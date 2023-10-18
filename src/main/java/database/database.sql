@@ -12,4 +12,6 @@ create table permision(
 idPermision int auto_increment primary key,
 namePermision varchar(20) not null
 );
-insert into userAccount(username,password,permision) value ("user","123456",2);
+insert into permision(namePermision) values ('admin');
+insert into permision(namePermision) values ('user');
+insert into userAccount(username,password,permision) value ('user','123456',2);
