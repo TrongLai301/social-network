@@ -7,7 +7,7 @@ username varchar(50) not null,
 password varchar(32) not null,
 CONSTRAINT CHK_PasswordLength CHECK (length(password) >= 6 AND length(password)<= 32),
 permission int,
-foreign key(permission) references permission(idPermision)
+foreign key(permission) references permission(idPermission)
 );
 // quản lý vai trò người dùng
 create table permission(
