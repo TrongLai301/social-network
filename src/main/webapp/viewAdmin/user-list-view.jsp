@@ -17,14 +17,14 @@
                 <th>Phone</th>
                 <th>Permission</th>
             </tr>
-            <c:forEach var="user" items="${sessionScope.['defaultListUser']}">
+            <c:forEach var="user" items="${sessionScope.defaultListUser}">
                 <tr>
                     <td>${user.id}</td>
                     <td>${user.username}</td>
                     <td>${user.password}</td>
                     <td>${user.email}</td>
                     <td>${user.phone}</td>
-                    <td>${user.permssion}</td>
+                    <td>${user.permission}</td>
                 </tr>
             </c:forEach>
         </table>

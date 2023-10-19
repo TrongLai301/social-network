@@ -1,19 +1,20 @@
 package service;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+// Class này là để kết nối với database theo file properties
 public class DataConnector {
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         Properties properties = new Properties();
         try {
-            FileInputStream fileInputStream = new FileInputStream("src/main/webapp/WEB-INF/classes/config.properties");
-            properties.load(fileInputStream);
-            fileInputStream.close();
+            InputStream inputStream = DataConnector.class.getResourceAsStream("/config.properties");
+            properties.load(inputStream);
+            inputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
