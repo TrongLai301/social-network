@@ -62,7 +62,7 @@
     <h2>Trang chủ</h2>
 </main>
 <footer>
-    <form action="/logout" method="get">
+    <form action="/session?actionGet=logOut" method="get">
         <input type="submit" class="btn btn-danger" value="Đăng xuất"/>
     </form>
 </footer>

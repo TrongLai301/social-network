@@ -25,7 +25,7 @@
             <img src="https://static.xx.fbcdn.net/rsrc.php/yI/r/4aAhOWlwaXf.svg" class="img-logo-header">
         </div>
         <div class="div-form-SignIn-SignUp">
-            <form action="/login" method="post" class="form-SignIn-SignUp">
+            <form action="/session?actionPost=login" method="post" class="form-SignIn-SignUp">
                 <div class="divInForm">
                     <div class="input-login login">
                         <div class="loginDiv">
