@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+<<<<<<< HEAD:src/main/java/controler/UserServlet.java
 @WebServlet(name = "UserServlet",value = "/user")
 public class UserServlet extends HttpServlet {
 
@@ -29,5 +30,31 @@ public class UserServlet extends HttpServlet {
         switch (actionPost) {
             default:
         }
+=======
+
+@WebServlet(name = "UserServlet",value = "/main")
+public class MainServlet extends HttpServlet {
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+         String action = req.getParameter("action");
+         if (action == null){
+             action = "";
+         }
+         switch (action){
+             case "block" :
+
+                 break;
+         }
+    }
+    public void blockUserById(HttpServletRequest request , HttpServletResponse response){
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+>>>>>>> 9df50fa518dcb77710f577d411e754c57b1c311a:src/main/java/controler/MainServlet.java
     }
 }

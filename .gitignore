@@ -36,8 +36,12 @@ build/
 
 ### Mac OS ###
 .DS_Store
+<<<<<<< HEAD
 
 .idea
 !**/src/main/java/config/config.properties
 
 
+=======
+.idea
+>>>>>>> 9df50fa518dcb77710f577d411e754c57b1c311a

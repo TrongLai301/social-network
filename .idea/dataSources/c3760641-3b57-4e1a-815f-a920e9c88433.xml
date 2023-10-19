@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="@localhost">
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.49">
+<<<<<<< HEAD
     <root id="1">
       <DefaultCasing>lower/lower</DefaultCasing>
       <DefaultEngine>InnoDB</DefaultEngine>
@@ -125,6 +126,13 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <ServerVersion>8.0.33</ServerVersion>
     </root>
     <collation id="2" parent="1" name="armscii8_general_ci">
+=======
+    <root id="1"/>
+    <collation id="2" parent="1" name="armscii8_bin">
+      <Charset>armscii8</Charset>
+    </collation>
+    <collation id="3" parent="1" name="armscii8_general_ci">
+>>>>>>> 9df50fa518dcb77710f577d411e754c57b1c311a
       <Charset>armscii8</Charset>
       <DefaultForCharset>1</DefaultForCharset>
     </collation>
@@ -1080,6 +1088,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
+<<<<<<< HEAD
     <routine id="304" parent="298" name="getAllUser">
       <Definer>tung@%</Definer>
       <RoutineKind>procedure</RoutineKind>
@@ -1156,5 +1165,10 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
+=======
+    <user id="303" parent="1" name="tung">
+      <Plugin>caching_sha2_password</Plugin>
+    </user>
+>>>>>>> 9df50fa518dcb77710f577d411e754c57b1c311a
   </database-model>
 </dataSource>
