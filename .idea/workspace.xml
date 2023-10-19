@@ -10,14 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c7a7826-fa0a-44ce-8348-bae2fa2bf8c6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/Login_SignUp/DisplaySignUp_SignIn.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/Login_SignUp/SignIn_SignUp.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/Login_SignUp/changeToSignUp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c3760641-3b57-4e1a-815f-a920e9c88433.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c3760641-3b57-4e1a-815f-a920e9c88433.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/Login_SignUp/CSS/SignIn_SignUp.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/Login_SignUp/CSS/SignIn_SignUp.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/Login_SignUp/HTML/DisplaySignUp_SignIn.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/Login_SignUp/HTML/DisplaySignUp_SignIn.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +83,14 @@
     ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/webapp/Login_SignUp/CSS" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/Login_SignUp/HTML" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/Login_SignUp/JavaScript" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/Login_SignUp" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Project" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.80" ALTERNATIVE_JRE_ENABLED="false">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/Login_SignUp/HTML/DisplaySignUp_SignIn.jsp" />
@@ -194,7 +197,7 @@
       <workItem from="1697615123387" duration="181000" />
       <workItem from="1697616656793" duration="7000" />
       <workItem from="1697616673025" duration="6672000" />
-      <workItem from="1697625152907" duration="13810000" />
+      <workItem from="1697625152907" duration="18887000" />
     </task>
     <servers />
   </component>
@@ -222,8 +225,8 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/webapp/Login_SignUp/DisplaySignUp_SignIn.jsp</url>
-          <line>52</line>
+          <url>file://$PROJECT_DIR$/src/main/webapp/Login_SignUp/HTML/DisplaySignUp_SignIn.jsp</url>
+          <line>74</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
