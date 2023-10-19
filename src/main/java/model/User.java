@@ -11,11 +11,10 @@ public class User {
     private String name;
     private String address;
     private String hobby;
+    private String permission;
+    private String status;
 
-    private int permission;
-
-//
-    public User(int id,String username, String password, String email, String phone, String birthdate, String avatar, String name, String address, String hobby) {
+    public User(int id, String username, String password, String email, String phone, String birthdate, String avatar, String name, String address, String hobby) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -27,21 +26,24 @@ public class User {
         this.hobby = hobby;
         this.id = id;
     }
+
     //form dang ky
-    public User(String username , String password,String email,String phone,String birthdate){
+    public User(String username, String password, String email, String phone, String birthdate) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
         this.birthdate = birthdate;
     }
-// form dang nhap
+
+    // form dang nhap
     public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
+
     // form profile
-    public User(String username, String avatar, String name, String address,String hobby,String phone){
+    public User(String username, String avatar, String name, String address, String hobby, String phone) {
         this.username = username;
         this.avatar = avatar;
         this.name = name;
@@ -50,11 +52,12 @@ public class User {
         this.hobby = hobby;
     }
 
-    public User(int id, String username, String password, int permission) {
+    public User(int id, String username, String password, String permission,String status) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.permission = permission;
+        this.status =status;
     }
 
     public User() {
@@ -68,11 +71,11 @@ public class User {
         this.id = id;
     }
 
-    public int getPermission() {
+    public String getPermission() {
         return permission;
     }
 
-    public void setPermission(int permission) {
+    public void setPermission(String permission) {
         this.permission = permission;
     }
 
@@ -146,6 +149,14 @@ public class User {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

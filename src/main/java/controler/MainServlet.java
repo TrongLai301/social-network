@@ -23,11 +23,7 @@ public class MainServlet extends HttpServlet {
         }
     }
 
-    public void blockUserById(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
 
-    }
 
     public class AdminServlet extends HttpServlet {
 
