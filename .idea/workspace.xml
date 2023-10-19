@@ -10,17 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c7a7826-fa0a-44ce-8348-bae2fa2bf8c6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controler/AdminServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controler/SessionServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controler/UserServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controler/MainServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controler/HomeServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database/database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/database.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/DataConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/DataConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/viewAdmin/user-list-view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/viewAdmin/user-list-view.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/UserDAOImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,22 +212,11 @@
       <workItem from="1697643930386" duration="1786000" />
       <workItem from="1697647643263" duration="83000" />
       <workItem from="1697679048164" duration="2644000" />
-      <workItem from="1697681724595" duration="1316000" />
+      <workItem from="1697681724595" duration="3312000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/webapp/viewAdmin/user-list-view.jsp</url>
-          <line>21</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
