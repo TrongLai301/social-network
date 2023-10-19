@@ -11,6 +11,9 @@ public class User {
     private String name;
     private String address;
     private String hobby;
+
+    private int permission;
+
 //
     public User(int id,String username, String password, String email, String phone, String birthdate, String avatar, String name, String address, String hobby) {
         this.username = username;
@@ -45,6 +48,32 @@ public class User {
         this.address = address;
         this.phone = phone;
         this.hobby = hobby;
+    }
+
+    public User(int id, String username, String password, int permission) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.permission = permission;
+    }
+
+    public User() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getPermission() {
+        return permission;
+    }
+
+    public void setPermission(int permission) {
+        this.permission = permission;
     }
 
     public String getUsername() {
@@ -117,5 +146,22 @@ public class User {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", birthdate='" + birthdate + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", hobby='" + hobby + '\'' +
+                ", permission=" + permission +
+                '}';
     }
 }
