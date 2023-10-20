@@ -9,7 +9,7 @@ import java.util.Properties;
 
 // Class này là để kết nối với database theo file properties
 public class DataConnector {
-    public static Connection getConnection() throws ClassNotFoundException, SQLException {
+    public static Connection getConnection() {
         Properties properties = new Properties();
         try {
             InputStream inputStream = DataConnector.class.getResourceAsStream("/config.properties");
@@ -23,7 +23,11 @@ public class DataConnector {
         String dbUser = properties.getProperty("db.user");
         String dbPassword = properties.getProperty("db.password");
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection(dbUrl,dbUser,dbPassword);
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            return DriverManager.getConnection(dbUrl,dbUser,dbPassword);
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

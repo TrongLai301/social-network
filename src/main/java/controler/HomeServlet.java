@@ -14,7 +14,7 @@ import java.util.List;
 
 //Class Main servlet dùng để hiển thị và sử lý logic liên quan đến trang home ví dụ như like bài Post
 
-@WebServlet(name = "UserServlet",value = "/home")
+@WebServlet(name = "HomeServlet",value = "/home")
 public class HomeServlet extends HttpServlet {
     private UserDAOImpl userDAO ;
 
