@@ -30,17 +30,15 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+!**/src/main/**/classes/
 
 ### VS Code ###
 .vscode/
 
 ### Mac OS ###
 .DS_Store
-<<<<<<< HEAD
 
 .idea
-!**/src/main/java/config/config.properties
 
 
-=======
 
