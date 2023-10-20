@@ -36,15 +36,4 @@ public class UserServlet extends HttpServlet {
                 break;
             default:
         }
-    }
-
-    //doGet
-    //...
-
-    //doPost
-    public void blockUserById(HttpServletRequest request, HttpServletResponse response) {
-
-
-    }
-}
 
