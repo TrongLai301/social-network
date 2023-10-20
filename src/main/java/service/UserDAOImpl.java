@@ -17,12 +17,12 @@ public class UserDAOImpl implements IUserDAO {
         Connection connection = null;
         try {
             connection = DataConnector.getConnection();
-            CallableStatement callableStatement = connection.prepareCall("{Call getALlUser() }");
+            CallableStatement callableStatement = connection.prepareCall("Call showUserWithStatus() ");
             ResultSet rs = callableStatement.executeQuery();
             while (rs.next()) {
                 User user = new User();
-                user.setId(rs.getInt("idaccount"));
-                user.setPermission(rs.getInt("permision"));
+                user.setId(rs.getInt("idAccount"));
+                user.setPermission(rs.getString("namePermission"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 listFromDb.add(user);
@@ -41,5 +41,22 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public void updateUser(User user) {
 
+    }
+
+    @Override
+    public void insertUser(User user){
+        Connection connection = null;
+        try {
+            connection = DataConnector.getConnection();
+            CallableStatement callableStatement = connection.prepareCall("{Call insertUser(?,?,?)}");
+
+            callableStatement.setString(1,user.getUsername());
+            callableStatement.setString(2,user.getPassword());
+            callableStatement.setString(3,"2");
+            callableStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

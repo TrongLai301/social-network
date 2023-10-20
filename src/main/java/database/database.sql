@@ -14,10 +14,7 @@ CONSTRAINT CHK_PasswordLength CHECK (length(password) >= 6 AND length(password)<
 permission int,
 foreign key(permission) references permission(idPermission)
 );
--- <<<<<<< HEAD
--- # // quản lý vai trò người dùng
--- =======
---
+
 -- // quản lý vai trò người dùng
 -- >>>>>>> a5971ad020046bc159b214abd5fc2b799880758b
 create table permission(
@@ -26,8 +23,7 @@ namePermission varchar(20) not null
 );
 -- <<<<<<< HEAD
 -- # // thêm vai trò quyền hạn
-insert into permission(namePermission) values ('admin');
-insert into permission(namePermission) values ('user');
+
 -- # // thêm người dùng
 -- =======
 
@@ -63,3 +59,10 @@ begin
 select userAccount.idAccount,username,password,namePermission,status from userAccount inner join permission on userAccount.permission = permission.idPermission left join userStatus on userAccount.idAccount = userStatus.idAccount;
 end $$
 
+
+-- Tạo thủ
+DELIMITER $$
+create procedure insertUser(in usernameWeb varchar(45),in passwordWeb varchar(32), in PermissionWeb int)
+begin
+insert into userAccount (username, password,permission ) values (usernameWeb,passwordWeb,permissionWeb);
+end $$
