@@ -45,9 +45,21 @@ public class UserServlet extends HttpServlet {
     }
 
     private void showEditPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
+        String actionGet = req.getParameter("actionGet");
         RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
         dispatcher.forward(req, resp);
+        switch (actionGet) {
+            case "":
+                break;
+            default:
+                viewUserMain(req, resp);
+                break;
+
+        }
+    }
+
+    public void viewUserMain(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.getRequestDispatcher("/home.jsp").forward(request, response);
     }
 
     @Override
@@ -107,4 +119,5 @@ public class UserServlet extends HttpServlet {
 
     }
 }
+
 
