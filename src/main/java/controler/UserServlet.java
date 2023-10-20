@@ -16,17 +16,19 @@ public class UserServlet extends HttpServlet {
             actionGet = "";
         }
         switch (actionGet) {
-            case "" :
+            case "":
                 break;
             default:
-               viewUserMain(req,resp);
+                viewUserMain(req, resp);
                 break;
 
         }
     }
-    public void viewUserMain(HttpServletRequest request , HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("/home.jsp").forward(request,response);
+
+    public void viewUserMain(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.getRequestDispatcher("/home.jsp").forward(request, response);
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String actionPost = req.getParameter("actionPost");
@@ -37,11 +39,4 @@ public class UserServlet extends HttpServlet {
             default:
         }
     }
-
-    //doGet
-    //...
-
-    //doPost
-
 }
-
