@@ -2,15 +2,23 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="SocialNetwork:war" />
+      <artifact name="SocialNetwork:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c7a7826-fa0a-44ce-8348-bae2fa2bf8c6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/controler/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controler/UserServlet.java" afterDir="false" />
+    <list default="true" id="e461fd34-a95d-471d-acfa-9160cc5427bb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controler/SessionServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controler/SessionServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/database/database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/database.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/IUserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/IUserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/UserDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/classes/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/classes/config.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/login-signup/changeToSignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/login-signup/changeToSignUp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/login-signup/display-signUp-signIn.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/login-signup/display-signUp-signIn.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,14 +29,20 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Class" />
+        <option value="Jsp File" />
         <option value="CSS File" />
         <option value="JavaScript File" />
-        <option value="Jsp File" />
-        <option value="Class" />
+
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="LogFilters">
@@ -56,47 +70,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging sprint0/feature39/blockUser",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "/home/trong/IdeaProjects/CloneLogin/Mordern-loginpage",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "spring.configuration.checksum": "9be6a4dbad5d341ee6e5ebd71e424c14",
-    "vue.rearranger.settings.migration": "true"
-  },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
-    ]
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/trong/IdeaProjects/ProjectSocialNetwork/social-network&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\PC\IdeaProjects\social-network\src\main\webapp\admin" />
-      <recent name="C:\Users\PC\IdeaProjects\social-network\src\main\webapp\WEB-INF\classes" />
-      <recent name="C:\Users\PC\IdeaProjects\social-network\src\main\webapp\WEB-INF" />
-      <recent name="$PROJECT_DIR$/src/main/webapp/login-signup" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/WEB-INF/classes" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Project" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.81" ALTERNATIVE_JRE_ENABLED="false">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/session" />
+    <configuration name="Project" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.80" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8081/session" />
       <option name="UPDATING_POLICY" value="redeploy-artifacts" />
       <deployment>
-        <artifact name="SocialNetwork:war">
+        <artifact name="SocialNetwork:war exploded">
           <settings>
             <option name="CONTEXT_PATH" value="" />
           </settings>
@@ -104,6 +102,9 @@
       </deployment>
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="f6dfaa72-9551-4976-a53b-2f80ff4cdd28" />
+        <option name="HTTP_PORT" value="8081" />
+        <option name="JNDI_PORT" value="1088" />
+
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -176,7 +177,7 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="SocialNetwork:war" />
+          <artifact name="SocialNetwork:war exploded" />
         </option>
       </method>
     </configuration>
@@ -184,7 +185,9 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="2c7a7826-fa0a-44ce-8348-bae2fa2bf8c6" name="Changes" comment="" />
+
+      <changelist id="e461fd34-a95d-471d-acfa-9160cc5427bb" name="Changes" comment="" />
+
       <created>1697592743067</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -195,14 +198,19 @@
       <workItem from="1697612576406" duration="397000" />
       <workItem from="1697612993045" duration="367000" />
       <workItem from="1697615123387" duration="181000" />
+      <workItem from="1697624106700" duration="5168000" />
+      <workItem from="1697678106639" duration="330000" />
       <workItem from="1697616656793" duration="7000" />
       <workItem from="1697616673025" duration="6672000" />
+      <workItem from="1697625152907" duration="18887000" />
       <workItem from="1697625152907" duration="13810000" />
-      <workItem from="1697693600770" duration="2180000" />
-      <workItem from="1697696251310" duration="5991000" />
-      <workItem from="1697705572835" duration="97000" />
-      <workItem from="1697720861019" duration="199000" />
-      <workItem from="1697763615967" duration="7642000" />
+      <workItem from="1697685276807" duration="26000" />
+      <workItem from="1697685364041" duration="8713000" />
+      <workItem from="1697711721748" duration="11669000" />
+      <workItem from="1697763783385" duration="10102000" />
+      <workItem from="1697781961378" duration="2005000" />
+      <workItem from="1697784723576" duration="1736000" />
+      <workItem from="1697786466367" duration="1123000" />
     </task>
     <servers />
   </component>
@@ -226,57 +234,36 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/controler/HomeServlet.java</url>
-          <line>35</line>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/service/UserDAOImpl.java</url>
+          <line>14</line>
+          <properties class="service.UserDAOImpl" method="getAllUser">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/controler/SessionServlet.java</url>
+          <line>132</line>
+          <properties class="controler.SessionServlet" method="checkUser">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/controler/HomeServlet.java</url>
-          <line>47</line>
-          <properties class="controler.HomeServlet" method="blockUserById">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/service/UserDAOImpl.java</url>
-          <line>34</line>
-          <properties class="service.UserDAOImpl" method="getUserById">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/service/UserDAOImpl.java</url>
-          <line>60</line>
-          <properties class="service.UserDAOImpl" method="unBlockUser">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/service/UserDAOImpl.java</url>
-          <line>51</line>
-          <properties class="service.UserDAOImpl" method="blockUser">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="14" />
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/controler/SessionServlet.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <pin-to-top-manager>
-      <pinned-members>
-        <PinnedItemInfo parentTag="model.User" memberName="status" />
-        <PinnedItemInfo parentTag="model.User" memberName="permission" />
-      </pinned-members>
-    </pin-to-top-manager>
   </component>
 </project>

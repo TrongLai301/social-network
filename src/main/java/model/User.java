@@ -14,6 +14,7 @@ public class User {
     private String permission;
     private String status;
 
+
     public User(int id, String username, String password, String email, String phone, String birthdate, String avatar, String name, String address, String hobby) {
         this.username = username;
         this.password = password;
@@ -51,6 +52,9 @@ public class User {
         this.phone = phone;
         this.hobby = hobby;
     }
+
+
+    public User(int id, String username, String password, String permission) {
 
     public User(int id, String username, String password, String permission,String status) {
         this.id = id;
