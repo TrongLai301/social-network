@@ -11,5 +11,5 @@ public interface IUserDAO {
    void updateUser(User user);
    void blockUser(int id) throws SQLException, ClassNotFoundException;
    void unBlockUser(int id) throws SQLException , ClassNotFoundException;
-
+   void editPasswordUser(int id, String newPassword) throws SQLException, ClassNotFoundException;
 }

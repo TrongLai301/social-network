@@ -60,6 +60,7 @@
 </header>
 <main>
     <h2>Trang chủ</h2>
+    <a href="/user?actionGet=showEditPassword">Doi mat khau</a>
 </main>
 <footer>
     <form action="/session?actionGet=logOut" method="get">

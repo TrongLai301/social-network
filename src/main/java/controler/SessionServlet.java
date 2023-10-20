@@ -98,9 +98,9 @@ public class SessionServlet extends HttpServlet {
 
                 // Chuyển hướng người dùng đến trang tương ứng với vai trò
                 if (permission.equals("admin")) {
-                    resp.sendRedirect("home");
+                    resp.sendRedirect("/home");
                 } else {
-                    resp.sendRedirect("user");
+                    resp.sendRedirect("/user");
                 }
             } else {
                 // Đăng nhập thất bại
