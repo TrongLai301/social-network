@@ -57,6 +57,15 @@ public class UserDAOImpl implements IUserDAO {
         connection.close();
     }
     @Override
+    public void unBlockUser(int id) throws SQLException , ClassNotFoundException{
+        Connection connection = DataConnector.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("update userStatus set status = ? where id = ?");
+        preparedStatement.setInt(2,id);
+        preparedStatement.setString(1,"");
+        preparedStatement.executeUpdate();
+        connection.close();
+    }
+    @Override
     public void updateUser(User user) {
 
     }

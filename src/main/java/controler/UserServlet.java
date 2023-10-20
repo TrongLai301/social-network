@@ -17,7 +17,10 @@ public class UserServlet extends HttpServlet {
             actionGet = "";
         }
         switch (actionGet) {
+            case "" :
+                break;
             default:
+
         }
     }
 
@@ -40,8 +43,7 @@ public class UserServlet extends HttpServlet {
 
     //doPost
     public void blockUserById(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
+
 
     }
 }

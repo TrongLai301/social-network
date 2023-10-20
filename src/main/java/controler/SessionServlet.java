@@ -100,7 +100,7 @@ public class SessionServlet extends HttpServlet {
                 if (permission.equals("admin")) {
                     resp.sendRedirect("home");
                 } else {
-                    resp.sendRedirect("user/home.jsp");
+                    resp.sendRedirect("user");
                 }
             } else {
                 // Đăng nhập thất bại

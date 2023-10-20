@@ -57,6 +57,8 @@ public class HomeServlet extends HttpServlet {
         }else if (user.getPermission().equals("admin")){
             request.setAttribute("message","khong the xoa doi tuong admin");
             request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
+        }else if (user.getStatus().equals("block")){
+            request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
         }
     }
     @Override

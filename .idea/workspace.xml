@@ -10,25 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c7a7826-fa0a-44ce-8348-bae2fa2bf8c6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin/home.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/user/home.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controler/HomeServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controler/HomeServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controler/MainServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controler/MainServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controler/SessionServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controler/SessionServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controler/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controler/UserServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/database/database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/database.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/DataConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DBcontext/DataConnector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/IUserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/IUserDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/UserDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/Login_SignUp/CSS/SignIn_SignUp.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/login-signup/style-signIn-signUp.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/Login_SignUp/HTML/DisplaySignUp_SignIn.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/login-signup/display-signUp-signIn.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/Login_SignUp/JavaScript/changeToSignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/login-signup/changeToSignUp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/classes/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/classes/config.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/viewAdmin/user-list-view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/viewAdmin/user-list-view.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/viewAdmin/userList.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/admin/userList.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,6 +208,8 @@
       <workItem from="1697693600770" duration="2180000" />
       <workItem from="1697696251310" duration="5991000" />
       <workItem from="1697705572835" duration="97000" />
+      <workItem from="1697720861019" duration="199000" />
+      <workItem from="1697763615967" duration="1999000" />
     </task>
     <servers />
   </component>
@@ -241,20 +232,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/service/UserDAOImpl.java</url>
-          <line>34</line>
-          <properties class="service.UserDAOImpl" method="getUserById">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

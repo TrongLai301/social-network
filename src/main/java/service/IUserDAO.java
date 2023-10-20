@@ -10,5 +10,6 @@ public interface IUserDAO {
    User getUserById(int id) throws SQLException, ClassNotFoundException;
    void updateUser(User user);
    void blockUser(int id) throws SQLException, ClassNotFoundException;
+   void unBlockUser(int id) throws SQLException , ClassNotFoundException;
 
 }
