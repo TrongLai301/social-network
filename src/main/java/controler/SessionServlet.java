@@ -58,16 +58,18 @@ public class SessionServlet extends HttpServlet {
     }
 
     //doGet
-    private void showLoginForm(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.sendRedirect("login-signup/display-signUp-signIn.jsp");
+    private void showLoginForm(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        RequestDispatcher dispatcher = req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp");
+        dispatcher.forward(req, resp);
     }
 
-    private void logOut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void logOut(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         // Xóa session
         req.getSession().invalidate();
 
         // Trở về trang đăng nhập
-        resp.sendRedirect("login-signup/display-signUp-signIn.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp");
+        dispatcher.forward(req, resp);
     }
 
     //doPost

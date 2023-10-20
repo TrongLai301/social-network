@@ -10,7 +10,7 @@
 <head>
     <title>Facebook-Login/SignUp</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style-signIn-signUp.css">
+    <link rel="stylesheet" href="../login-signup/style-signIn-signUp.css">
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="changeToSignUp.js"></script>
