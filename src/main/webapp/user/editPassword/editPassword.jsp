@@ -16,6 +16,7 @@
 <div class="container">
     <h1>Edit Password</h1>
     <form action="/user?actionPost=editPassword" method="post">
+        <input type="hidden" name="idAccount" value="<c:out value="${idAccount}"/>">
         <label>Current Password</label>
         <input type="password" name="password" required>
         <label>New Password</label>

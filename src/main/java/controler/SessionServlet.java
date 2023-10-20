@@ -82,7 +82,7 @@ public class SessionServlet extends HttpServlet {
         ResultSet resultSet = null;
         try {
             connection = DataConnector.getConnection();
-            statement = connection.prepareStatement("SELECT namePermission FROM permission inner join userAccount on permission.idPermission = userAccount.permission WHERE username = ? AND password = ?");
+            statement = connection.prepareStatement("SELECT idAccount, namePermission FROM permission inner join userAccount on permission.idPermission = userAccount.permission WHERE username = ? AND password = ?");
             statement.setString(1, username);
             statement.setString(2, password);
             resultSet = statement.executeQuery();
@@ -90,11 +90,13 @@ public class SessionServlet extends HttpServlet {
             // Nếu tài khoản tồn tại thì đăng nhập thành công
             if (resultSet.next()) {
                 HttpSession session = req.getSession();
+                int id = resultSet.getInt("idAccount");
+                session.setAttribute("idAccount", id);
                 session.setAttribute("username", username);
                 session.setAttribute("namePermission", resultSet.getString("namePermission"));
-
                 // Xác định vai trò của người dùng
                 String permission = session.getAttribute("namePermission").toString();
+                System.out.println(id);
 
                 // Chuyển hướng người dùng đến trang tương ứng với vai trò
                 if (permission.equals("admin")) {

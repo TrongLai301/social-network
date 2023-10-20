@@ -45,6 +45,7 @@ public class UserServlet extends HttpServlet {
     }
 
     private void showEditPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
         RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
         dispatcher.forward(req, resp);
     }
@@ -70,6 +71,7 @@ public class UserServlet extends HttpServlet {
         String password= req.getParameter("password");
         String newPassword = req.getParameter("newPassword");
         String confirmPassword = req.getParameter("confirmPassword");
+        int idAccount = Integer.parseInt(req.getParameter("idAccount"));
 
         if (passwordValidate.validate(newPassword) == false){
             req.setAttribute("message", "Vui long nhap tu 6-32 ky tu");
@@ -81,7 +83,7 @@ public class UserServlet extends HttpServlet {
             req.setAttribute("message", "Mat khau khong duoc trong");
         }
         try {
-            userDAO.editPasswordUser(1, newPassword);
+            userDAO.editPasswordUser(idAccount, newPassword);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
