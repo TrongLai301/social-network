@@ -35,13 +35,14 @@ public class UserDAOImpl implements IUserDAO {
     public User getUserById(int id) throws SQLException, ClassNotFoundException {
      Connection connection = DataConnector.getConnection();
      Statement statement = connection.createStatement();
-     ResultSet resultSet = statement.executeQuery("select idAccount,username,password,namePermission from userAccount inner join permission on userAccount.permission = permission.idPermission where idAccount = '" + id +"'");
-        User user = new User();
+     ResultSet resultSet = statement.executeQuery("select userAccount.idAccount,username,password,namePermission,status from userAccount inner join permission on userAccount.permission = permission.idPermission left join userStatus on userAccount.idAccount = userStatus.idAccount where userAccount.idAccount = '" + id +"'");
+     User user = new User();
      while (resultSet.next()){
          user.setId(resultSet.getInt("idAccount"));
          user.setUsername(resultSet.getString("username"));
          user.setPassword(resultSet.getString("password"));
          user.setPermission(resultSet.getString("namePermission"));
+         user.setStatus(resultSet.getString("status"));
      }
      connection.close();
      return user;
@@ -59,10 +60,10 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public void unBlockUser(int id) throws SQLException , ClassNotFoundException{
         Connection connection = DataConnector.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("update userStatus set status = ? where id = ?");
-        preparedStatement.setInt(2,id);
-        preparedStatement.setString(1,"");
+        PreparedStatement preparedStatement = connection.prepareStatement("delete from userStatus where idAccount = ?");
+        preparedStatement.setInt(1,id);
         preparedStatement.executeUpdate();
+
         connection.close();
     }
     @Override

@@ -9,7 +9,6 @@ import java.io.IOException;
 
 @WebServlet(name = "UserServlet", value = "/user")
 public class UserServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String actionGet = req.getParameter("actionGet");
@@ -20,10 +19,14 @@ public class UserServlet extends HttpServlet {
             case "" :
                 break;
             default:
+               viewUserMain(req,resp);
+                break;
 
         }
     }
-
+    public void viewUserMain(HttpServletRequest request , HttpServletResponse response) throws IOException, ServletException {
+        request.getRequestDispatcher("/home.jsp").forward(request,response);
+    }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String actionPost = req.getParameter("actionPost");
@@ -31,9 +34,6 @@ public class UserServlet extends HttpServlet {
             actionPost = "";
         }
         switch (actionPost) {
-            case "block":
-                blockUserById(req, resp);
-                break;
             default:
         }
     }
@@ -42,9 +42,6 @@ public class UserServlet extends HttpServlet {
     //...
 
     //doPost
-    public void blockUserById(HttpServletRequest request, HttpServletResponse response) {
 
-
-    }
 }
 

@@ -48,18 +48,25 @@ public class HomeServlet extends HttpServlet {
     public void blockUserById(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         User user = userDAO.getUserById(id);
-        if (user.getPermission().equals("user")){
-            userDAO.blockUser(id);
-            List<User> defaultListUser = userDAO.getAllUser();
-            HttpSession session = request.getSession();
-            session.setAttribute("defaultListUser", defaultListUser);
-            request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
-        }else if (user.getPermission().equals("admin")){
+        if (user.getPermission().equals("admin")){
             request.setAttribute("message","khong the xoa doi tuong admin");
             request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
-        }else if (user.getStatus().equals("block")){
-            request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
+        }else{
+            if (user.getStatus()==null){
+                userDAO.blockUser(id);
+                List<User> defaultListUser = userDAO.getAllUser();
+                HttpSession session = request.getSession();
+                session.setAttribute("defaultListUser", defaultListUser);
+                request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
+            }else{
+                userDAO.unBlockUser(id);
+                List<User> defaultListUser = userDAO.getAllUser();
+                HttpSession session = request.getSession();
+                session.setAttribute("defaultListUser", defaultListUser);
+                request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
+            }
         }
+
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
