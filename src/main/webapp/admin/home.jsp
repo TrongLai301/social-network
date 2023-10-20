@@ -1,3 +1,5 @@
+<%@ page import="java.io.PrintWriter" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: tuancd
@@ -11,6 +13,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <title>Mạng xã hội</title>
 </head>
 <body>
@@ -59,10 +63,45 @@
     <h1>Mạng xã hội</h1>
 </header>
 <main>
-    <h2>Trang chủ</h2>
+    <h1>List User  </h1>
+    <c:if test="${requestScope['message'] != null}">
+        <%
+            PrintWriter printWriter = response.getWriter();
+            printWriter.println("<script type=\"text/javascript\">");
+            printWriter.println("alert('khong the xoa admin');");
+            printWriter.println("</script>");
+        %>
+    </c:if>
+    <div class="table">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Permission</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            <c:forEach var="user" items="${sessionScope.defaultListUser}">
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.password}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phone}</td>
+                    <td>${user.permission}</td>
+                    <td>${user.status}</td>
+                    <td><a href="home?action=block&id=${user.id}"><i class="bi bi-ban"></i></a></td>
+                    <td></td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </main>
 <footer>
-    <form action="/session?actionGet=logOut" method="get">
+    <form action="session?actionGet=logOut" method="get">
         <input type="submit" class="btn btn-danger" value="Đăng xuất"/>
     </form>
 </footer>

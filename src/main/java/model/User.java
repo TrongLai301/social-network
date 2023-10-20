@@ -11,7 +11,8 @@ public class User {
     private String name;
     private String address;
     private String hobby;
-    private int permission;
+    private String permission;
+    private String status;
 
     public User(int id, String username, String password, String email, String phone, String birthdate, String avatar, String name, String address, String hobby) {
         this.username = username;
@@ -51,11 +52,12 @@ public class User {
         this.hobby = hobby;
     }
 
-    public User(int id, String username, String password, int permission) {
+    public User(int id, String username, String password, String permission,String status) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.permission = permission;
+        this.status =status;
     }
 
     public User() {
@@ -69,11 +71,11 @@ public class User {
         this.id = id;
     }
 
-    public int getPermission() {
+    public String getPermission() {
         return permission;
     }
 
-    public void setPermission(int permission) {
+    public void setPermission(String permission) {
         this.permission = permission;
     }
 
@@ -147,6 +149,14 @@ public class User {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

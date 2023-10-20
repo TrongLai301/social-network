@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 //Class Main servlet dùng để hiển thị và sử lý logic liên quan đến trang home ví dụ như like bài Post
@@ -26,20 +27,40 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String actionGet =  req.getParameter("actionGet");
-        if (actionGet == null){
+        String actionGet = req.getParameter("action");
+        if (actionGet == null) {
             actionGet = "";
         }
-        switch (actionGet) {
-
-
-
-            // Đoạn code dưới là để chuyển hươớng tới trang home
-            default:
-                directToHome(req,resp);
+        try {
+            switch (actionGet) {
+                case "block":
+                    blockUserById(req, resp);
+                    break;
+                // Đoạn code dưới là để chuyển hươớng tới trang home
+                default:
+                    directToHome(req, resp);
+                    break;
+            }
+             }catch (SQLException | ClassNotFoundException e){
+                   throw new RuntimeException();
         }
     }
-
+    public void blockUserById(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        User user = userDAO.getUserById(id);
+        if (user.getPermission().equals("user")){
+            userDAO.blockUser(id);
+            List<User> defaultListUser = userDAO.getAllUser();
+            HttpSession session = request.getSession();
+            session.setAttribute("defaultListUser", defaultListUser);
+            request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
+        }else if (user.getPermission().equals("admin")){
+            request.setAttribute("message","khong the xoa doi tuong admin");
+            request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
+        }else if (user.getStatus().equals("block")){
+            request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
+        }
+    }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String actionPost =  req.getParameter("actionPost");
@@ -58,6 +79,6 @@ public class HomeServlet extends HttpServlet {
         HttpSession session = req.getSession();
         List<User> defaultListUser = userDAO.getAllUser();
         session.setAttribute("defaultListUser", defaultListUser);
-        req.getRequestDispatcher("/viewAdmin/user-list-view.jsp").forward(req,resp);
+        req.getRequestDispatcher("/admin/home.jsp").forward(req,resp);
     }
 }
