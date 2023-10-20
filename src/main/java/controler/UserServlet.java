@@ -6,27 +6,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-<<<<<<< HEAD:src/main/java/controler/UserServlet.java
-@WebServlet(name = "UserServlet",value = "/user")
+
+@WebServlet(name = "UserServlet", value = "/user")
 public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String actionGet =  req.getParameter("actionGet");
-        if (actionGet == null){
+        String actionGet = req.getParameter("actionGet");
+        if (actionGet == null) {
             actionGet = "";
         }
         switch (actionGet) {
+            case "" :
+                break;
             default:
+
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String actionPost =  req.getParameter("actionPost");
-        if (actionPost == null){
+        String actionPost = req.getParameter("actionPost");
+        if (actionPost == null) {
             actionPost = "";
         }
         switch (actionPost) {
+            case "block":
+                blockUserById(req, resp);
+                break;
             default:
         }
+

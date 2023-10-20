@@ -1,10 +1,8 @@
-package service;
+package DBcontext;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 // Class này là để kết nối với database theo file properties
@@ -25,5 +23,17 @@ public class DataConnector {
 
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(dbUrl,dbUser,dbPassword);
+    }
+
+    public static void closeConnection(Connection connection, PreparedStatement statement, ResultSet resultSet) throws SQLException {
+        if (resultSet != null) {
+            resultSet.close();
+        }
+        if (statement != null) {
+            statement.close();
+        }
+        if (connection != null) {
+            connection.close();
+        }
     }
 }
