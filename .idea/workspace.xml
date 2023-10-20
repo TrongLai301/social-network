@@ -33,6 +33,7 @@
         <option value="Jsp File" />
         <option value="CSS File" />
         <option value="JavaScript File" />
+
       </list>
     </option>
   </component>
@@ -103,6 +104,7 @@
         <option name="BASE_DIRECTORY_NAME" value="f6dfaa72-9551-4976-a53b-2f80ff4cdd28" />
         <option name="HTTP_PORT" value="8081" />
         <option name="JNDI_PORT" value="1088" />
+
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -183,7 +185,9 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+
       <changelist id="e461fd34-a95d-471d-acfa-9160cc5427bb" name="Changes" comment="" />
+
       <created>1697592743067</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
