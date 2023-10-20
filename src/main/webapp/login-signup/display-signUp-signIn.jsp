@@ -1,4 +1,4 @@
-<%@ page import="java.util.*" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: trong
   Date: 10/18/23
@@ -11,12 +11,12 @@
 <head>
     <title>Facebook-Login/SignUp</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../CSS/SignIn_SignUp.css">
+    <link rel="stylesheet" href="style-signIn-signUp.css">
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../JavaScript/changeToSignUp.js"></script>
+    <script src="changeToSignUp.js"></script>
 </head>
 <body>
 
@@ -90,13 +90,6 @@
     <form class="needs-validation edit form-signUp" novalidate>
         <div class="title-form">
             <span>Sign up</span>
-<%--            <button type="button" class="icon" onclick="hideFormSignUp()">--%>
-<%--        <span><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg {--%>
-<%--            fill: #27303f--%>
-<%--        }</style><path--%>
-<%--                d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"/></svg>--%>
-<%--        </span>--%>
-<%--            </button>--%>
             <input type="button" class="icon" onclick="hideFormSignUp()" value="x">
         </div>
         <div class="underline-signup"></div>
@@ -105,22 +98,22 @@
                 <label for="validationCustom01">Email</label>
                 <input type="email" class="form-control" id="validationCustom01" placeholder="Example: hello@gmail.com"
                        required>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
+<%--                <div class="valid-feedback">--%>
+<%--                    Looks good!--%>
+<%--                </div>--%>
             </div>
             <div class="col-md-4 mb-3">
                 <label for="validationCustom02">Password</label>
-                <input type="text" class="form-control" id="validationCustom02" placeholder="password" required>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
+                <input type="password" class="form-control" id="validationCustom02" placeholder="password" minlength="6" maxlength="32"  required>
+<%--                <div class="valid-feedback">--%>
+<%--                    Looks good!--%>
+<%--                </div>--%>
             </div>
             <div class="col-md-4 mb-3">
                 <label for="validationCustom03">Confirm password</label>
-                <input type="text" class="form-control" id="validationCustom03" placeholder="confirm password" required>
+                <input type="password" class="form-control" id="validationCustom03" placeholder="confirm password" minlength="6" maxlength="32"   required>
                 <div class="valid-feedback">
-                    Looks good!
+                    <p id="notify"></p>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
@@ -134,28 +127,18 @@
                     <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username"
                            aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">
-                        Please choose a username.
+                        Choose a username
                     </div>
                 </div>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="validationCustom04">Phone number</label>
-                <input type="text" class="form-control" id="validationCustom04" placeholder="Phone number" required>
+                <input type="text" pattern="\d*" class="form-control" id="validationCustom04" placeholder="Phone number" maxlength="10" minlength="10" inputmode="numeric" required>
                 <div class="invalid-feedback">
-                    Please provide a valid phone.
+                    Provide a valid phone
                 </div>
             </div>
         </div>
-        <%--    <div class="form-row">--%>
-        <%--        <div class="col-md-6 mb-3">--%>
-        <%--            <label for="validationCustom04">Phone number</label>--%>
-        <%--            <input type="text" class="form-control" id="validationCustom04" placeholder="Phone number" required>--%>
-        <%--            <div class="invalid-feedback">--%>
-        <%--                Please provide a valid phone.--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
-        <%--    </div>--%>
-
         <div class="title-birth">
             <span>Date of birth ( day/month/year )</span>
         </div>
@@ -174,7 +157,7 @@
                     </c:forEach>
                 </select>
             </label>
-            <label class="label-select">
+            <label class="div-label-select">
                 <select class="label-select">
                     <c:forEach var="i" begin="1905" end="2023">
                         <option value="${i}">${i}</option>
@@ -201,14 +184,11 @@
         </div>
     </div>
     <script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function () {
             'use strict';
             window.addEventListener('load', function () {
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.getElementsByClassName('needs-validation');
-                // Loop over them and prevent submission
-                var validation = Array.prototype.filter.call(forms, function (form) {
+                let forms = document.getElementsByClassName('needs-validation');
+                let validation = Array.prototype.filter.call(forms, function (form) {
                     form.addEventListener('submit', function (event) {
                         if (form.checkValidity() === false) {
                             event.preventDefault();
@@ -219,22 +199,50 @@
                 });
             }, false);
         })();
+
+
+        const password = document.getElementById("validationCustom02");
+        const passwordConfirm = document.getElementById("validationCustom03");
+        const notify = document.getElementById("notify");
+        passwordConfirm.addEventListener("input", checkPassword);
+
+        const form = document.querySelector('.form-signUp');
+
+        form.addEventListener('submit', function(event) {
+            if (password.value !== passwordConfirm.value) {
+                event.preventDefault();
+                event.stopPropagation();
+                passwordConfirm.classList.add('is-invalid');
+                alert("your password is something wrong")
+            }
+            form.classList.add('was-validated');
+        });
+
+        function checkPassword(){
+            const pass = password.value;
+            const passConfirm = passwordConfirm.value;
+            if (pass === passConfirm){
+                notify.textContent = "confirm password";
+            }else {
+                notify.textContent ="wrong password";
+            }
+        }
     </script>
     <main class="form-login">
         <div class="div-img-logo-header">
             <img src="https://static.xx.fbcdn.net/rsrc.php/yI/r/4aAhOWlwaXf.svg" class="img-logo-header">
         </div>
         <div class="div-form-SignIn-SignUp">
-            <form action="" method="get" class="form-SignIn-SignUp">
+            <form action="/session?actionPost=login" method="post" class="form-SignIn-SignUp">
                 <div class="divInForm">
                     <div class="input-login login">
                         <div class="loginDiv">
                             <input type="text" placeholder="Email address or Name account"
-                                   class="input-a-signIn-signUp inputLogin border-all border-login">
+                                   class="input-a-signIn-signUp inputLogin border-all border-login" required>
                         </div>
                         <div class="loginDiv">
                             <input type="password" placeholder="Password"
-                                   class="input-a-signIn-signUp inputLogin border-all border-login">
+                                   name="password" class="input-a-signIn-signUp inputLogin border-all border-login" required>
                         </div>
                     </div>
                     <div class="div-input-submit login loginDiv">
@@ -248,10 +256,6 @@
 
                     </div>
                     <div class="div-input-button login button-signUp">
-                        <%--                        <button type="button" onclick="showFormSignUp()"--%>
-                        <%--                                class="input-a-signIn-signUp signUp input-SignUp border-all" id="showFormSignUp">Create--%>
-                        <%--                            new account--%>
-                        <%--                        </button>--%>
                         <input type="button" onclick="showFormSignUp()"
                                class="input-a-signIn-signUp input-SignUp border-all" value="Create new account">
                     </div>

@@ -6,6 +6,12 @@ function showFormSignUp(){
 }
 
 function hideFormSignUp(){
+
     let signUp = document.getElementById("formSignUp");
     signUp.style.display = "none";
 }
+
+
+
+
+
