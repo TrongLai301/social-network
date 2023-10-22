@@ -1,12 +1,16 @@
 package controler;
 
 import DBcontext.DataConnector;
+import model.User;
+import service.IUserDAO;
+import service.UserDAOImpl;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,6 +23,8 @@ import javax.servlet.http.HttpSession;
 /*   Xử lý phiên làm việc như login, logout*/
 @WebServlet(name = "SessionServlet", value = "/session")
 public class SessionServlet extends HttpServlet {
+    UserDAOImpl userDAO = new UserDAOImpl();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         String actionGet = req.getParameter("actionGet");
@@ -49,6 +55,9 @@ public class SessionServlet extends HttpServlet {
             switch (actionPost) {
                 case "login":
                     loginToHomePage(req, resp);
+                    break;
+                case "signUp":
+                    signupNewUser(req, resp);
                     break;
                 default:
             }
@@ -119,6 +128,35 @@ public class SessionServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+
+    public boolean checkUser(List<User> users, String username) {
+        for (User check : users
+        ) {
+            if (check.getUsername().equals(username)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void signupNewUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Lấy ttin đki từ req.
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        User user = new User(username, password);
+        List<User> listUser = userDAO.getAllUser();
+
+        if (!checkUser(listUser, username)) {
+            String message = "The user is exists";
+            request.setAttribute("mess", message);
+            response.sendRedirect(request.getContextPath());
+        } else {
+            userDAO.insertUser(user);
+            request.getRequestDispatcher("login-signup/display-signUp-signIn.jsp").forward(request, response);
         }
     }
 }

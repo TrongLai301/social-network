@@ -77,5 +77,20 @@ public class UserDAOImpl implements IUserDAO {
         pstm.setString(1, newPassword);
         pstm.setInt(2, id);
         pstm.executeUpdate();
+
+    @Override
+    public void insertUser(User user){
+        Connection connection = null;
+        try {
+            connection = DataConnector.getConnection();
+            CallableStatement callableStatement = connection.prepareCall("{Call insertUser(?,?,?)}");
+            callableStatement.setString(1,user.getUsername());
+            callableStatement.setString(2,user.getPassword());
+            callableStatement.setString(3,"2");
+            callableStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
