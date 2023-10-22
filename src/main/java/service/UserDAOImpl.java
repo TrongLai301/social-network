@@ -77,7 +77,7 @@ public class UserDAOImpl implements IUserDAO {
         pstm.setString(1, newPassword);
         pstm.setInt(2, id);
         pstm.executeUpdate();
-
+    }
     @Override
     public void insertUser(User user){
         Connection connection = null;

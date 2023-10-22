@@ -178,7 +178,7 @@
                     <div class="input-login login">
                         <div class="loginDiv">
                             <input type="text" placeholder="Email address or Name account"
-                                   class="input-a-signIn-signUp inputLogin border-all border-login" required>
+                                 name="username"  class="input-a-signIn-signUp inputLogin border-all border-login" required>
                         </div>
                         <div class="loginDiv">
                             <input type="password" placeholder="Password"

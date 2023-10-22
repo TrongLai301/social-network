@@ -54,8 +54,6 @@ public class User {
     }
 
 
-    public User(int id, String username, String password, String permission) {
-
     public User(int id, String username, String password, String permission,String status) {
         this.id = id;
         this.username = username;

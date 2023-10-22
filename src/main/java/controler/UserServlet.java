@@ -1,5 +1,6 @@
 package controler;
 
+import model.User;
 import service.IUserDAO;
 import service.UserDAOImpl;
 import service.Validate.PasswordValidate;
@@ -73,39 +74,55 @@ public class UserServlet extends HttpServlet {
                 blockUserById(req, resp);
                 break;
             case "editPassword":
-                editPassword(req, resp);
+                try {
+                    editPassword(req, resp);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             default:
         }
     }
 
-    private void editPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String password= req.getParameter("password");
+    private void editPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException, ClassNotFoundException {
+        String password = req.getParameter("password");
         String newPassword = req.getParameter("newPassword");
         String confirmPassword = req.getParameter("confirmPassword");
         int idAccount = Integer.parseInt(req.getParameter("idAccount"));
-
-        if (passwordValidate.validate(newPassword) == false){
-            req.setAttribute("message", "Vui long nhap tu 6-32 ky tu");
-        }
-        if (!newPassword.equals(confirmPassword)){
-            req.setAttribute("message", "Mat khau khong trung khop");
-        }
-        if (password.isEmpty()){
-            req.setAttribute("message", "Mat khau khong duoc trong");
-        }
+        User user = userDAO.getUserById(idAccount);
+if (password.equals(user.getPassword())) {
+    if (!passwordValidate.validate(newPassword)) {
+        req.setAttribute("message", "Vui long nhap tu 6-32 ky tu");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
+        dispatcher.forward(req, resp);
+    } else if (!newPassword.equals(confirmPassword)) {
+        req.setAttribute("message", "Mat khau khong trung khop");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
+        dispatcher.forward(req, resp);
+    } else if (password.isEmpty()) {
+        req.setAttribute("message", "Mat khau khong duoc trong");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
+        dispatcher.forward(req, resp);
+    } else {
         try {
             userDAO.editPasswordUser(idAccount, newPassword);
+            req.setAttribute("message", "Doi mat khau thanh cong");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
+            dispatcher.forward(req, resp);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        req.setAttribute("message", "Doi mat khau thanh cong");
-
-        RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
-        dispatcher.forward(req, resp);
+    }
+}else{
+    req.setAttribute("message", "Mat khau cu khong trung khop");
+    RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
+    dispatcher.forward(req, resp);
+}
     }
 
     //doGet
