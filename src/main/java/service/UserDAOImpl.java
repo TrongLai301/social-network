@@ -70,6 +70,13 @@ public class UserDAOImpl implements IUserDAO {
     public void updateUser(User user) {
 
     }
+    @Override
+    public void editPasswordUser(int id, String newPassword) throws SQLException, ClassNotFoundException {
+        Connection connection = DataConnector.getConnection();
+        PreparedStatement pstm = connection.prepareStatement("UPDATE userAccount SET password = ? WHERE idAccount = ?");
+        pstm.setString(1, newPassword);
+        pstm.setInt(2, id);
+        pstm.executeUpdate();
 
     @Override
     public void insertUser(User user){
@@ -77,7 +84,6 @@ public class UserDAOImpl implements IUserDAO {
         try {
             connection = DataConnector.getConnection();
             CallableStatement callableStatement = connection.prepareCall("{Call insertUser(?,?,?)}");
-
             callableStatement.setString(1,user.getUsername());
             callableStatement.setString(2,user.getPassword());
             callableStatement.setString(3,"2");
