@@ -11,8 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 @WebServlet(name = "UserServlet", value = "/user")
 public class UserServlet extends HttpServlet {
@@ -83,7 +86,7 @@ public class UserServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
-            case "updateProfile":
+            case "updateUser":
                 updateUser(req,resp);
                 break;
             default:
@@ -129,8 +132,12 @@ if (password.equals(user.getPassword())) {
     // Chuc nang update user
     private void showUserProfile(HttpServletRequest req, HttpServletResponse resp){
         try {
-            req.getRequestDispatcher("profile-view.jsp").forward(req,resp);
-        } catch (ServletException | IOException e) {
+            HttpSession session = req.getSession();
+            Integer idUser = (Integer) session.getAttribute("idAccount");
+            User userNeedToEdit = userDAO.getUserById(idUser);
+            req.setAttribute("userNeedToEdit",userNeedToEdit);
+            req.getRequestDispatcher("/user/userProfile/profile-view.jsp").forward(req,resp);
+        } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -141,7 +148,7 @@ if (password.equals(user.getPassword())) {
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
-        String birthdate = req.getParameter("birthdate");
+        LocalDate birth = LocalDate.parse(req.getParameter("birth"));
         String avatar = req.getParameter("avatar");
         String name = req.getParameter("name");
         String address = req.getParameter("address");
@@ -153,21 +160,18 @@ if (password.equals(user.getPassword())) {
         userAfterEdit.setPassword(password);
         userAfterEdit.setEmail(email);
         userAfterEdit.setPhone(phone);
-        userAfterEdit.setBirthdate(birthdate);
+        userAfterEdit.setBirth(birth);
         userAfterEdit.setAvatar(avatar);
         userAfterEdit.setName(name);
         userAfterEdit.setAddress(address);
         userAfterEdit.setHobby(hobby);
 
         System.out.println(userAfterEdit);
-
         // code thay doi csdl o day
+        userDAO.updateUser(userAfterEdit);
+
         req.setAttribute("actionGet","showUserProfile");
-        try {
-            req.getRequestDispatcher("/user").forward(req,resp);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        }
+        resp.sendRedirect("/user");
     }
 
     //doGet

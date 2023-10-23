@@ -1,6 +1,10 @@
 drop database socialnetwork;
 create database socialnetwork;
 use socialnetwork;
+create table permission(
+                           idPermission int auto_increment primary key,
+                           namePermission varchar(30)
+);
 --  tao bang user lam viec voi profile
 create table user(
                      id int auto_increment primary key,
@@ -18,10 +22,7 @@ create table user(
 
 );
 -- tao bang permision lam viec voi quyen thuc thi
-create table permission(
-                           idPermission int auto_increment primary key,
-                           namePermission varchar(30)
-);
+
 -- tao bang lam viec voi trang thai tai khoan
 create table userStatus(
                            idAccount int,
