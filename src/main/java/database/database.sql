@@ -25,7 +25,7 @@ create table permission(
 -- tao bang lam viec voi trang thai tai khoan
 create table userStatus(
                            idAccount int,
-                           status enum("working","block"),
+                           status enum('working','block'),
                            primary key(idAccount),
                            foreign key(idAccount) references user(id)
 );
@@ -49,4 +49,5 @@ insert into permission(namePermission) values ('admin'),('user');
 -- du lieu bang account
 insert into user(username , password,idPermission) values('admin','123456',1);
 insert into user(username , password,idPermission) values('user','123456',2);
-update userStatus set status = 1 where idAccount = 2;
+
+
