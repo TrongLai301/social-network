@@ -28,10 +28,15 @@
                     <span>Sign up</span>
                     <input type="button" class="icon" onclick="hideFormSignUp()" value="x">
                 </div>
-                <div class="underline-signup"></div>
+                <div class="underline-signup-top"></div>
                 <div class="form-row">
-                    <div class="col-md-5 mb-3">
-                        <label for="validationCustomUsername">Username(<span class="icon-im">*</span>)</label>
+                    <div class="col-md-6 mb-2">
+                        <div class="title-notify">
+                            <label for="validationCustomUsername" class="text-title div-notify">Username(<span class="icon-im">*</span>)</label>
+                            <div class="text-notify">
+                                <p id="notifyUser"></p>
+                            </div>
+                        </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupPrepend"><svg xmlns="http://www.w3.org/2000/svg"
@@ -41,73 +46,69 @@
                             <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username"
                                    aria-describedby="inputGroupPrepend" name="username" value="user2"
                                    required>
-                            <div class="valid-feedback">
-                                <%--                                Choose a username--%>
-                                <p id="notifyUser"></p>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-md-5 mb-3">
-                        <label for="validationCustom01">Email</label>
+                    <div class="col-md-6 mb-2">
+                        <label for="validationCustom01"  class="text-title">Email(*)</label>
                         <input type="email" class="form-control" id="validationCustom01"
-                               placeholder="tronglai@gmail.com" name="email"
+                               placeholder="Ex:tronglai@gmail.com" name="email"
                                required>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">Password</label>
+                    <div class="col-md-12 mb-2">
+                        <label for="validationCustom02"  class="text-title">Password(*)</label>
                         <input type="password" class="form-control" id="validationCustom02" placeholder="password"
                                minlength="6" maxlength="32" name="password"
                                required>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom03">Confirm password</label>
+                    <div class="col-md-12 mb-2">
+                        <div class="title-notify">
+                            <label for="validationCustom03"  class="text-title">Confirm password(*)</label>
+                            <div class="text-notify">
+                                <p id="notify"></p>
+                            </div>
+                        </div>
                         <input type="password" class="form-control" id="validationCustom03"
                                placeholder="confirm password" minlength="6" maxlength="32"  required>
-                        <div class="valid-feedback">
-                            <p id="notify"></p>
-                        </div>
+
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="validationCustom04">Phone number</label>
+                    <div class="col-md-12 mb-2">
+                        <label for="validationCustom04"  class="text-title">Phone number</label>
                         <input type="text" pattern="\d*" class="form-control" id="validationCustom04"
                                placeholder="Phone number" maxlength="10" minlength="10" inputmode="numeric"
                                name="phoneNumber"
                                required>
-                        <div class="invalid-feedback">
-                            Provide a valid phone
-                        </div>
                     </div>
                 </div>
 
-                <div class="title-birthday birth">
+                <div class="title-birthday birth text-title" >
                     <span>Date of birth (day/month/year)</span>
                 </div>
                 <div class="birthday birth">
                     <label class="div-label-select">
                         <select class="label-select">
                             <c:forEach var="i" begin="1" end="31" step="1">
-                                <option value="${i}">${i}</option>
+                                <option class="option" value="${i}">${i}</option>
                             </c:forEach>
                         </select>
                     </label>
                     <label class="div-label-select">
                         <select class="label-select">
                             <c:forEach var="i" begin="1" end="12" step="1">
-                                <option value="${i}">${i}</option>
+                                <option class="option" value="${i}">${i}</option>
                             </c:forEach>
                         </select>
                     </label>
                     <label class="div-label-select">
                         <select class="label-select">
                             <c:forEach var="i" begin="1905" end="2023">
-                                <option value="${i}">${i}</option>
+                                <option class="option" value="${i}">${i}</option>
                             </c:forEach>
                         </select>
                     </label>
                 </div>
-                <div class="underline-signup"></div>
+<%--                <div class="underline-signup-bottom"></div>--%>
                 <div class="div-submit">
-                    <button class="btn btn-primary button" type="submit">Submit form</button>
+                    <button class=" button" type="submit">Submit form</button>
                 </div>
             </form>
         </div>
@@ -116,6 +117,7 @@
         (function () {
             'use strict';
             window.addEventListener('load', function () {
+                const mb2 = document.getElementsByClassName("mb-2");
                 let forms = document.getElementsByClassName('needs-validation');
                 let validation = Array.prototype.filter.call(forms, function (form) {
                     form.addEventListener('submit', function (event) {
@@ -151,8 +153,10 @@
             const passConfirm = passwordConfirm.value;
             if (pass === passConfirm) {
                 notify.textContent = "confirm password";
+                notify.style.color = "#18ce11";
             } else {
                 notify.textContent = "wrong password";
+                notify.style.color = "#ee3434";
             }
         }
 
@@ -191,17 +195,17 @@
                     <div class="input-login login">
                         <div class="loginDiv">
                             <input type="text" placeholder="Email address or username"
-                                 name="username"  class="input-a-signIn-signUp inputLogin border-all border-login" required>
+                                 name="username"  class="input-a-signIn-signUp inputLogin border-login" required>
                         </div>
                         <div class="loginDiv">
                             <input type="password" placeholder="Password"
-                                   name="password" class="input-a-signIn-signUp inputLogin border-all border-login"
+                                   name="password" class="input-a-signIn-signUp inputLogin border-login"
                                    required>
                         </div>
                     </div>
                     <div class="div-input-submit login loginDiv">
                         <input type="submit" value="Log in"
-                               class="input-a-signIn-signUp inputLogin submit-login loginDiv border-all">
+                               class="input-a-signIn-signUp inputLogin submit-login loginDiv border-submit">
                     </div>
                     <div class="div-a-forgot login">
                         <a href="" class="input-a-signIn-signUp login">Forgotten password?</a>
@@ -211,7 +215,7 @@
                     </div>
                     <div class="div-input-button login button-signUp">
                         <input type="button" onclick="showFormSignUp()"
-                               class="input-a-signIn-signUp input-SignUp border-all" value="Create new account">
+                               class="input-a-signIn-signUp input-SignUp border-submit" value="Create new account">
                     </div>
                 </div>
             </form>
