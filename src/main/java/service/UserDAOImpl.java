@@ -18,7 +18,7 @@ public class UserDAOImpl implements IUserDAO {
             ResultSet rs = callableStatement.executeQuery();
             while (rs.next()) {
                 User user = new User();
-                user.setId(rs.getInt("idAccount"));
+                user.setId(rs.getInt("id"));
                 user.setPermission(rs.getString("namePermission"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
@@ -34,11 +34,11 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public User getUserById(int id) throws SQLException, ClassNotFoundException {
      Connection connection = DataConnector.getConnection();
-     Statement statement = connection.createStatement();
-     ResultSet resultSet = statement.executeQuery("select userAccount.idAccount,username,password,namePermission,status from userAccount inner join permission on userAccount.permission = permission.idPermission left join userStatus on userAccount.idAccount = userStatus.idAccount where userAccount.idAccount = '" + id +"'");
+     CallableStatement callableStatement = connection.prepareCall("select user.id,username,password,namePermission,status from user inner join permission on user.idPermission = permission.idPermission left join userStatus on user.id = userStatus.idAccount where user.id = '" + id +"'");
+     ResultSet resultSet = callableStatement.executeQuery();
      User user = new User();
      while (resultSet.next()){
-         user.setId(resultSet.getInt("idAccount"));
+         user.setId(resultSet.getInt("id"));
          user.setUsername(resultSet.getString("username"));
          user.setPassword(resultSet.getString("password"));
          user.setPermission(resultSet.getString("namePermission"));
@@ -51,18 +51,18 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public void blockUser(int id) throws SQLException , ClassNotFoundException{
         Connection connection = DataConnector.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into userStatus(idAccount,status) values (?,?)");
-        preparedStatement.setInt(1,id);
-        preparedStatement.setString(2,"block");
-        preparedStatement.executeUpdate();
+        CallableStatement callableStatement = connection.prepareCall("insert into userStatus(idAccount,status) values (?,?)");
+        callableStatement.setInt(1,id);
+        callableStatement.setString(2,"block");
+        callableStatement.executeUpdate();
         connection.close();
     }
     @Override
     public void unBlockUser(int id) throws SQLException , ClassNotFoundException{
         Connection connection = DataConnector.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("delete from userStatus where idAccount = ?");
-        preparedStatement.setInt(1,id);
-        preparedStatement.executeUpdate();
+        CallableStatement callableStatement = connection.prepareCall("delete from userStatus where idAccount = ?");
+        callableStatement.setInt(1,id);
+        callableStatement.executeUpdate();
 
         connection.close();
     }
@@ -73,10 +73,10 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public void editPasswordUser(int id, String newPassword) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
-        PreparedStatement pstm = connection.prepareStatement("UPDATE user SET password = ? WHERE id = ?");
-        pstm.setString(1, newPassword);
-        pstm.setInt(2, id);
-        pstm.executeUpdate();
+        CallableStatement callableStatement = connection.prepareCall("UPDATE user SET password = ? WHERE id = ?");
+        callableStatement.setString(1, newPassword);
+        callableStatement.setInt(2, id);
+        callableStatement.executeUpdate();
     }
     @Override
     public void insertUser(User user){
