@@ -4,6 +4,7 @@ import DBcontext.DataConnector;
 import model.User;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,13 +35,20 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public User getUserById(int id) throws SQLException, ClassNotFoundException {
      Connection connection = DataConnector.getConnection();
-     CallableStatement callableStatement = connection.prepareCall("select user.id,username,password,namePermission,status from user inner join permission on user.idPermission = permission.idPermission left join userStatus on user.id = userStatus.idAccount where user.id = '" + id +"'");
+     CallableStatement callableStatement = connection.prepareCall("select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission left join userStatus on user.id = userStatus.idAccount where user.id = '" + id +"'");
      ResultSet resultSet = callableStatement.executeQuery();
      User user = new User();
      while (resultSet.next()){
          user.setId(resultSet.getInt("id"));
          user.setUsername(resultSet.getString("username"));
          user.setPassword(resultSet.getString("password"));
+         user.setEmail(resultSet.getString("email"));
+         user.setPhone(resultSet.getString("phone"));
+         user.setBirth(LocalDate.parse(resultSet.getString("birth")));
+         user.setAvatar(resultSet.getString("avatar"));
+         user.setName(resultSet.getString("fullname"));
+         user.setAddress(resultSet.getString("address"));
+         user.setHobby(resultSet.getString("hobby"));
          user.setPermission(resultSet.getString("namePermission"));
          user.setStatus(resultSet.getString("status"));
      }
@@ -70,7 +78,23 @@ public class UserDAOImpl implements IUserDAO {
     }
     @Override
     public void updateUser(User user) {
+        try {
+            Connection connection = DataConnector.getConnection();
+            CallableStatement cs = connection.prepareCall("UPDATE user u set u.email = ?, u.phone = ?, u.birth = ?, u.avatar = ?, u.fullname = ?, u.address = ? , u.hobby = ? where id = ?");
+            cs.setString(1,user.getEmail());
+            cs.setString(2,user.getPhone());
+            cs.setString(3, String.valueOf(user.getBirth()));
+            cs.setString(4,user.getAvatar());
+            cs.setString(5,user.getName());
+            cs.setString(6,user.getAddress());
+            cs.setString(7,user.getHobby());
+            cs.setInt(8,user.getId());
+            cs.executeUpdate();
 
+            connection.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     @Override
     public void editPasswordUser(int id, String newPassword) throws SQLException, ClassNotFoundException {

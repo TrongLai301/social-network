@@ -62,6 +62,7 @@
 <main>
     <h2>Trang chủ</h2>
     <a href="/user?actionGet=showEditPassword">Doi mat khau</a>
+    <a href="/user?actionGet=showUserProfile">Trang ca nhan</a>
 </main>
 <footer>
     <form action="/session?actionGet=logOut" method="get">
