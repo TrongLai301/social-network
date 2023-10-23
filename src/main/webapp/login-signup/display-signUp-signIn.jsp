@@ -23,17 +23,34 @@
 <div class="login">
     <div class="form-Sign-Up" id="formSignUp">
         <div class="div-form-signUp">
-            <form class="needs-validation edit form-signUp" action="/session?actionPost=signUp" method="post" novalidate>
+            <form class="needs-validation edit form-signUp" action="/session?actionPost=signUp" method="post" id="Signup" novalidate>
                 <div class="title-form">
                     <span>Sign up</span>
                     <input type="button" class="icon" onclick="hideFormSignUp()" value="x">
                 </div>
                 <div class="underline-signup"></div>
                 <div class="form-row">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-5 mb-3">
+                        <label for="validationCustomUsername">Username(<span class="icon-im">*</span>)</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupPrepend"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                               height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
+                            d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg></span>
+                            </div>
+                            <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username"
+                                   aria-describedby="inputGroupPrepend" name="username" value="user2"
+                                   required>
+                            <div class="valid-feedback">
+                                <%--                                Choose a username--%>
+                                <p id="notifyUser"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 mb-3">
                         <label for="validationCustom01">Email</label>
                         <input type="email" class="form-control" id="validationCustom01"
-                               placeholder="Example: hello@gmail.com" name="email"
+                               placeholder="tronglai@gmail.com" name="email"
                                required>
                     </div>
                     <div class="col-md-4 mb-3">
@@ -45,25 +62,9 @@
                     <div class="col-md-4 mb-3">
                         <label for="validationCustom03">Confirm password</label>
                         <input type="password" class="form-control" id="validationCustom03"
-                               placeholder="confirm password" minlength="6" maxlength="32" required>
+                               placeholder="confirm password" minlength="6" maxlength="32"  required>
                         <div class="valid-feedback">
                             <p id="notify"></p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustomUsername">Name account</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroupPrepend"><svg xmlns="http://www.w3.org/2000/svg"
-                                                                               height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
-                            d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg></span>
-                            </div>
-                            <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username"
-                                   aria-describedby="inputGroupPrepend" name="username"
-                                   required>
-                            <div class="invalid-feedback">
-                                Choose a username
-                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
@@ -77,10 +78,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="title-birth">
-                    <span>Date of birth ( day/month/year )</span>
+
+                <div class="title-birthday birth">
+                    <span>Date of birth (day/month/year)</span>
                 </div>
-                <div class="birthday">
+                <div class="birthday birth">
                     <label class="div-label-select">
                         <select class="label-select">
                             <c:forEach var="i" begin="1" end="31" step="1">
@@ -103,23 +105,9 @@
                         </select>
                     </label>
                 </div>
-
-
-                <div class="form-group">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                        <label class="form-check-label" for="invalidCheck">
-                            Agree to terms and conditions
-                        </label>
-                        <div class="invalid-feedback">
-                            You must agree before submitting.
-                        </div>
-                    </div>
-                </div>
                 <div class="underline-signup"></div>
-                <button class="btn btn-primary" type="submit">Submit form</button>
-                <div>
-                    <p>${mess}</p>
+                <div class="div-submit">
+                    <button class="btn btn-primary button" type="submit">Submit form</button>
                 </div>
             </form>
         </div>
@@ -167,6 +155,31 @@
                 notify.textContent = "wrong password";
             }
         }
+
+
+        const notifyUsers = document.getElementById("notifyUser")
+        $(document).ready(function () {
+            $('#Signup').submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/session?actionPost=signUp',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        username: document.getElementById("validationCustomUsername").value,
+                        password: document.getElementById("validationCustom02").value
+                    },
+                    success: (response) => {
+                        console.log(response);
+                        notifyUsers.textContent = response.notifyUser;
+                        if(response.notifyUser === "success"){
+                            // window.location.href ='display-signUp-signIn.jsp';
+                            window.location.reload();
+                        }
+                    }
+                })
+            })
+        })
     </script>
     <main class="form-login">
         <div class="div-img-logo-header">
@@ -177,7 +190,7 @@
                 <div class="divInForm">
                     <div class="input-login login">
                         <div class="loginDiv">
-                            <input type="text" placeholder="Email address or Name account"
+                            <input type="text" placeholder="Email address or username"
                                  name="username"  class="input-a-signIn-signUp inputLogin border-all border-login" required>
                         </div>
                         <div class="loginDiv">

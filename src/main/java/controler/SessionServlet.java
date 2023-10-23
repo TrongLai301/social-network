@@ -2,15 +2,8 @@ package controler;
 
 import DBcontext.DataConnector;
 import model.User;
-import service.IUserDAO;
+import org.json.simple.JSONObject;
 import service.UserDAOImpl;
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,6 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 /*   Xử lý phiên làm việc như login, logout*/
 @WebServlet(name = "SessionServlet", value = "/session")
@@ -68,15 +67,26 @@ public class SessionServlet extends HttpServlet {
 
     //doGet
     private void showLoginForm(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.sendRedirect("login-signup/display-signUp-signIn.jsp");
+//        resp.sendRedirect("login-signup/display-signUp-signIn.jsp");
+        try {
+            req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp").forward(req,resp);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     private void logOut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Xóa session
         req.getSession().invalidate();
 
         // Trở về trang đăng nhập
-        resp.sendRedirect("login-signup/display-signUp-signIn.jsp");
+//        resp.sendRedirect("login-signup/display-signUp-signIn.jsp");
+        try {
+            req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp").forward(req,resp);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //doPost
@@ -148,14 +158,17 @@ public class SessionServlet extends HttpServlet {
 
         User user = new User(username, password);
         List<User> listUser = userDAO.getAllUser();
-
+        String notify;
+        JSONObject jsonObject = new JSONObject();
         if (!checkUser(listUser, username)) {
-            String message = "The user is exists";
-            request.setAttribute("mess", message);
-            response.sendRedirect(request.getContextPath());
+            notify = "The user is exist";
         } else {
+            notify = "success";
             userDAO.insertUser(user);
-            request.getRequestDispatcher("login-signup/display-signUp-signIn.jsp").forward(request, response);
         }
+        jsonObject.put("notifyUser",notify);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().print(jsonObject);
     }
 }

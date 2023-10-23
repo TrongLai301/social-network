@@ -29,12 +29,13 @@ html{
     overflow: hidden;
 }
 .div-img-logo-header{
-    margin-bottom: 15px;
+    margin-bottom: 95px;
 }
 .img-logo-header{
     width: 200px;
     height: 100px;
 }
+
 
 .div-form-SignIn-SignUp{
     /*display: flex;*/
@@ -53,6 +54,7 @@ html{
 }
 
 .input-a-signIn-signUp{
+    font-family: "Time New Roman", Times, serif;
     display: flex;
     justify-content: center;
     margin: auto;
@@ -88,7 +90,7 @@ a:hover{
     color: #4d90d9;
 }
 .divInForm{
-    padding: 5vh 0 10vh 0;
+    padding: 7vh 0 8vh 0;
     width: 400px;
     height: 500px;
     display: flex;
@@ -131,7 +133,7 @@ a:hover{
     transition: 0.5s;
 }
 .input-SignUp:hover{
-    background-color: #aafa95;
+    background-color: #52a925;
     transition: 0.5s;
 }
 
@@ -193,7 +195,7 @@ footer{
 
 
 .edit{
-    width: 450px;
+    width: 480px;
     height: 600px;
     margin-top: 150px;
     background-color: #eceaea;
@@ -205,15 +207,21 @@ footer{
 
 .underline-signup{
     border-bottom: #d0d0d0 1px solid;
-    width: 400px;
+    width: 420px;
     margin: 20px;
+}
+.button{
+    margin: auto;
+}
+.div-submit{
+    margin: auto;
 }
 
 .birthday{
-    display: flex;
-    justify-content: space-around;
 }
-
+.birth{
+    display: inline-block;
+}
 .label-select{
     width: 80px;
     height: 30px;
@@ -245,7 +253,7 @@ footer{
 }
 .icon{
     background-color: #eceaea;
-    font-size: 14px;
+    font-size: 24px;
     cursor: pointer;
     border: none;
     outline: none;
@@ -257,7 +265,7 @@ footer{
     margin: auto;
 }
 .div-form-signUp{
-    margin-top: 180px;
+    margin-top: 150px;
 }
 
 .form-control{
