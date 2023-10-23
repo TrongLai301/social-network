@@ -1,71 +1,49 @@
-create database SocialNetwork ;
-use SocialNetwork;
--- <<<<<<< HEAD
--- # // quản lý tài khoản người dùng đăng nhập
--- =======
---
--- // quản lý tài khoản người dùng đăng nhập
-create table userAccount(
-idAccount int auto_increment primary key,
-username varchar(50) not null,
-password varchar(32) not null,
-CONSTRAINT CHK_PasswordLength CHECK (length(password) >= 6 AND length(password)<= 32),
-permission int,
-foreign key(permission) references permission(idPermission),
-foreign key(permission) references permission(idPermission)
+drop database socialnetwork;
+create database socialnetwork;
+use socialnetwork;
+--  tao bang user lam viec voi profile
+create table user(
+                     id int auto_increment primary key,
+                     username varchar(50) not null,
+                     password varchar(32) not null,
+                     fullname nvarchar(100),
+                     email varchar(100),
+                     birth date,
+                     phone varchar(20),
+                     gender boolean,
+                     hobby nvarchar(200),
+                     CONSTRAINT CHK_PasswordLength CHECK (length(password) >= 6 AND length(password)<= 32),
+                     idPermission int,
+                     foreign key(idPermission) references permission(idPermission)
+
 );
-
-
--- // quản lý vai trò người dùng
--- >>>>>>> a5971ad020046bc159b214abd5fc2b799880758b
+-- tao bang permision lam viec voi quyen thuc thi
 create table permission(
-idPermission int auto_increment primary key,
-namePermission varchar(20) not null
+                           idPermission int auto_increment primary key,
+                           namePermission varchar(30)
 );
-
--- <<<<<<< HEAD
--- # // thêm vai trò quyền hạn
-
--- # // thêm người dùng
--- =======
-
--- // thêm vai trò quyền hạn
-insert into permission(namePermission) values ('admin');
-insert into permission(namePermission) values ('user');
---
--- // thêm người dùng
--- >>>>>>> 9df50fa518dcb77710f577d411e754c57b1c311a
--- >>>>>>> a5971ad020046bc159b214abd5fc2b799880758b
-insert into userAccount(username,password,permission) value ('user','123456',2);
--- # // tạo bảng trạng thái người dùng
+-- tao bang lam viec voi trang thai tai khoan
 create table userStatus(
                            idAccount int,
                            status varchar(10),
                            primary key(idAccount),
-                           foreign key(idAccount) references userAccount(idAccount)
+                           foreign key(idAccount) references user(id)
 );
--- <<<<<<< HEAD
--- # // thêm dữ liệu trạng thái người dùng
-# insert into userStatus(idAccount,status) values (2,"block");
--- # // tạo thủ tục hiển thị danh sách người dùng gồm id , tên tài khoản , mật khẩu , quyền hạn , trạng thái
--- =======
-
--- // thêm dữ liệu trạng thái người dùng
-insert into userStatus(idAccount,status) values (2,"block");
-
--- // tạo thủ tục hiển thị danh sách người dùng gồm id , tên tài khoản , mật khẩu , quyền hạn , trạng thái
--- >>>>>>> a5971ad020046bc159b214abd5fc2b799880758b
-
+-- tao thu tuc lam viec xem cac du lieu co ban tai khoan nguoi dung
 DELIMITER $$
 create procedure showUserWithStatus()
 begin
-select userAccount.idAccount,username,password,namePermission,status from userAccount inner join permission on userAccount.permission = permission.idPermission left join userStatus on userAccount.idAccount = userStatus.idAccount;
+    select user.id,username,password,namePermission,status from user inner join permission on user.idPermission = permission.idPermission left join userStatus on user.id = userStatus.idAccount;
 end $$
-
--- Tạo thủ tuc
+-- tao thu tuc them du lieu nguoi dung
 DELIMITER $$
 create procedure insertUser(in usernameWeb varchar(45),in passwordWeb varchar(32), in PermissionWeb int)
 begin
-insert into userAccount (username, password,permission ) values (usernameWeb,passwordWeb,permissionWeb);
+    insert into user (username, password,idPermission ) values (usernameWeb,passwordWeb,permissionWeb);
 end $$
-
+-- *  du leu tham so dau vao
+-- du lieu bang permission
+insert into permission(namePermission) values ('admin'),('user');
+-- du lieu bang account
+insert into user(username , password,idPermission) values('admin','123456',1);
+insert into user(username , password,idPermission) values('user','123456',2);

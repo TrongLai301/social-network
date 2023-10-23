@@ -73,7 +73,7 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public void editPasswordUser(int id, String newPassword) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
-        PreparedStatement pstm = connection.prepareStatement("UPDATE userAccount SET password = ? WHERE idAccount = ?");
+        PreparedStatement pstm = connection.prepareStatement("UPDATE user SET password = ? WHERE id = ?");
         pstm.setString(1, newPassword);
         pstm.setInt(2, id);
         pstm.executeUpdate();
