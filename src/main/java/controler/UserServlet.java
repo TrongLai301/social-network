@@ -36,6 +36,9 @@ public class UserServlet extends HttpServlet {
                 case "showEditPassword":
                     showEditPassword(req, resp);
                     break;
+                case "showUserProfile":
+                    showUserProfile(req,resp);
+                    break;
                 default:
                     showHomePageForUser(req, resp);
                     break;
@@ -76,11 +79,12 @@ public class UserServlet extends HttpServlet {
             case "editPassword":
                 try {
                     editPassword(req, resp);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
+                break;
+            case "updateProfile":
+                updateUser(req,resp);
                 break;
             default:
         }
@@ -111,9 +115,7 @@ if (password.equals(user.getPassword())) {
             req.setAttribute("message", "Doi mat khau thanh cong");
             RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
             dispatcher.forward(req, resp);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -124,6 +126,49 @@ if (password.equals(user.getPassword())) {
     dispatcher.forward(req, resp);
 }
     }
+    // Chuc nang update user
+    private void showUserProfile(HttpServletRequest req, HttpServletResponse resp){
+        try {
+            req.getRequestDispatcher("profile-view.jsp").forward(req,resp);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //Do post
+    private void updateUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        String email = req.getParameter("email");
+        String phone = req.getParameter("phone");
+        String birthdate = req.getParameter("birthdate");
+        String avatar = req.getParameter("avatar");
+        String name = req.getParameter("name");
+        String address = req.getParameter("address");
+        String hobby = req.getParameter("hobby");
+
+        User userAfterEdit = new User();
+        userAfterEdit.setId(id);
+        userAfterEdit.setUsername(username);
+        userAfterEdit.setPassword(password);
+        userAfterEdit.setEmail(email);
+        userAfterEdit.setPhone(phone);
+        userAfterEdit.setBirthdate(birthdate);
+        userAfterEdit.setAvatar(avatar);
+        userAfterEdit.setName(name);
+        userAfterEdit.setAddress(address);
+        userAfterEdit.setHobby(hobby);
+
+        System.out.println(userAfterEdit);
+
+        // code thay doi csdl o day
+        req.setAttribute("actionGet","showUserProfile");
+        try {
+            req.getRequestDispatcher("/user").forward(req,resp);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     //doGet
     private void showHomePageForUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -132,7 +177,6 @@ if (password.equals(user.getPassword())) {
 
     //doPost
     public void blockUserById(HttpServletRequest request, HttpServletResponse response) {
-
 
     }
 }
