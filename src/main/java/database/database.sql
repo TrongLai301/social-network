@@ -25,7 +25,7 @@ create table permission(
 -- tao bang lam viec voi trang thai tai khoan
 create table userStatus(
                            idAccount int,
-                           status boolean default 0,
+                           status enum("working","block"),
                            primary key(idAccount),
                            foreign key(idAccount) references user(id)
 );
@@ -36,6 +36,7 @@ create procedure showUserWithStatus()
 begin
     select user.id,username,password,namePermission,status from user inner join permission on user.idPermission = permission.idPermission left join userStatus on user.id = userStatus.idAccount;
 end $$
+call showUserWithStatus();
 -- tao thu tuc them du lieu nguoi dung
 DELIMITER $$
 create procedure insertUser(in usernameWeb varchar(45),in passwordWeb varchar(32), in PermissionWeb int)
@@ -48,3 +49,4 @@ insert into permission(namePermission) values ('admin'),('user');
 -- du lieu bang account
 insert into user(username , password,idPermission) values('admin','123456',1);
 insert into user(username , password,idPermission) values('user','123456',2);
+update userStatus set status = 1 where idAccount = 2;
