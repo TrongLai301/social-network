@@ -49,5 +49,3 @@ insert into permission(namePermission) values ('admin'),('user');
 -- du lieu bang account
 insert into user(username , password,idPermission) values('admin','123456',1);
 insert into user(username , password,idPermission) values('user','123456',2);
-
-
