@@ -154,6 +154,10 @@ if (password.equals(user.getPassword())) {
         String address = req.getParameter("address");
         String hobby = req.getParameter("hobby");
 
+        if (avatar == null || avatar.isEmpty()){
+            avatar = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
+        }
+
         User userAfterEdit = new User();
         userAfterEdit.setId(id);
         userAfterEdit.setUsername(username);
@@ -169,7 +173,6 @@ if (password.equals(user.getPassword())) {
         System.out.println(userAfterEdit);
         // code thay doi csdl o day
         userDAO.updateUser(userAfterEdit);
-
         req.setAttribute("actionGet","showUserProfile");
         resp.sendRedirect("/user");
     }

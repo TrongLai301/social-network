@@ -57,8 +57,10 @@ public class UserDAOImpl implements IUserDAO {
     }
 
     @Override
-    public void blockUser(int id) throws SQLException , ClassNotFoundException{
+    public void addBlockUser(int id) throws SQLException , ClassNotFoundException{
         Connection connection = DataConnector.getConnection();
+        CallableStatement callableStatement1 = connection.prepareCall("delete from userStatus where idAccount = '"+id +"'");
+        callableStatement1.executeUpdate();
         CallableStatement callableStatement = connection.prepareCall("insert into userStatus(idAccount,status) values (?,?)");
         callableStatement.setInt(1,id);
         callableStatement.setString(2,"block");
@@ -66,9 +68,9 @@ public class UserDAOImpl implements IUserDAO {
         connection.close();
     }
     @Override
-    public void unBlockUser(int id) throws SQLException , ClassNotFoundException{
+    public void removeBlockUser(int id) throws SQLException , ClassNotFoundException{
         Connection connection = DataConnector.getConnection();
-        CallableStatement callableStatement = connection.prepareCall("delete from userStatus where idAccount = ?");
+        CallableStatement callableStatement = connection.prepareCall("update userStatus set status = 'working' where idAccount = ?");
         callableStatement.setInt(1,id);
         callableStatement.executeUpdate();
 

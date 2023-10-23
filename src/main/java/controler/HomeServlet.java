@@ -53,21 +53,30 @@ public class HomeServlet extends HttpServlet {
             request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
         }else{
             if (user.getStatus()==null){
-                userDAO.blockUser(id);
+                userDAO.addBlockUser(id);
                 List<User> defaultListUser = userDAO.getAllUser();
                 HttpSession session = request.getSession();
                 session.setAttribute("defaultListUser", defaultListUser);
                 request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
-            }else{
-                userDAO.unBlockUser(id);
-                List<User> defaultListUser = userDAO.getAllUser();
-                HttpSession session = request.getSession();
-                session.setAttribute("defaultListUser", defaultListUser);
-                request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
+            }else {
+                if (user.getStatus().equals("working")){
+                    userDAO.addBlockUser(id);
+                    List<User> defaultListUser = userDAO.getAllUser();
+                    HttpSession session = request.getSession();
+                    session.setAttribute("defaultListUser", defaultListUser);
+                    request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
+                }else {
+                    userDAO.removeBlockUser(id);
+                    List<User> defaultListUser = userDAO.getAllUser();
+                    HttpSession session = request.getSession();
+                    session.setAttribute("defaultListUser", defaultListUser);
+                    request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
+                }
             }
         }
+        }
 
-    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String actionPost =  req.getParameter("actionPost");
