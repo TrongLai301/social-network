@@ -22,8 +22,8 @@
         <input type="text" name="name" value="${userNeedToEdit.name}">
         <input type="text" name="email" value="${userNeedToEdit.email}">
         <input type="text" name="phone" value="${userNeedToEdit.phone}">
-        <input type="text" name="birthdate" value="${userNeedToEdit.birthdate}">
-        <input type="text" name="address" value="${userNeedToEdit.birthdate}">
+        <input type="date" name="birth" value="${userNeedToEdit.birth}">
+        <input type="text" name="address" value="${userNeedToEdit.address}">
         <input type="text" name="hobby" value="${userNeedToEdit.hobby}">
         <input type="submit" value="Save!">
     </form>
