@@ -25,10 +25,11 @@ create table permission(
 -- tao bang lam viec voi trang thai tai khoan
 create table userStatus(
                            idAccount int,
-                           status varchar(10),
+                           status boolean default 0,
                            primary key(idAccount),
                            foreign key(idAccount) references user(id)
 );
+
 -- tao thu tuc lam viec xem cac du lieu co ban tai khoan nguoi dung
 DELIMITER $$
 create procedure showUserWithStatus()
