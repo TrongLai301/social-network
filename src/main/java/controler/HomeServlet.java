@@ -55,21 +55,18 @@ public class HomeServlet extends HttpServlet {
             if (user.getStatus()==null){
                 userDAO.addBlockUser(id);
                 List<User> defaultListUser = userDAO.getAllUser();
-                HttpSession session = request.getSession();
-                session.setAttribute("defaultListUser", defaultListUser);
+                request.setAttribute("defaultListUser", defaultListUser);
                 request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
             }else {
                 if (user.getStatus().equals("working")){
                     userDAO.addBlockUser(id);
                     List<User> defaultListUser = userDAO.getAllUser();
-                    HttpSession session = request.getSession();
-                    session.setAttribute("defaultListUser", defaultListUser);
+                    request.setAttribute("defaultListUser", defaultListUser);
                     request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
                 }else {
                     userDAO.removeBlockUser(id);
                     List<User> defaultListUser = userDAO.getAllUser();
-                    HttpSession session = request.getSession();
-                    session.setAttribute("defaultListUser", defaultListUser);
+                    request.setAttribute("defaultListUser", defaultListUser);
                     request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
                 }
             }
@@ -92,9 +89,8 @@ public class HomeServlet extends HttpServlet {
     }
 
     public void directToHome(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
         List<User> defaultListUser = userDAO.getAllUser();
-        session.setAttribute("defaultListUser", defaultListUser);
+        req.setAttribute("defaultListUser", defaultListUser);
         req.getRequestDispatcher("/admin/home.jsp").forward(req,resp);
     }
 }

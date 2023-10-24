@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UserDAOImpl implements IUserDAO {
     @Override
-    public List<User> getAllUser()  {
+    public List<User> getAllUser() {
         List<User> listFromDb = new ArrayList<>();
         Connection connection = null;
         try {
@@ -30,32 +30,36 @@ public class UserDAOImpl implements IUserDAO {
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
-        return  listFromDb;
+        return listFromDb;
     }
+// debug by tùng
     @Override
     public User getUserById(int id) throws SQLException, ClassNotFoundException {
-     Connection connection = DataConnector.getConnection();
-     CallableStatement callableStatement = connection.prepareCall("select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission left join userStatus on user.id = userStatus.idAccount where user.id = '" + id +"'");
-     ResultSet resultSet = callableStatement.executeQuery();
-     User user = new User();
-     while (resultSet.next()){
-         user.setId(resultSet.getInt("id"));
-         user.setUsername(resultSet.getString("username"));
-         user.setPassword(resultSet.getString("password"));
-         user.setEmail(resultSet.getString("email"));
-         user.setPhone(resultSet.getString("phone"));
-         user.setBirth(LocalDate.parse(resultSet.getString("birth")));
-         user.setAvatar(resultSet.getString("avatar"));
-         user.setName(resultSet.getString("fullname"));
-         user.setAddress(resultSet.getString("address"));
-         user.setHobby(resultSet.getString("hobby"));
-         user.setPermission(resultSet.getString("namePermission"));
-         user.setStatus(resultSet.getString("status"));
-     }
-     connection.close();
-     return user;
+        Connection connection = DataConnector.getConnection();
+        CallableStatement callableStatement = connection.prepareCall("select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission left join userStatus on user.id = userStatus.idAccount where user.id = '" + id + "'");
+        ResultSet resultSet = callableStatement.executeQuery();
+        User user = new User();
+        while (resultSet.next()) {
+            user.setId(resultSet.getInt("id"));
+            user.setUsername(resultSet.getString("username"));
+            user.setPassword(resultSet.getString("password"));
+            user.setEmail(resultSet.getString("email"));
+            user.setPhone(resultSet.getString("phone"));
+            Date date = resultSet.getDate("birth");
+            if (date != null){
+                user.setBirth(LocalDate.parse(resultSet.getString("birth")));
+            }
+            user.setAvatar(resultSet.getString("avatar"));
+            user.setName(resultSet.getString("fullname"));
+            user.setAddress(resultSet.getString("address"));
+            user.setHobby(resultSet.getString("hobby"));
+            user.setPermission(resultSet.getString("namePermission"));
+            user.setStatus(resultSet.getString("status"));
+        }
+        connection.close();
+        return user;
     }
-    // Tim xem co user nao co email voi so
+
     @Override
     public User findUserWithEmailOrPhone(String email, String phone) {
         User user = new User();
@@ -91,7 +95,6 @@ public class UserDAOImpl implements IUserDAO {
         CallableStatement callableStatement = connection.prepareCall("update userStatus set status = 'working' where idAccount = ?");
         callableStatement.setInt(1,id);
         callableStatement.executeUpdate();
-
         connection.close();
     }
     @Override
