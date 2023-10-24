@@ -1,7 +1,6 @@
 package controler;
 
 import model.User;
-import service.IUserDAO;
 import service.UserDAOImpl;
 import service.Validate.PasswordValidate;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -40,13 +38,13 @@ public class UserServlet extends HttpServlet {
                     showEditPassword(req, resp);
                     break;
                 case "showUserProfile":
-                    showUserProfile(req,resp);
+                    showUserProfile(req, resp);
                     break;
                 default:
                     showHomePageForUser(req, resp);
                     break;
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -75,117 +73,115 @@ public class UserServlet extends HttpServlet {
         if (actionPost == null) {
             actionPost = "";
         }
-        switch (actionPost) {
-            case "block":
-                blockUserById(req, resp);
-                break;
-            case "editPassword":
-                try {
+        try {
+            switch (actionPost) {
+                case "editPassword":
                     editPassword(req, resp);
-                } catch (SQLException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
-            case "updateUser":
-                updateUser(req,resp);
-                break;
-            default:
+                    break;
+                case "updateUser":
+                    updateUser(req, resp);
+                    break;
+                default:
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
-
     private void editPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException, ClassNotFoundException {
         String password = req.getParameter("password");
         String newPassword = req.getParameter("newPassword");
         String confirmPassword = req.getParameter("confirmPassword");
         int idAccount = Integer.parseInt(req.getParameter("idAccount"));
-        User user = userDAO.getUserByIdForBlockandChange(idAccount);
-if (password.equals(user.getPassword())) {
-    if (!passwordValidate.validate(newPassword)) {
-        req.setAttribute("message", "Vui long nhap tu 6-32 ky tu");
-        RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
-        dispatcher.forward(req, resp);
-    } else if (!newPassword.equals(confirmPassword)) {
-        req.setAttribute("message", "Mat khau khong trung khop");
-        RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
-        dispatcher.forward(req, resp);
-    } else if (password.isEmpty()) {
-        req.setAttribute("message", "Mat khau khong duoc trong");
-        RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
-        dispatcher.forward(req, resp);
-    } else {
-        try {
-            userDAO.editPasswordUser(idAccount, newPassword);
-            req.setAttribute("message", "Doi mat khau thanh cong");
-            RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
-            dispatcher.forward(req, resp);
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-}else{
-    req.setAttribute("message", "Mat khau cu khong trung khop");
-    RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
-    dispatcher.forward(req, resp);
-}
-    }
-    // Chuc nang update user
-    private void showUserProfile(HttpServletRequest req, HttpServletResponse resp){
-        try {
-            HttpSession session = req.getSession();
-            Integer idUser = (Integer) session.getAttribute("idAccount");
-            User userNeedToEdit = userDAO.getUserById(idUser);
-            req.setAttribute("userNeedToEdit",userNeedToEdit);
-            req.getRequestDispatcher("/user/userProfile/profile-view.jsp").forward(req,resp);
-        } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        User user = userDAO.getUserById(idAccount);
+        if (password.equals(user.getPassword())) {
+            if (!passwordValidate.validate(newPassword)) {
+                req.setAttribute("message", "Vui long nhap tu 6-32 ky tu");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
+                dispatcher.forward(req, resp);
+            } else if (!newPassword.equals(confirmPassword)) {
+                req.setAttribute("message", "Mat khau khong trung khop");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
+                dispatcher.forward(req, resp);
+            } else if (password.isEmpty()) {
+                req.setAttribute("message", "Mat khau khong duoc trong");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
+                dispatcher.forward(req, resp);
+            } else {
+                try {
+                    userDAO.editPasswordUser(idAccount, newPassword);
+                    req.setAttribute("message", "Doi mat khau thanh cong");
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
+                    dispatcher.forward(req, resp);
+                } catch (SQLException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
-    //Do post
-    private void updateUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        int id = Integer.parseInt(req.getParameter("id"));
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        String email = req.getParameter("email");
-        String phone = req.getParameter("phone");
-        LocalDate birth = LocalDate.parse(req.getParameter("birth"));
-        String avatar = req.getParameter("avatar");
-        String name = req.getParameter("name");
-        String address = req.getParameter("address");
-        String hobby = req.getParameter("hobby");
 
-        if (avatar == null || avatar.isEmpty()){
-            avatar = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
-        }
+                // Chuc nang update user profile va hien thi userProfile
+                private void showUserProfile (HttpServletRequest req, HttpServletResponse resp){
+                    try {
+                        HttpSession session = req.getSession();
+                        Integer idUser = (Integer) session.getAttribute("idAccount");
+                        User userNeedToEdit = userDAO.getUserById(idUser);
+                        req.setAttribute("userNeedToEdit", userNeedToEdit);
+                        req.getRequestDispatcher("/user/userProfile/profile-view.jsp").forward(req, resp);
+                    } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
 
-        User userAfterEdit = new User();
-        userAfterEdit.setId(id);
-        userAfterEdit.setUsername(username);
-        userAfterEdit.setPassword(password);
-        userAfterEdit.setEmail(email);
-        userAfterEdit.setPhone(phone);
-        userAfterEdit.setBirth(birth);
-        userAfterEdit.setAvatar(avatar);
-        userAfterEdit.setName(name);
-        userAfterEdit.setAddress(address);
-        userAfterEdit.setHobby(hobby);
+                //Do post
+                private void updateUser (HttpServletRequest req, HttpServletResponse resp) throws
+                IOException, ServletException
+                {
+                    int id = Integer.parseInt(req.getParameter("id"));
+                    String username = req.getParameter("username");
+                    String password = req.getParameter("password");
+                    String email = req.getParameter("email");
+                    String phone = req.getParameter("phone");
+                    LocalDate birth = LocalDate.parse(req.getParameter("birth"));
+                    String avatar = req.getParameter("avatar");
+                    String name = req.getParameter("name");
+                    String address = req.getParameter("address");
+                    String hobby = req.getParameter("hobby");
 
-        System.out.println(userAfterEdit);
-        // code thay doi csdl o day
-        userDAO.updateUser(userAfterEdit);
-        req.setAttribute("actionGet","showUserProfile");
-        resp.sendRedirect("/user");
-    }
+                    // Cài avarta mặc định nếu người dùng không thêm avatar
+                    if (avatar == null || avatar.isEmpty()) {
+                        avatar = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
+                    }
 
-    //doGet
-    private void showHomePageForUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.sendRedirect("user/home.jsp");
-    }
+                    User userAfterEdit = new User();
+                    userAfterEdit.setId(id);
+                    userAfterEdit.setUsername(username);
+                    userAfterEdit.setPassword(password);
+                    userAfterEdit.setEmail(email);
+                    userAfterEdit.setPhone(phone);
+                    userAfterEdit.setBirth(birth);
+                    userAfterEdit.setAvatar(avatar);
+                    userAfterEdit.setName(name);
+                    userAfterEdit.setAddress(address);
+                    userAfterEdit.setHobby(hobby);
 
-    //doPost
-    public void blockUserById(HttpServletRequest request, HttpServletResponse response) {
+                    System.out.println(userAfterEdit);
+                    if (userDAO.findUserWithEmailOrPhone(email, phone).getId() != userAfterEdit.getId()) {
+                        req.setAttribute("message", "Email hoặc số điện thoại đã tồn tại !");
+                        req.setAttribute("userNeedToEdit", userAfterEdit);
+                        req.getRequestDispatcher("/user/userProfile/profile-view.jsp").forward(req, resp);
+                    }
+                    userDAO.updateUser(userAfterEdit);
+                    req.setAttribute("message", "Thêm Thành Công !");
+                    req.setAttribute("userNeedToEdit", userAfterEdit);
+                    req.getRequestDispatcher("/user/userProfile/profile-view.jsp").forward(req, resp);
+                }
 
-    }
-}
+                //doGet
+                private void showHomePageForUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+                    resp.sendRedirect("user/home.jsp");
+                }
+
+            }
+
 
 

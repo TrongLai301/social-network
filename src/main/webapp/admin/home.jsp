@@ -89,7 +89,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="user" items="${sessionScope.defaultListUser}">
+                    <c:forEach var="user" items="${requestScope.defaultListUser}">
                         <tr>
                             <td>${user.id}</td>
                             <td>${user.username}</td>
