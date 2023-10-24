@@ -55,6 +55,28 @@ public class UserDAOImpl implements IUserDAO {
      connection.close();
      return user;
     }
+    @Override
+    public User getUserByIdForBlockandChange(int id) throws ClassNotFoundException, SQLException {
+        Connection connection = DataConnector.getConnection();
+        CallableStatement callableStatement = connection.prepareCall("select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission left join userStatus on user.id = userStatus.idAccount where user.id = '" + id +"'");
+        ResultSet resultSet = callableStatement.executeQuery();
+        User user = new User();
+        while (resultSet.next()){
+            user.setId(resultSet.getInt("id"));
+            user.setUsername(resultSet.getString("username"));
+            user.setPassword(resultSet.getString("password"));
+            user.setEmail(resultSet.getString("email"));
+            user.setPhone(resultSet.getString("phone"));
+            user.setAvatar(resultSet.getString("avatar"));
+            user.setName(resultSet.getString("fullname"));
+            user.setAddress(resultSet.getString("address"));
+            user.setHobby(resultSet.getString("hobby"));
+            user.setPermission(resultSet.getString("namePermission"));
+            user.setStatus(resultSet.getString("status"));
+        }
+        connection.close();
+        return user;
+    }
 
     @Override
     public void addBlockUser(int id) throws SQLException , ClassNotFoundException{

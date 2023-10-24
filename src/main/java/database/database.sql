@@ -1,11 +1,11 @@
 drop database socialnetwork;
 create database socialnetwork;
 use socialnetwork;
+--  tao bang user lam viec voi profile
 create table permission(
                            idPermission int auto_increment primary key,
                            namePermission varchar(30)
 );
---  tao bang user lam viec voi profile
 create table user(
                      id int auto_increment primary key,
                      username varchar(50) not null,
@@ -16,6 +16,8 @@ create table user(
                      phone varchar(20),
                      gender boolean,
                      hobby nvarchar(200),
+                     avatar nvarchar(200),
+                     address nvarchar(200),
                      CONSTRAINT CHK_PasswordLength CHECK (length(password) >= 6 AND length(password)<= 32),
                      idPermission int,
                      foreign key(idPermission) references permission(idPermission)
@@ -26,7 +28,7 @@ create table user(
 -- tao bang lam viec voi trang thai tai khoan
 create table userStatus(
                            idAccount int,
-                           status enum('working','block'),
+                           status enum('working','block') default 'working',
                            primary key(idAccount),
                            foreign key(idAccount) references user(id)
 );
@@ -50,3 +52,4 @@ insert into permission(namePermission) values ('admin'),('user');
 -- du lieu bang account
 insert into user(username , password,idPermission) values('admin','123456',1);
 insert into user(username , password,idPermission) values('user','123456',2);
+select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission left join userStatus on user.id = userStatus.idAccount where user.id = 1;

@@ -98,7 +98,7 @@ public class UserServlet extends HttpServlet {
         String newPassword = req.getParameter("newPassword");
         String confirmPassword = req.getParameter("confirmPassword");
         int idAccount = Integer.parseInt(req.getParameter("idAccount"));
-        User user = userDAO.getUserById(idAccount);
+        User user = userDAO.getUserByIdForBlockandChange(idAccount);
 if (password.equals(user.getPassword())) {
     if (!passwordValidate.validate(newPassword)) {
         req.setAttribute("message", "Vui long nhap tu 6-32 ky tu");

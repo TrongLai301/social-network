@@ -47,7 +47,7 @@ public class HomeServlet extends HttpServlet {
     }
     public void blockUserById(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        User user = userDAO.getUserById(id);
+        User user = userDAO.getUserByIdForBlockandChange(id);
         if (user.getPermission().equals("admin")){
             request.setAttribute("message","khong the xoa doi tuong admin");
             request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
