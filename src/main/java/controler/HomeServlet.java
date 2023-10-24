@@ -50,6 +50,8 @@ public class HomeServlet extends HttpServlet {
         User user = userDAO.getUserById(id);
         if (user.getPermission().equals("admin")){
             request.setAttribute("message","khong the xoa doi tuong admin");
+            List<User> defaultListUser = userDAO.getAllUser();
+            request.setAttribute("defaultListUser", defaultListUser);
             request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
         }else{
             if (user.getStatus()==null){
