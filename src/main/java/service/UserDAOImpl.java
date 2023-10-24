@@ -55,6 +55,24 @@ public class UserDAOImpl implements IUserDAO {
      connection.close();
      return user;
     }
+    // Tim xem co user nao co email voi so
+    @Override
+    public User findUserWithEmailOrPhone(String email, String phone) {
+        User user = new User();
+        try {
+            Connection connection = DataConnector.getConnection();
+            CallableStatement cs = connection.prepareCall("select * from user where email = ? or phone = ?;");
+            cs.setString(1,email);
+            cs.setString(2,phone);
+            ResultSet rs = cs.executeQuery();
+            if (rs.next()){
+                user.setId(rs.getInt("id"));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
+    }
 
     @Override
     public void addBlockUser(int id) throws SQLException , ClassNotFoundException{
