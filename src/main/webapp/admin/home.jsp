@@ -89,14 +89,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="user" items="${sessionScope.defaultListUser}">
+                    <c:forEach var="user" items="${requestScope.defaultListUser}">
                         <tr>
                             <td>${user.id}</td>
                             <td>${user.username}</td>
                             <td>${user.password}</td>
                             <td>${user.permission}</td>
                             <td>${user.status}</td>
-                            <td><a href="home?action=block&id=${user.id}"><i class="bi bi-ban"></i></a></td>
+                            <td><a href="admin?action=block&id=${user.id}"><i class="bi bi-ban"></i></a></td>
                             <td></td>
                         </tr>
                     </c:forEach>
