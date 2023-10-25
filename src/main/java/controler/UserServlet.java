@@ -177,8 +177,8 @@ public class UserServlet extends HttpServlet {
                 }
 
                 //doGet
-                private void showHomePageForUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-                    resp.sendRedirect("user/home.jsp");
+                private void showHomePageForUser(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+                    req.getRequestDispatcher("user/home.jsp").forward(req,resp);
                 }
 
             }

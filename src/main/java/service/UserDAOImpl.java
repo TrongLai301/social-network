@@ -36,7 +36,7 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public User getUserById(int id) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
-        CallableStatement callableStatement = connection.prepareCall("select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission left join userStatus on user.id = userStatus.idAccount where user.id = '" + id + "'");
+        CallableStatement callableStatement = connection.prepareCall("select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission  where user.id = '" + id + "'");
         ResultSet resultSet = callableStatement.executeQuery();
         User user = new User();
         while (resultSet.next()) {
@@ -81,18 +81,15 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public void addBlockUser(int id) throws SQLException , ClassNotFoundException{
         Connection connection = DataConnector.getConnection();
-        CallableStatement callableStatement1 = connection.prepareCall("delete from userStatus where idAccount = '"+id +"'");
-        callableStatement1.executeUpdate();
-        CallableStatement callableStatement = connection.prepareCall("insert into userStatus(idAccount,status) values (?,?)");
+        CallableStatement callableStatement = connection.prepareCall("update user set status = 'block' where id = ?");
         callableStatement.setInt(1,id);
-        callableStatement.setString(2,"block");
         callableStatement.executeUpdate();
         connection.close();
     }
     @Override
     public void removeBlockUser(int id) throws SQLException , ClassNotFoundException{
         Connection connection = DataConnector.getConnection();
-        CallableStatement callableStatement = connection.prepareCall("update userStatus set status = 'working' where idAccount = ?");
+        CallableStatement callableStatement = connection.prepareCall("update user set status = 'working' where id = ?");
         callableStatement.setInt(1,id);
         callableStatement.executeUpdate();
         connection.close();
