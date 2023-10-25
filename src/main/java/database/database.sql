@@ -31,7 +31,7 @@ create table user(
 DELIMITER $$
 create procedure showUserWithStatus()
 begin
-    select user.id,username,password,namePermission,status from user inner join permission on user.idPermission = permission.idPermission;
+    select user.id,username,password,namePermission,status,email,phone from user inner join permission on user.idPermission = permission.idPermission;
 end $$
 call showUserWithStatus();
 -- tao thu tuc them du lieu nguoi dung

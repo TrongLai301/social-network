@@ -18,6 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="changeToSignUp.js"></script>
 </head>
+
 <body>
 <c:if test="${requestScope.message != null}">
     <%
@@ -35,6 +36,7 @@
         printWriter.println("</script>");
     %>
 </c:if>
+<body>
 <div class="login">
     <div class="form-Sign-Up" id="formSignUp">
         <div class="div-form-signUp">
@@ -121,7 +123,6 @@
                         </select>
                     </label>
                 </div>
-<%--                <div class="underline-signup-bottom"></div>--%>
                 <div class="div-submit">
                     <button class=" button" type="submit">Submit form</button>
                 </div>
@@ -217,6 +218,7 @@
                                    name="password" class="input-a-signIn-signUp inputLogin border-login"
                                    required>
                         </div>
+
                     </div>
                     <div class="div-input-submit login loginDiv">
                         <input type="submit" value="Log in"

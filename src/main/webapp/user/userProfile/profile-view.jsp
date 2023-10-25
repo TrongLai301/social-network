@@ -1,4 +1,4 @@
-<%@ page import="java.io.PrintWriter" %><%--@elvariable id="userNeedToEdit" type="model.User"--%>
+<%@ page import="java.io.PrintWriter" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -36,7 +36,7 @@
                              alt="avatar"
                              class="rounded-circle img-fluid" style="width: 150px;">
                         <br>
-                        <h5 class="my-3">John Smith</h5>
+                        <h5 class="my-3">${userNeedToEdit.name}</h5>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                                     <p class="mb-0">Phone</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input class="js.inputField" type="tel" maxlength="10" name="phone" value="${userNeedToEdit.phone}">
+                                    <input class="js.inputField" type="tel" maxlength="11" minlength="10" name="phone" value="${userNeedToEdit.phone}">
                                 </div>
                             </div>
                             <hr>
