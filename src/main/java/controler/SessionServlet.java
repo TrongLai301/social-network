@@ -90,55 +90,63 @@ public class SessionServlet extends HttpServlet {
     }
 
     //doPost
-    private void loginToHomePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void loginToHomePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException, ClassNotFoundException {
         // Lấy thông tin đăng nhập từ req
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        User user = userDAO.getUserByName(username);
 
-        // Kiểm tra tài khoản có trong database hay không
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = DataConnector.getConnection();
-            statement = connection.prepareStatement("SELECT id, namePermission FROM permission inner join user on permission.idPermission = user.idPermission WHERE username = ? AND password = ?");
-            statement.setString(1, username);
-            statement.setString(2, password);
-            resultSet = statement.executeQuery();
-
-            // Nếu tài khoản tồn tại thì đăng nhập thành công
-            if (resultSet.next()) {
-                HttpSession session = req.getSession();
-                int id = resultSet.getInt("id");
-                session.setAttribute("idAccount", id);
-                session.setAttribute("username", username);
-                session.setAttribute("namePermission", resultSet.getString("namePermission"));
-                // Xác định vai trò của người dùng
-                String permission = session.getAttribute("namePermission").toString();
-
-                // Chuyển hướng người dùng đến trang tương ứng với vai trò
-                if (permission.equals("admin")) {
-                    resp.sendRedirect("/admin");
-                } else {
-                    resp.sendRedirect("/user");
-                }
-            } else {
-                // Đăng nhập thất bại
-                RequestDispatcher dispatcher = req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp");
-                dispatcher.forward(req, resp);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } finally {
+            // Kiểm tra tài khoản có trong database hay không
+            Connection connection = null;
+            PreparedStatement statement = null;
+            ResultSet resultSet = null;
             try {
-                DataConnector.closeConnection(connection, statement, resultSet);
+                connection = DataConnector.getConnection();
+                statement = connection.prepareStatement("SELECT id, namePermission FROM permission inner join user on permission.idPermission = user.idPermission WHERE username = ? AND password = ?");
+                statement.setString(1, username);
+                statement.setString(2, password);
+                resultSet = statement.executeQuery();
+
+                // Nếu tài khoản tồn tại thì đăng nhập thành công
+                if (resultSet.next()) {
+                    HttpSession session = req.getSession();
+                    int id = resultSet.getInt("id");
+                    session.setAttribute("idAccount", id);
+                    session.setAttribute("username", username);
+                    session.setAttribute("namePermission", resultSet.getString("namePermission"));
+                    // Xác định vai trò của người dùng
+                    String permission = session.getAttribute("namePermission").toString();
+
+                    // Chuyển hướng người dùng đến trang tương ứng với vai trò
+                    if (permission.equals("admin")) {
+                        resp.sendRedirect("/admin");
+                    } else {
+                        if (user.getStatus().equals("block")){
+                            req.setAttribute("message","tài khoản bị chặn");
+                            req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp").forward(req,resp);
+                        }else{
+                            resp.sendRedirect("/user");
+                        }
+                    }
+                } else {
+                    // Đăng nhập thất bại
+                    req.setAttribute("messageError","tài khoản không đúng hoặc mật khẩu không trùng khớp");
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp");
+                    dispatcher.forward(req, resp);
+                }
             } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
+            } finally {
+                try {
+                    DataConnector.closeConnection(connection, statement, resultSet);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
-    }
+
 
 
     public boolean checkUser(List<User> users, String username) {
