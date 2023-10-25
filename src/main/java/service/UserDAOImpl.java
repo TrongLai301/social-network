@@ -60,6 +60,32 @@ public class UserDAOImpl implements IUserDAO {
         connection.close();
         return user;
     }
+    @Override
+    public User getUserByName(String name) throws SQLException, ClassNotFoundException {
+        Connection connection = DataConnector.getConnection();
+        CallableStatement callableStatement = connection.prepareCall("select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission  where user.username = '" + name + "'");
+        ResultSet resultSet = callableStatement.executeQuery();
+        User user = new User();
+        while (resultSet.next()) {
+            user.setId(resultSet.getInt("id"));
+            user.setUsername(resultSet.getString("username"));
+            user.setPassword(resultSet.getString("password"));
+            user.setEmail(resultSet.getString("email"));
+            user.setPhone(resultSet.getString("phone"));
+            Date date = resultSet.getDate("birth");
+            if (date != null){
+                user.setBirth(LocalDate.parse(resultSet.getString("birth")));
+            }
+            user.setAvatar(resultSet.getString("avatar"));
+            user.setName(resultSet.getString("fullname"));
+            user.setAddress(resultSet.getString("address"));
+            user.setHobby(resultSet.getString("hobby"));
+            user.setPermission(resultSet.getString("namePermission"));
+            user.setStatus(resultSet.getString("status"));
+        }
+        connection.close();
+        return user;
+    }
 
     @Override
     public User findUserWithEmailOrPhone(String email, String phone) {
