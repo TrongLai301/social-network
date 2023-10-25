@@ -36,7 +36,7 @@
                              alt="avatar"
                              class="rounded-circle img-fluid" style="width: 150px;">
                         <br>
-                        <h5 class="my-3">John Smith</h5>
+                        <h5 class="my-3">${userNeedToEdit.name}</h5>
                     </div>
                 </div>
             </div>
