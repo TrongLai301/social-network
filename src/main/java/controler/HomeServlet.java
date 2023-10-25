@@ -1,5 +1,7 @@
 package controler;
 
+import service.StatusDAOImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +11,12 @@ import java.io.IOException;
 
 @WebServlet(name = "HomeServlet",value = "/home")
 public class HomeServlet extends HttpServlet {
+    StatusDAOImpl statusDAO;
+
+    @Override
+    public void init() throws ServletException {
+        statusDAO = new StatusDAOImpl();
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -17,15 +25,11 @@ public class HomeServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
-            case "block":
+            case "findStatus":
 
                 break;
         }
     }
-
-
-
-    public class AdminServlet extends HttpServlet {
 
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,15 +42,5 @@ public class HomeServlet extends HttpServlet {
             }
         }
 
-        @Override
-        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            String actionPost = req.getParameter("actionPost");
-            if (actionPost == null) {
-                actionPost = "";
-            }
-            switch (actionPost) {
-                default:
-            }
-        }
     }
-}
+
