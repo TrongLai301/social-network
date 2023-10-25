@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 /*   Xử lý phiên làm việc như login, logout*/
@@ -155,8 +156,19 @@ public class SessionServlet extends HttpServlet {
         //Lấy ttin đki từ req.
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String day = request.getParameter("day");
+        String month = request.getParameter("month");
+        String year = request.getParameter("year");
 
-        User user = new User(username, password);
+        String birthday = year+"-"+month+"-"+day;
+        System.out.println(birthday);
+
+
+
+//        User user = new User(username, password);
+        User user = new User(username, password,email,phoneNumber, LocalDate.parse(birthday));
         List<User> listUser = userDAO.getAllUser();
         String notify;
         JSONObject jsonObject = new JSONObject();

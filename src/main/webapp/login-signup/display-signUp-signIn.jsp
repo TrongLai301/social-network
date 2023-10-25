@@ -11,8 +11,8 @@
 <head>
     <title>Facebook-Login/SignUp</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../login-signup/style-signIn-signUp.css">
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
+    <link rel="stylesheet" href="../login-signup/style-signIn-signUp.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -44,7 +44,7 @@
                             d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg></span>
                             </div>
                             <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username"
-                                   aria-describedby="inputGroupPrepend" name="username" value="user2"
+                                   aria-describedby="inputGroupPrepend" name="username"
                                    required>
                         </div>
                     </div>
@@ -85,21 +85,21 @@
                 </div>
                 <div class="birthday birth">
                     <label class="div-label-select">
-                        <select class="label-select">
+                        <select class="label-select" id="day">
                             <c:forEach var="i" begin="1" end="31" step="1">
                                 <option class="option" value="${i}">${i}</option>
                             </c:forEach>
                         </select>
                     </label>
                     <label class="div-label-select">
-                        <select class="label-select">
+                        <select class="label-select" id="month">
                             <c:forEach var="i" begin="1" end="12" step="1">
                                 <option class="option" value="${i}">${i}</option>
                             </c:forEach>
                         </select>
                     </label>
                     <label class="div-label-select">
-                        <select class="label-select">
+                        <select class="label-select" id="year">
                             <c:forEach var="i" begin="1905" end="2023">
                                 <option class="option" value="${i}">${i}</option>
                             </c:forEach>
@@ -171,7 +171,12 @@
                     dataType: 'json',
                     data: {
                         username: document.getElementById("validationCustomUsername").value,
-                        password: document.getElementById("validationCustom02").value
+                        password: document.getElementById("validationCustom02").value,
+                        email: document.getElementById("validationCustom01").value,
+                        phoneNumber: document.getElementById("validationCustom03").value,
+                        day: document.getElementById("day").value,
+                        month: document.getElementById("month").value,
+                        year: document.getElementById("year").value
                     },
                     success: (response) => {
                         console.log(response);

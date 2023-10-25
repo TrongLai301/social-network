@@ -130,10 +130,14 @@ public class UserDAOImpl implements IUserDAO {
         Connection connection = null;
         try {
             connection = DataConnector.getConnection();
-            CallableStatement callableStatement = connection.prepareCall("{Call insertUser(?,?,?)}");
+            CallableStatement callableStatement = connection.prepareCall("{Call insertUser(?,?,?,?,?,?)}");
             callableStatement.setString(1,user.getUsername());
             callableStatement.setString(2,user.getPassword());
-            callableStatement.setString(3,"2");
+            callableStatement.setString(3,user.getEmail());
+            Date date = Date.valueOf(user.getBirth());
+            callableStatement.setDate(4,date);
+            callableStatement.setString(5,user.getPhone());
+            callableStatement.setInt(6,2);
             callableStatement.executeUpdate();
             connection.close();
         } catch (SQLException | ClassNotFoundException e) {
