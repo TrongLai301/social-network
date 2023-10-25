@@ -15,7 +15,7 @@ public class UserDAOImpl implements IUserDAO {
         Connection connection = null;
         try {
             connection = DataConnector.getConnection();
-            CallableStatement callableStatement = connection.prepareCall("{Call showUserWithStatus() }");
+            CallableStatement callableStatement = connection.prepareCall("{Call showUserWithStatus()}");
             ResultSet rs = callableStatement.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -24,6 +24,7 @@ public class UserDAOImpl implements IUserDAO {
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setStatus(rs.getString("status"));
+                user.setEmail(rs.getString("email"));
                 listFromDb.add(user);
             }
             connection.close();

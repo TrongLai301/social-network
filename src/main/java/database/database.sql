@@ -36,9 +36,9 @@ end $$
 call showUserWithStatus();
 -- tao thu tuc them du lieu nguoi dung
 DELIMITER $$
-create procedure insertUser(in usernameWeb varchar(45),in passwordWeb varchar(32), in PermissionWeb int)
+create procedure insertUser(in usernameWeb varchar(45),in passwordWeb varchar(32),in emailWeb varchar(100),in birthWeb date,in phoneNumberWeb varchar(20),in PermissionWeb int)
 begin
-    insert into user (username, password,idPermission ) values (usernameWeb,passwordWeb,permissionWeb);
+insert into user (username,password,email,birth,phone,idPermission) values (usernameWeb,passwordWeb,emailWeb,birthWeb,phoneNumberWeb,PermissionWeb);
 end $$
 -- *  du leu tham so dau vao
 -- du lieu bang permission
