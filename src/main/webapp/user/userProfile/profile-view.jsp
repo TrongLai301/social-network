@@ -81,7 +81,7 @@
                                     <p class="mb-0">Phone</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input class="js.inputField" type="tel" maxlength="10" name="phone" value="${userNeedToEdit.phone}">
+                                    <input class="js.inputField" type="tel" maxlength="11" minlength="10" name="phone" value="${userNeedToEdit.phone}">
                                 </div>
                             </div>
                             <hr>
