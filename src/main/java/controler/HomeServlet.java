@@ -30,6 +30,9 @@ public class HomeServlet extends HttpServlet {
                 break;
         }
     }
+    public void findStatusByName(){
+
+    }
 
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

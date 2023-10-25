@@ -17,57 +17,80 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <title>Admin - Quản lý người dùng</title>
 </head>
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .card-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 0;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .table {
+        border-radius: 10px;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+    }
+    body{
+        background: url("https://kss.com.vn/wp-content/uploads/2021/07/ca-nhan-uy-thac.jpg") no-repeat fixed;
+        background-size: 100% 100%;
+        font-family: "Arial", sans-serif;
+    }
+
+</style>
 <body>
+
 <header>
-    <style>
-         body {
-             background-color: #f8f9fa;
-         }
 
-        .container {
-            margin-top: 50px;
-        }
-
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .card-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 0;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .table {
-            border-radius: 10px;
-        }
-
-        .table th,
-        .table td {
-            vertical-align: middle;
-        }
-
-    </style>
     <h1 style="text-align: center">User account management</h1>
 </header>
 <main>
+    <c:if test="${requestScope['messageRemove'] != null}">
+        <%
+            PrintWriter printWriter = response.getWriter();
+            printWriter.println("<script type=\"text/javascript\">");
+            printWriter.println("alert('tài khoản hoạt động trở lại ');");
+            printWriter.println("</script>");
+        %>
+    </c:if>
+    <c:if test="${requestScope['messageBlock'] != null}">
+        <%
+            PrintWriter printWriter = response.getWriter();
+            printWriter.println("<script type=\"text/javascript\">");
+            printWriter.println("alert('tài khoản chặn thành công ');");
+            printWriter.println("</script>");
+        %>
+    </c:if>
     <c:if test="${requestScope['message'] != null}">
         <%
             PrintWriter printWriter = response.getWriter();
             printWriter.println("<script type=\"text/javascript\">");
-            printWriter.println("alert('khong the xoa admin');");
+            printWriter.println("alert('tài khoản chặn là admin không thể chặn ');");
             printWriter.println("</script>");
         %>
     </c:if>
