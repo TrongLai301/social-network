@@ -104,7 +104,10 @@ public class UserDAOImpl implements IUserDAO {
             CallableStatement cs = connection.prepareCall("UPDATE user u set u.email = ?, u.phone = ?, u.birth = ?, u.avatar = ?, u.fullname = ?, u.address = ? , u.hobby = ? where id = ?");
             cs.setString(1,user.getEmail());
             cs.setString(2,user.getPhone());
-            cs.setString(3, String.valueOf(user.getBirth()));
+            cs.setString(3,null);
+            if (user.getBirth() != null){
+                cs.setString(3, String.valueOf(user.getBirth()));
+            }
             cs.setString(4,user.getAvatar());
             cs.setString(5,user.getName());
             cs.setString(6,user.getAddress());

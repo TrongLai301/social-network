@@ -54,6 +54,11 @@ insert into user(username , password,idPermission) values('admin','123456',1);
 insert into user(username , password,idPermission) values('user','123456',2);
 select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission left join userStatus on user.id = userStatus.idAccount where user.id = 1;
 -- bang status
+create table permissionStatus(
+                                 idPermission int primary key auto_increment ,
+                                 namePermission enum('public','private')
+);
+-- bang quyen status
 create table status(
                        idStatus int auto_increment primary key,
                        createTime datetime,
@@ -64,9 +69,4 @@ create table status(
                        idPermission int,
                        foreign key(idUser) references user(id),
                        foreign key(idPermission) references permissionStatus(idPermission)
-);
--- bang quyen status
-create table permissionStatus(
-                                 idPermission int primary key auto_increment ,
-                                 namePermission enum('public','private')
 );
