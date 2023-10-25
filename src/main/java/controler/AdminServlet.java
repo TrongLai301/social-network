@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 //Class admin servlet dùng để hiển thị và sử lý logic liên quan đến trang admin ví dụ như block or view
@@ -55,6 +56,7 @@ public class AdminServlet extends HttpServlet {
         }else{
             if (user.getStatus()==null){
                 userDAO.addBlockUser(id);
+                request.setAttribute("messageBlock","thanh cong");
                 List<User> defaultListUser = userDAO.getAllUser();
                 request.setAttribute("defaultListUser", defaultListUser);
                 request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
@@ -62,11 +64,13 @@ public class AdminServlet extends HttpServlet {
                 if (user.getStatus().equals("working")){
                     userDAO.addBlockUser(id);
                     List<User> defaultListUser = userDAO.getAllUser();
+                    request.setAttribute("messageBlock","thanh cong");
                     request.setAttribute("defaultListUser", defaultListUser);
                     request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
                 }else {
                     userDAO.removeBlockUser(id);
                     List<User> defaultListUser = userDAO.getAllUser();
+                    request.setAttribute("messageRemove","thanh cong");
                     request.setAttribute("defaultListUser", defaultListUser);
                     request.getRequestDispatcher("/admin/home.jsp").forward(request,response);
                 }

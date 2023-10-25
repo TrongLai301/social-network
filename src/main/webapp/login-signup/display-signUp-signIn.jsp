@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.io.PrintWriter" %><%--
   Created by IntelliJ IDEA.
   User: trong
   Date: 10/18/23
@@ -19,7 +19,22 @@
     <script src="changeToSignUp.js"></script>
 </head>
 <body>
-
+<c:if test="${requestScope.message != null}">
+    <%
+        PrintWriter printWriter = response.getWriter();
+        printWriter.println("<script type=\"text/javascript\">");
+        printWriter.println("alert('tài khoản bị chặn');");
+        printWriter.println("</script>");
+    %>
+</c:if>
+<c:if test="${requestScope.messageError != null}">
+    <%
+        PrintWriter printWriter = response.getWriter();
+        printWriter.println("<script type=\"text/javascript\">");
+        printWriter.println("alert('tài khoản hoặc mật khẩu không trùng khớp');");
+        printWriter.println("</script>");
+    %>
+</c:if>
 <div class="login">
     <div class="form-Sign-Up" id="formSignUp">
         <div class="div-form-signUp">
@@ -202,6 +217,7 @@
                                    name="password" class="input-a-signIn-signUp inputLogin border-login"
                                    required>
                         </div>
+
                     </div>
                     <div class="div-input-submit login loginDiv">
                         <input type="submit" value="Log in"

@@ -36,7 +36,33 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public User getUserById(int id) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
-        CallableStatement callableStatement = connection.prepareCall("select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission left join userStatus on user.id = userStatus.idAccount where user.id = '" + id + "'");
+        CallableStatement callableStatement = connection.prepareCall("select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission  where user.id = '" + id + "'");
+        ResultSet resultSet = callableStatement.executeQuery();
+        User user = new User();
+        while (resultSet.next()) {
+            user.setId(resultSet.getInt("id"));
+            user.setUsername(resultSet.getString("username"));
+            user.setPassword(resultSet.getString("password"));
+            user.setEmail(resultSet.getString("email"));
+            user.setPhone(resultSet.getString("phone"));
+            Date date = resultSet.getDate("birth");
+            if (date != null){
+                user.setBirth(LocalDate.parse(resultSet.getString("birth")));
+            }
+            user.setAvatar(resultSet.getString("avatar"));
+            user.setName(resultSet.getString("fullname"));
+            user.setAddress(resultSet.getString("address"));
+            user.setHobby(resultSet.getString("hobby"));
+            user.setPermission(resultSet.getString("namePermission"));
+            user.setStatus(resultSet.getString("status"));
+        }
+        connection.close();
+        return user;
+    }
+    @Override
+    public User getUserByName(String name) throws SQLException, ClassNotFoundException {
+        Connection connection = DataConnector.getConnection();
+        CallableStatement callableStatement = connection.prepareCall("select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission  where user.username = '" + name + "'");
         ResultSet resultSet = callableStatement.executeQuery();
         User user = new User();
         while (resultSet.next()) {
@@ -81,18 +107,15 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public void addBlockUser(int id) throws SQLException , ClassNotFoundException{
         Connection connection = DataConnector.getConnection();
-        CallableStatement callableStatement1 = connection.prepareCall("delete from userStatus where idAccount = '"+id +"'");
-        callableStatement1.executeUpdate();
-        CallableStatement callableStatement = connection.prepareCall("insert into userStatus(idAccount,status) values (?,?)");
+        CallableStatement callableStatement = connection.prepareCall("update user set status = 'block' where id = ?");
         callableStatement.setInt(1,id);
-        callableStatement.setString(2,"block");
         callableStatement.executeUpdate();
         connection.close();
     }
     @Override
     public void removeBlockUser(int id) throws SQLException , ClassNotFoundException{
         Connection connection = DataConnector.getConnection();
-        CallableStatement callableStatement = connection.prepareCall("update userStatus set status = 'working' where idAccount = ?");
+        CallableStatement callableStatement = connection.prepareCall("update user set status = 'working' where id = ?");
         callableStatement.setInt(1,id);
         callableStatement.executeUpdate();
         connection.close();
@@ -104,7 +127,10 @@ public class UserDAOImpl implements IUserDAO {
             CallableStatement cs = connection.prepareCall("UPDATE user u set u.email = ?, u.phone = ?, u.birth = ?, u.avatar = ?, u.fullname = ?, u.address = ? , u.hobby = ? where id = ?");
             cs.setString(1,user.getEmail());
             cs.setString(2,user.getPhone());
-            cs.setString(3, String.valueOf(user.getBirth()));
+            cs.setString(3,null);
+            if (user.getBirth() != null){
+                cs.setString(3, String.valueOf(user.getBirth()));
+            }
             cs.setString(4,user.getAvatar());
             cs.setString(5,user.getName());
             cs.setString(6,user.getAddress());
