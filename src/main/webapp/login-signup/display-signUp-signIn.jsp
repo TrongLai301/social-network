@@ -18,7 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="changeToSignUp.js"></script>
 </head>
-<body>
+<body>git
 
 <div class="login">
     <div class="form-Sign-Up" id="formSignUp">
@@ -202,6 +202,7 @@
                                    name="password" class="input-a-signIn-signUp inputLogin border-login"
                                    required>
                         </div>
+
                     </div>
                     <div class="div-input-submit login loginDiv">
                         <input type="submit" value="Log in"
