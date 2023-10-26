@@ -31,14 +31,14 @@ create table user(
 DELIMITER $$
 create procedure showUserWithStatus()
 begin
-    select user.id,username,password,namePermission,status from user inner join permission on user.idPermission = permission.idPermission;
+select user.id,username,password,email,namePermission,status,phone from user inner join permission on user.idPermission = permission.idPermission;
 end $$
 call showUserWithStatus();
 -- tao thu tuc them du lieu nguoi dung
 DELIMITER $$
-create procedure insertUser(in usernameWeb varchar(45),in passwordWeb varchar(32), in PermissionWeb int)
+create procedure insertUser(in usernameWeb varchar(45),in passwordWeb varchar(32),in emailWeb varchar(100),in birthWeb date,in phoneNumberWeb varchar(20),in PermissionWeb int)
 begin
-    insert into user (username, password,idPermission ) values (usernameWeb,passwordWeb,permissionWeb);
+insert into user (username,password,email,birth,phone,idPermission) values (usernameWeb,passwordWeb,emailWeb,birthWeb,phoneNumberWeb,PermissionWeb);
 end $$
 -- *  du leu tham so dau vao
 -- du lieu bang permission
@@ -58,13 +58,11 @@ create table status(
                        idStatus int auto_increment primary key,
                        createTime datetime,
                        description nvarchar(600),
-                       img text(65535),
-                       video text(65535),
+                       media text(65530),
                        idUser int,
                        idPermission int,
                        foreign key(idUser) references user(id),
                        foreign key(idPermission) references permissionStatus(idPermission)
 );
-
-select * from user;
-
+select idStatus , createTime , description , namePermission , idUser from status inner join permissionStatus on status.idPermission = permissionStatus.idPermission inner join user on status.idUser = user.id where username like "tuan";
+insert into permissionStatus(namePermission) values ('public'),('private');

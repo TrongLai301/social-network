@@ -1,5 +1,6 @@
 package service;
 
+import model.Status;
 import model.User;
 
 import java.sql.SQLException;

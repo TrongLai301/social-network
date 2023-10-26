@@ -1,6 +1,7 @@
 package service;
 
 import DBcontext.DataConnector;
+import model.Status;
 import model.User;
 
 import java.sql.*;
@@ -32,7 +33,8 @@ public class UserDAOImpl implements IUserDAO {
         }
         return listFromDb;
     }
-// debug by tùng
+
+    // debug by tùng
     @Override
     public User getUserById(int id) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
@@ -46,7 +48,7 @@ public class UserDAOImpl implements IUserDAO {
             user.setEmail(resultSet.getString("email"));
             user.setPhone(resultSet.getString("phone"));
             Date date = resultSet.getDate("birth");
-            if (date != null){
+            if (date != null) {
                 user.setBirth(LocalDate.parse(resultSet.getString("birth")));
             }
             user.setAvatar(resultSet.getString("avatar"));
@@ -59,6 +61,7 @@ public class UserDAOImpl implements IUserDAO {
         connection.close();
         return user;
     }
+
     @Override
     public User getUserByName(String name) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
@@ -72,7 +75,7 @@ public class UserDAOImpl implements IUserDAO {
             user.setEmail(resultSet.getString("email"));
             user.setPhone(resultSet.getString("phone"));
             Date date = resultSet.getDate("birth");
-            if (date != null){
+            if (date != null) {
                 user.setBirth(LocalDate.parse(resultSet.getString("birth")));
             }
             user.setAvatar(resultSet.getString("avatar"));
@@ -92,10 +95,10 @@ public class UserDAOImpl implements IUserDAO {
         try {
             Connection connection = DataConnector.getConnection();
             CallableStatement cs = connection.prepareCall("select * from user where email = ? or phone = ?;");
-            cs.setString(1,email);
-            cs.setString(2,phone);
+            cs.setString(1, email);
+            cs.setString(2, phone);
             ResultSet rs = cs.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 user.setId(rs.getInt("id"));
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -105,37 +108,39 @@ public class UserDAOImpl implements IUserDAO {
     }
 
     @Override
-    public void addBlockUser(int id) throws SQLException , ClassNotFoundException{
+    public void addBlockUser(int id) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
         CallableStatement callableStatement = connection.prepareCall("update user set status = 'block' where id = ?");
-        callableStatement.setInt(1,id);
+        callableStatement.setInt(1, id);
         callableStatement.executeUpdate();
         connection.close();
     }
+
     @Override
-    public void removeBlockUser(int id) throws SQLException , ClassNotFoundException{
+    public void removeBlockUser(int id) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
         CallableStatement callableStatement = connection.prepareCall("update user set status = 'working' where id = ?");
-        callableStatement.setInt(1,id);
+        callableStatement.setInt(1, id);
         callableStatement.executeUpdate();
         connection.close();
     }
+
     @Override
     public void updateUser(User user) {
         try {
             Connection connection = DataConnector.getConnection();
             CallableStatement cs = connection.prepareCall("UPDATE user u set u.email = ?, u.phone = ?, u.birth = ?, u.avatar = ?, u.fullname = ?, u.address = ? , u.hobby = ? where id = ?");
-            cs.setString(1,user.getEmail());
-            cs.setString(2,user.getPhone());
-            cs.setString(3,null);
-            if (user.getBirth() != null){
+            cs.setString(1, user.getEmail());
+            cs.setString(2, user.getPhone());
+            cs.setString(3, null);
+            if (user.getBirth() != null) {
                 cs.setString(3, String.valueOf(user.getBirth()));
             }
-            cs.setString(4,user.getAvatar());
-            cs.setString(5,user.getName());
-            cs.setString(6,user.getAddress());
-            cs.setString(7,user.getHobby());
-            cs.setInt(8,user.getId());
+            cs.setString(4, user.getAvatar());
+            cs.setString(5, user.getName());
+            cs.setString(6, user.getAddress());
+            cs.setString(7, user.getHobby());
+            cs.setInt(8, user.getId());
             cs.executeUpdate();
 
             connection.close();
@@ -143,6 +148,7 @@ public class UserDAOImpl implements IUserDAO {
             throw new RuntimeException(e);
         }
     }
+
     @Override
     public void editPasswordUser(int id, String newPassword) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
@@ -151,18 +157,35 @@ public class UserDAOImpl implements IUserDAO {
         callableStatement.setInt(2, id);
         callableStatement.executeUpdate();
     }
+
     @Override
-    public void insertUser(User user){
+    public void insertUser(User user) {
         Connection connection = null;
         try {
             connection = DataConnector.getConnection();
             CallableStatement callableStatement = connection.prepareCall("{Call insertUser(?,?,?)}");
-            callableStatement.setString(1,user.getUsername());
-            callableStatement.setString(2,user.getPassword());
-            callableStatement.setString(3,"2");
+            callableStatement.setString(1, user.getUsername());
+            callableStatement.setString(2, user.getPassword());
+            callableStatement.setString(3, "2");
             callableStatement.executeUpdate();
             connection.close();
         } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void insertStatus(Status status) {
+        try {
+            Connection connection = DataConnector.getConnection();
+            CallableStatement callableStatement = connection.prepareCall("insert into status (description, idUser, createTime, media) values (?,?,?,?)");
+            callableStatement.setString(1, status.getDescription());
+            callableStatement.setInt(2,status.getIdUser());
+            callableStatement.setTimestamp(3, Timestamp.valueOf(status.getCreateTime()));
+            callableStatement.setString(4, status.getMedia());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

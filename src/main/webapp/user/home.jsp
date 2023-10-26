@@ -63,6 +63,7 @@
     <h2>Trang chủ</h2>
     <a href="/user?actionGet=showEditPassword">Doi mat khau</a>
     <a href="/user?actionGet=showUserProfile">Trang ca nhan</a>
+    <a href="/user?actionGet=showUploadNewPostForm">Dang bai viet moi</a>
 </main>
 <footer>
     <form action="/session?actionGet=logOut" method="get">

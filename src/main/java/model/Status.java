@@ -1,25 +1,34 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Status {
     private int id;
-    private LocalDate createTime;
+    private LocalDateTime createTime;
     private String description;
-    private String img;
-    private String video;
-    private String permission;
+    private String media;
+    private int permission;
+    private int idUser;
 
-    public Status(int id, LocalDate createTime, String description, String img, String video, String permission) {
+    public Status(int id, LocalDateTime createTime, String description, String media, int permission, int idUser) {
         this.id = id;
         this.createTime = createTime;
         this.description = description;
-        this.img = img;
-        this.video = video;
+        this.media = media;
         this.permission = permission;
+        this.idUser = idUser;
     }
-    public Status(){}
+
+    public Status() {
+    }
+
+    public Status(String description, int idUser, LocalDateTime createTime, String media) {
+        this.createTime = createTime;
+        this.description = description;
+        this.media = media;
+        this.idUser = idUser;
+    }
 
     public int getId() {
         return id;
@@ -29,11 +38,11 @@ public class Status {
         this.id = id;
     }
 
-    public LocalDate getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDate createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
@@ -45,27 +54,27 @@ public class Status {
         this.description = description;
     }
 
-    public String getImg() {
-        return img;
+    public String getMedia() {
+        return media;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setMedia(String media) {
+        this.media = media;
     }
 
-    public String getVideo() {
-        return video;
-    }
-
-    public void setVideo(String video) {
-        this.video = video;
-    }
-
-    public String getPermission() {
+    public int getPermission() {
         return permission;
     }
 
-    public void setPermission(String permission) {
+    public void setPermission(int permission) {
         this.permission = permission;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 }
