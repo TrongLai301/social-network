@@ -7,11 +7,11 @@ public class Status {
     private int id;
     private LocalDateTime createTime;
     private String description;
-    private Blob media;
+    private String media;
     private int permission;
     private int idUser;
 
-    public Status(int id, LocalDateTime createTime, String description, Blob media, int permission,int idUser) {
+    public Status(int id, LocalDateTime createTime, String description, String media, int permission, int idUser) {
         this.id = id;
         this.createTime = createTime;
         this.description = description;
@@ -19,7 +19,17 @@ public class Status {
         this.permission = permission;
         this.idUser = idUser;
     }
-    public Status(){}
+
+    public Status() {
+    }
+
+    public Status(String description, int idUser, LocalDateTime createTime, String media, int permission) {
+        this.createTime = createTime;
+        this.description = description;
+        this.media = media;
+        this.idUser = idUser;
+        this.permission=permission;
+    }
 
     public int getId() {
         return id;
@@ -45,11 +55,11 @@ public class Status {
         this.description = description;
     }
 
-    public Blob getMedia() {
+    public String getMedia() {
         return media;
     }
 
-    public void setMedia(Blob media) {
+    public void setMedia(String media) {
         this.media = media;
     }
 

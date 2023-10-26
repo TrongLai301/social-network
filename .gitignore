@@ -32,15 +32,24 @@ build/
 !**/src/test/**/build/
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+!**//src/main/webapp/WEB-INF/classes/config.properties
+=======
+>>>>>>> 28cba3224abad9b06b19f0ecb9015ea1a70ea202
+<<<<<<< HEAD
 !**/src/main/**/classes/
 !**src/main/webapp/WEB-INF/classes/
 
 =======
 !**//src/main/webapp/WEB-INF/classes/config.properties
 >>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
+<<<<<<< HEAD
 =======
 !**//src/main/webapp/WEB-INF/classes/config.properties
 >>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
+=======
+>>>>>>> 76a496f1f1cb50cca46256f56329afa254163a27
+>>>>>>> 28cba3224abad9b06b19f0ecb9015ea1a70ea202
 
 ### VS Code ###
 .vscode/
