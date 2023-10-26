@@ -117,7 +117,7 @@ a:hover{
     flex-direction: column;
 }
 .submit-login{
-    font-size: 28px;
+    font-size: 20px;
     color: whitesmoke;
     background-color: #0077ff;
     cursor: pointer;
@@ -233,6 +233,17 @@ main{
 #notifyEmail,#notifyUser{
     margin: 4px 0 0 4px;
 }
+
+.date{
+    padding: 0.375rem 0.75rem;
+    height: 40px;
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    width: 220px;
+    color: #797877;
+    cursor: text;
+}
+
 .button:hover{
     cursor: pointer;
     background-color: #0059fd;
