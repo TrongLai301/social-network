@@ -66,27 +66,17 @@
 </head>
 <body>
 <div class="status-container">
-    <textarea id="status-content" placeholder="Nhập nội dung"></textarea>
-    <input type="file" id="status-image" accept="image/*">
-    <button id="status-submit" onclick="submitStatus()">Đăng</button>
+<form action="/user?actionPost=uploadNewStatus" method="post" enctype='multipart/form-data'>
+    <select name="permission">
+        <option value="1">Public</option>
+        <option value="2">Private</option>
+        <option value="3">Friends</option>
+    </select>
+    <textarea name="description" placeholder="Nhập nội dung"></textarea>
+    <input name="media" type="file" accept="image/*">
+    <input type="submit" value="Upload">
+</form>
 </div>
 <div id="status-list"></div>
-
-<script>
-    function submitStatus() {
-        var content = document.getElementById('status-content').value;
-        var image = document.getElementById('status-image').files[0];
-
-        // Gửi dữ liệu đăng status lên server bằng Ajax hoặc fetch
-
-        // Sau khi đăng thành công, cập nhật giao diện
-        var statusInfo = document.createElement('div');
-        statusInfo.classList.add('status-info');
-
-        // Thêm các phần tử vào statusInfo theo yêu cầu của bạn
-
-        document.getElementById('status-list').prepend(statusInfo);
-    }
-</script>
 </body>
 </html>

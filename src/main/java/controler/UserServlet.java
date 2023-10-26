@@ -11,20 +11,22 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.nio.file.Paths;
-import java.sql.SQLException;
-import java.time.LocalDate;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @WebServlet(name = "UserServlet", value = "/user")
 @MultipartConfig
 public class UserServlet extends HttpServlet {
     PasswordValidate passwordValidate;
     UserDAOImpl userDAO;
-    private static final String UPLOAD_DIR = "/path/to/upload/directory"; // Đường dẫn đến thư mục lưu trữ ảnh đính kèm
+    private static final String IMG_DIR = "/WEB-INF/img"; // Đường dẫn đến thư mục lưu trữ ảnh và video đính kèm
 
     @Override
     public void init() throws ServletException {
@@ -46,8 +48,8 @@ public class UserServlet extends HttpServlet {
                 case "showUserProfile":
                     showUserProfile(req, resp);
                     break;
-                case "showUploadNewPostForm":
-                    showUploadNewPostForm(req, resp);
+                case "showUploadNewStatusForm":
+                    showUploadNewStatusForm(req, resp);
                     break;
                 default:
                     showHomePageForUser(req, resp);
@@ -58,8 +60,8 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    private void showUploadNewPostForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/user/upNewStatus.jsp").forward(req, resp);
+    private void showUploadNewStatusForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/user/upNewStatus.jsp").forward(request, response);
     }
 
     private void showEditPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -94,8 +96,8 @@ public class UserServlet extends HttpServlet {
                 case "updateUser":
                     updateUser(req, resp);
                     break;
-                case "upLoadNewPost":
-                    upLoadNewPost(req, resp);
+                case "uploadNewStatus":
+                    uploadNewStatus(req, resp);
                     break;
                 default:
             }
@@ -104,32 +106,35 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-
-    private void upLoadNewPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void uploadNewStatus(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        User loggedInUser = (User) session.getAttribute("user");
+        int userID = (int) session.getAttribute("idAccount");
 
-        if (loggedInUser == null) {
+        if (Objects.isNull(userID)) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Bạn chưa đăng nhập");
             return;
         }
 
         String description = request.getParameter("description");
         Part mediaPart = request.getPart("media");
+        int permission = Integer.parseInt(request.getParameter("permission"));
 
         String mediaPath = null;
         if (mediaPart != null && mediaPart.getSize() > 0) {
-            String fileName = LocalDateTime.now().toString().replace(':', '-') + "-" + mediaPart.getSubmittedFileName();
-            Path uploadPath = Paths.get(UPLOAD_DIR, fileName);
-            Files.copy(mediaPart.getInputStream(), uploadPath, StandardCopyOption.REPLACE_EXISTING);
-            mediaPath = uploadPath.toString();
+            String fileName = LocalDateTime.now().toString().replace(':', '-') + ".png";
+            Path uploadPath = Paths.get(getServletContext().getRealPath(IMG_DIR), fileName);
+            try (InputStream inputStream = mediaPart.getInputStream()) {
+                Files.copy(inputStream, uploadPath, StandardCopyOption.REPLACE_EXISTING);
+            }
+            mediaPath = request.getContextPath() + IMG_DIR + "/" + fileName;
         }
 
         // Lưu thông tin trạng thái vào CSDL
-        Status newStatus = new Status(description, loggedInUser.getId(), LocalDateTime.now(), mediaPath);
+        Status newStatus = new Status(description, userID, LocalDateTime.now(), mediaPath, permission);
         userDAO.insertStatus(newStatus);
 
-        response.getWriter().write("Trạng thái đã được đăng thành công");
+        request.setAttribute("messagePost","upload success");
+        request.getRequestDispatcher("user/home.jsp").forward(request,response);
     }
 
     private void editPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException, ClassNotFoundException {
@@ -165,7 +170,7 @@ public class UserServlet extends HttpServlet {
     }
 
     // Chuc nang update user profile va hien thi userProfile
-    private void showUserProfile(HttpServletRequest req, HttpServletResponse resp) {
+    private void showUserProfile (HttpServletRequest req, HttpServletResponse resp){
         try {
             HttpSession session = req.getSession();
             Integer idUser = (Integer) session.getAttribute("idAccount");
@@ -178,10 +183,10 @@ public class UserServlet extends HttpServlet {
     }
 
     //Do post
-    private void updateUser(HttpServletRequest req, HttpServletResponse resp) throws
-            IOException, ServletException {
+    private void updateUser (HttpServletRequest req, HttpServletResponse resp) throws
+            IOException, ServletException
+    {
         User userAfterEdit = new User();
-
         int id = Integer.parseInt(req.getParameter("id"));
         String username = req.getParameter("username");
         String password = req.getParameter("password");
@@ -190,7 +195,7 @@ public class UserServlet extends HttpServlet {
         String date = req.getParameter("birth");
         System.out.println(date);
         System.out.println("".compareTo(date));
-        if (date != null && !date.isEmpty()) {
+        if (date != null && !date.isEmpty()){
             LocalDate birth = LocalDate.parse(req.getParameter("birth"));
             userAfterEdit.setBirth(birth);
         }
@@ -214,9 +219,9 @@ public class UserServlet extends HttpServlet {
         userAfterEdit.setAddress(address);
         userAfterEdit.setHobby(hobby);
 
-        User userToCheckEmailExit = userDAO.findUserWithEmailOrPhone(email, phone);
+        User userToCheckEmailExit = userDAO.findUserWithEmailOrPhone(email,phone);
         if (userToCheckEmailExit.getId() != userAfterEdit.getId()) {
-            if (userToCheckEmailExit.getId() != 0) {
+            if (userToCheckEmailExit.getId() != 0){
                 req.setAttribute("message", "Email hoặc số điện thoại đã tồn tại !");
                 req.setAttribute("userNeedToEdit", userAfterEdit);
                 req.getRequestDispatcher("/user/userProfile/profile-view.jsp").forward(req, resp);
@@ -230,10 +235,7 @@ public class UserServlet extends HttpServlet {
 
     //doGet
     private void showHomePageForUser(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.getRequestDispatcher("user/home.jsp").forward(req, resp);
+        req.getRequestDispatcher("user/home.jsp").forward(req,resp);
     }
 
 }
-
-
-

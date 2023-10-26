@@ -1,6 +1,5 @@
 package model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Status {
@@ -11,7 +10,7 @@ public class Status {
     private int permission;
     private int idUser;
 
-    public Status(int id, LocalDateTime createTime, String description, String media, int permission, int idUser) {
+    public Status(int id, LocalDateTime createTime, String description, String media, int permission,int idUser) {
         this.id = id;
         this.createTime = createTime;
         this.description = description;
@@ -23,11 +22,12 @@ public class Status {
     public Status() {
     }
 
-    public Status(String description, int idUser, LocalDateTime createTime, String media) {
+    public Status(String description, int idUser, LocalDateTime createTime, String media, int permission) {
         this.createTime = createTime;
         this.description = description;
         this.media = media;
         this.idUser = idUser;
+        this.permission=permission;
     }
 
     public int getId() {

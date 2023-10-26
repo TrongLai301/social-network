@@ -30,7 +30,17 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+<<<<<<< HEAD
 !**//src/main/webapp/WEB-INF/classes/config.properties
+=======
+<<<<<<< HEAD
+!**/src/main/**/classes/
+!**src/main/webapp/WEB-INF/classes/
+
+=======
+!**//src/main/webapp/WEB-INF/classes/config.properties
+>>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
+>>>>>>> 76a496f1f1cb50cca46256f56329afa254163a27
 
 ### VS Code ###
 .vscode/

@@ -16,7 +16,7 @@ public class UserDAOImpl implements IUserDAO {
         Connection connection = null;
         try {
             connection = DataConnector.getConnection();
-            CallableStatement callableStatement = connection.prepareCall("{Call showUserWithStatus() }");
+            CallableStatement callableStatement = connection.prepareCall("{Call showUserWithStatus()}");
             ResultSet rs = callableStatement.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -25,6 +25,8 @@ public class UserDAOImpl implements IUserDAO {
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setStatus(rs.getString("status"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
                 listFromDb.add(user);
             }
             connection.close();
@@ -163,10 +165,14 @@ public class UserDAOImpl implements IUserDAO {
         Connection connection = null;
         try {
             connection = DataConnector.getConnection();
-            CallableStatement callableStatement = connection.prepareCall("{Call insertUser(?,?,?)}");
+            CallableStatement callableStatement = connection.prepareCall("{Call insertUser(?,?,?,?,?,?)}");
             callableStatement.setString(1, user.getUsername());
             callableStatement.setString(2, user.getPassword());
-            callableStatement.setString(3, "2");
+            callableStatement.setString(3, user.getEmail());
+            Date date = Date.valueOf(user.getBirth());
+            callableStatement.setDate(4, date);
+            callableStatement.setString(5, user.getPhone());
+            callableStatement.setInt(6, 2);
             callableStatement.executeUpdate();
             connection.close();
         } catch (SQLException | ClassNotFoundException e) {
@@ -178,11 +184,14 @@ public class UserDAOImpl implements IUserDAO {
     public void insertStatus(Status status) {
         try {
             Connection connection = DataConnector.getConnection();
-            CallableStatement callableStatement = connection.prepareCall("insert into status (description, idUser, createTime, media) values (?,?,?,?)");
+            CallableStatement callableStatement = connection.prepareCall("insert into status (description, idUser, createTime, media, idPermission) values (?,?,?,?,?)");
             callableStatement.setString(1, status.getDescription());
-            callableStatement.setInt(2,status.getIdUser());
+            callableStatement.setInt(2, status.getIdUser());
             callableStatement.setTimestamp(3, Timestamp.valueOf(status.getCreateTime()));
             callableStatement.setString(4, status.getMedia());
+            callableStatement.setInt(5, status.getPermission());
+            callableStatement.executeUpdate();
+            connection.close();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {

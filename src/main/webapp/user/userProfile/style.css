@@ -571,7 +571,15 @@ img.coverImage {
 }
 
 .profile-container {
+<<<<<<< HEAD
     padding: 20px 20%;
+=======
+<<<<<<< HEAD
+    padding: 20px 15%;
+=======
+    padding: 20px 20%;
+>>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
+>>>>>>> 76a496f1f1cb50cca46256f56329afa254163a27
     color: #626262;
 }
 
@@ -650,7 +658,15 @@ img.coverImage {
 }
 
 .content-area.profile-content-area {
+<<<<<<< HEAD
     flex-basis: 100%;
+=======
+<<<<<<< HEAD
+    flex-basis: 65%;
+=======
+    flex-basis: 100%;
+>>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
+>>>>>>> 76a496f1f1cb50cca46256f56329afa254163a27
 }
 
 .left-profile-sidebar-top {

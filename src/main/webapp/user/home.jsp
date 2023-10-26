@@ -1,3 +1,4 @@
+<%@ page import="java.io.PrintWriter" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -60,10 +61,18 @@
     <h1>Mạng xã hội</h1>
 </header>
 <main>
+    <c:if test="${requestScope.messagePost != null}">
+        <%
+        PrintWriter printWriter = response.getWriter();
+        printWriter.println("<script type=\"text/javascript\">");
+        printWriter.println("alert('Đăng bài thành công ');");
+        printWriter.println("</script>");
+        %>
+    </c:if>
     <h2>Trang chủ</h2>
     <a href="/user?actionGet=showEditPassword">Doi mat khau</a>
     <a href="/user?actionGet=showUserProfile">Trang ca nhan</a>
-    <a href="/user?actionGet=showUploadNewPostForm">Dang bai viet moi</a>
+    <a href="/user?actionGet=showUploadNewStatusForm">Dang bai viet moi</a>
 </main>
 <footer>
     <form action="/session?actionGet=logOut" method="get">
