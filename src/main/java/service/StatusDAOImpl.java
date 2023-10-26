@@ -26,7 +26,7 @@ public class StatusDAOImpl implements IStatusDAO {
             status.setId(resultSet.getInt("idStatus"));
             status.setCreateTime(LocalDateTime.parse(resultSet.getString("createTime")));
             status.setDescription(resultSet.getString("description"));
-            status.setMedia(resultSet.getString("media"));
+            status.setMedia(resultSet.getBlob("media"));
             status.setPermission(resultSet.getInt("idPermission"));
             statusList.add(status);
         }
@@ -46,7 +46,7 @@ public class StatusDAOImpl implements IStatusDAO {
                     status.setId(resultSet.getInt("idStatus"));
                     status.setCreateTime(LocalDateTime.parse(resultSet.getString("createTime")));
                     status.setDescription(resultSet.getString("description"));
-                    status.setMedia(resultSet.getString("media"));
+                    status.setMedia(resultSet.getBlob("media"));
                     String permission = resultSet.getString("namePermission");
                     if (permission.equals("private")) {
                         continue;
@@ -60,7 +60,7 @@ public class StatusDAOImpl implements IStatusDAO {
                     status.setId(resultStatusByNameUser.getInt("idStatus"));
                     status.setCreateTime(LocalDateTime.parse(resultStatusByNameUser.getString("createTime")));
                     status.setDescription(resultStatusByNameUser.getString("description"));
-                    status.setMedia(resultStatusByNameUser.getString("media"));
+                    status.setMedia(resultStatusByNameUser.getBlob("media"));
                    String permission = resultStatusByNameUser.getString("namePermission");
                     if (permission.equals("private")) {
                         continue;

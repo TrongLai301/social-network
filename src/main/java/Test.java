@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 public class Test {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
-
         LocalDateTime currentDateTime = LocalDateTime.now();
         int year = currentDateTime.getYear();
         int month = currentDateTime.getMonthValue();
@@ -21,5 +20,19 @@ public class Test {
         System.out.println("Giờ: " + hour);
         System.out.println("Phút: " + minute);
         System.out.println("Giây: " + second);
+        String input = "Chữ cái có dấu: á, ấ, ầ";
+
+        // Biểu thức chính quy Unicode cho chữ cái và chữ cái có dấu
+        String regex = "^[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]+$";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+
+        if (matcher.matches()) {
+            System.out.println("Hợp lệ");
+        } else {
+            System.out.println("Không hợp lệ");
+        }
+
     }
 }

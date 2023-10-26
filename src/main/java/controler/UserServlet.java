@@ -186,7 +186,7 @@ public class UserServlet extends HttpServlet {
 
                 //doGet
                 private void showHomePageForUser(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-                    req.getRequestDispatcher("user/home.jsp").forward(req,resp);
+                    req.getRequestDispatcher("display-home/homeFB.jsp").forward(req,resp);
                 }
 
             }

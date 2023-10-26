@@ -1,16 +1,17 @@
 package model;
 
+import java.sql.Blob;
 import java.time.LocalDateTime;
 
 public class Status {
     private int id;
     private LocalDateTime createTime;
     private String description;
-    private String media;
+    private Blob media;
     private int permission;
     private int idUser;
 
-    public Status(int id, LocalDateTime createTime, String description, String media, int permission,int idUser) {
+    public Status(int id, LocalDateTime createTime, String description, Blob media, int permission,int idUser) {
         this.id = id;
         this.createTime = createTime;
         this.description = description;
@@ -44,11 +45,11 @@ public class Status {
         this.description = description;
     }
 
-    public String getMedia() {
+    public Blob getMedia() {
         return media;
     }
 
-    public void setMedia(String media) {
+    public void setMedia(Blob media) {
         this.media = media;
     }
 

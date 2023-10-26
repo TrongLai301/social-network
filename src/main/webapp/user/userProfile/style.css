@@ -572,7 +572,11 @@ img.coverImage {
 
 .profile-container {
 <<<<<<< HEAD
+<<<<<<< HEAD
     padding: 20px 15%;
+=======
+    padding: 20px 20%;
+>>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
 =======
     padding: 20px 20%;
 >>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
@@ -655,7 +659,11 @@ img.coverImage {
 
 .content-area.profile-content-area {
 <<<<<<< HEAD
+<<<<<<< HEAD
     flex-basis: 65%;
+=======
+    flex-basis: 100%;
+>>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
 =======
     flex-basis: 100%;
 >>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
