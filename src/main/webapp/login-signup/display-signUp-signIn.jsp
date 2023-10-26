@@ -216,7 +216,7 @@
         let validationCustomUsername = document.getElementById("validationCustomUsername");
         validationCustomUsername.addEventListener("input", function () {
             let inputValue = this.value;
-            this.value = inputValue.replace(/[^\w\s]/g, "");
+            this.value = inputValue.replace(/[^sa-zA-Z1-9]/g, "");
         })
         validationCustom04.addEventListener("input", function () {
             let inputValue = this.value;

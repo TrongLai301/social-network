@@ -571,7 +571,11 @@ img.coverImage {
 }
 
 .profile-container {
+<<<<<<< HEAD
     padding: 20px 15%;
+=======
+    padding: 20px 20%;
+>>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
     color: #626262;
 }
 
@@ -650,7 +654,11 @@ img.coverImage {
 }
 
 .content-area.profile-content-area {
+<<<<<<< HEAD
     flex-basis: 65%;
+=======
+    flex-basis: 100%;
+>>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
 }
 
 .left-profile-sidebar-top {

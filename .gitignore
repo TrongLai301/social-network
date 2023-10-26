@@ -30,9 +30,13 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+<<<<<<< HEAD
 !**/src/main/**/classes/
 !**src/main/webapp/WEB-INF/classes/
 
+=======
+!**//src/main/webapp/WEB-INF/classes/config.properties
+>>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
 
 ### VS Code ###
 .vscode/
@@ -41,6 +45,7 @@ build/
 .DS_Store
 
 .idea
+
 
 
 
