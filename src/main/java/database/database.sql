@@ -67,3 +67,4 @@ create table status(
 );
 
 select * from user;
+
