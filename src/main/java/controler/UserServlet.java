@@ -136,12 +136,20 @@ public class UserServlet extends HttpServlet {
                 private void updateUser (HttpServletRequest req, HttpServletResponse resp) throws
                 IOException, ServletException
                 {
+                    User userAfterEdit = new User();
+
                     int id = Integer.parseInt(req.getParameter("id"));
                     String username = req.getParameter("username");
                     String password = req.getParameter("password");
                     String email = req.getParameter("email");
                     String phone = req.getParameter("phone");
-                    LocalDate birth = LocalDate.parse(req.getParameter("birth"));
+                    String date = req.getParameter("birth");
+                    System.out.println(date);
+                    System.out.println("".compareTo(date));
+                    if (date != null && !date.isEmpty()){
+                        LocalDate birth = LocalDate.parse(req.getParameter("birth"));
+                        userAfterEdit.setBirth(birth);
+                    }
                     String avatar = req.getParameter("avatar");
                     String name = req.getParameter("name");
                     String address = req.getParameter("address");
@@ -152,23 +160,23 @@ public class UserServlet extends HttpServlet {
                         avatar = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
                     }
 
-                    User userAfterEdit = new User();
                     userAfterEdit.setId(id);
                     userAfterEdit.setUsername(username);
                     userAfterEdit.setPassword(password);
                     userAfterEdit.setEmail(email);
                     userAfterEdit.setPhone(phone);
-                    userAfterEdit.setBirth(birth);
                     userAfterEdit.setAvatar(avatar);
                     userAfterEdit.setName(name);
                     userAfterEdit.setAddress(address);
                     userAfterEdit.setHobby(hobby);
 
-                    System.out.println(userAfterEdit);
-                    if (userDAO.findUserWithEmailOrPhone(email, phone).getId() != userAfterEdit.getId()) {
-                        req.setAttribute("message", "Email hoặc số điện thoại đã tồn tại !");
-                        req.setAttribute("userNeedToEdit", userAfterEdit);
-                        req.getRequestDispatcher("/user/userProfile/profile-view.jsp").forward(req, resp);
+                    User userToCheckEmailExit = userDAO.findUserWithEmailOrPhone(email,phone);
+                    if (userToCheckEmailExit.getId() != userAfterEdit.getId()) {
+                        if (userToCheckEmailExit.getId() != 0){
+                            req.setAttribute("message", "Email hoặc số điện thoại đã tồn tại !");
+                            req.setAttribute("userNeedToEdit", userAfterEdit);
+                            req.getRequestDispatcher("/user/userProfile/profile-view.jsp").forward(req, resp);
+                        }
                     }
                     userDAO.updateUser(userAfterEdit);
                     req.setAttribute("message", "Thêm Thành Công !");

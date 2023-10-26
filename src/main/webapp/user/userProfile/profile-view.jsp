@@ -11,6 +11,7 @@
 <head>
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -36,7 +37,7 @@
                              alt="avatar"
                              class="rounded-circle img-fluid" style="width: 150px;">
                         <br>
-                        <h5 class="my-3">John Smith</h5>
+                        <h5 class="my-3">${userNeedToEdit.name}</h5>
                     </div>
                 </div>
             </div>
@@ -81,7 +82,7 @@
                                     <p class="mb-0">Phone</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input class="js.inputField" type="tel" maxlength="10" name="phone" value="${userNeedToEdit.phone}">
+                                    <input class="js.inputField" type="tel" maxlength="11" minlength="10" name="phone" value="${userNeedToEdit.phone}">
                                 </div>
                             </div>
                             <hr>
@@ -158,7 +159,9 @@
     }
 
     function textOnly(input) {
-        var text = /[^a-zA-Z ]/gi;
+        var text = /[^aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆ
+fFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTu
+UùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]/gi;
         input.value = input.value.replace(text, "")
     }
 
