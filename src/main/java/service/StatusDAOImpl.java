@@ -15,12 +15,12 @@ public class StatusDAOImpl implements IStatusDAO {
     public List<Status> getAllStatus() throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media, namePermission , idUser from status inner join permissionStatus on status.idPermission = permissionStatus.idPermission");
+        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media, status.idPermission , idUser from status");
         List<Status> statusList = new ArrayList<>();
-        Status status = new Status();
         while (resultSet.next()) {
+            Status status = new Status();
             status.setId(resultSet.getInt("idStatus"));
-            status.setCreateTime(LocalDateTime.parse(resultSet.getString("createTime")));
+            status.setCreateTime(LocalDate.parse(resultSet.getString("createTime")));
             status.setDescription(resultSet.getString("description"));
             status.setMedia(resultSet.getString("media"));
             status.setPermission(resultSet.getInt("idPermission"));
@@ -35,11 +35,11 @@ public class StatusDAOImpl implements IStatusDAO {
         Connection connection = DataConnector.getConnection();
         Statement statement = connection.createStatement();
         List<Status> list = new ArrayList<>();
-        Status status = new Status();
-                ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media ,namePermission,idUser , username from status inner join permissionStatus on status.idPermission = permissionStatus.idPermission inner join user on status.idUser = user.id where description like '%" + searchContent + "%' or username like '%" + searchContent +"%' ");
+        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media ,status.idPermission ,idUser , username , namePermission from status inner join permissionStatus on status.idPermission = permissionStatus.idPermission inner join user on status.idUser = user.id where description like '%" + searchContent + "%' or username like '%" + searchContent +"%' ");
                 while (resultSet.next()) {
+                    Status status = new Status();
                     status.setId(resultSet.getInt("idStatus"));
-                    status.setCreateTime(LocalDateTime.parse(resultSet.getString("createTime")));
+                    status.setCreateTime(LocalDate.parse(resultSet.getString("createTime")));
                     status.setDescription(resultSet.getString("description"));
                     status.setMedia(resultSet.getString("media"));
                     String permission = resultSet.getString("namePermission");

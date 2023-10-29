@@ -130,7 +130,7 @@ public class UserServlet extends HttpServlet {
         }
 
         // Lưu thông tin trạng thái vào CSDL
-        Status newStatus = new Status(description, userID, LocalDateTime.now(), mediaPath, permission);
+        Status newStatus = new Status(description, userID, LocalDate.now(), mediaPath, permission);
         userDAO.insertStatus(newStatus);
 
         request.setAttribute("messagePost","upload success");

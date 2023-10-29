@@ -187,7 +187,7 @@ public class UserDAOImpl implements IUserDAO {
             CallableStatement callableStatement = connection.prepareCall("insert into status (description, idUser, createTime, media, idPermission) values (?,?,?,?,?)");
             callableStatement.setString(1, status.getDescription());
             callableStatement.setInt(2, status.getIdUser());
-            callableStatement.setTimestamp(3, Timestamp.valueOf(status.getCreateTime()));
+            callableStatement.setDate(3, Date.valueOf(status.getCreateTime()));
             callableStatement.setString(4, status.getMedia());
             callableStatement.setInt(5, status.getPermission());
             callableStatement.executeUpdate();

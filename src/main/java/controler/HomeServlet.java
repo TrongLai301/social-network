@@ -45,26 +45,26 @@ public class HomeServlet extends HttpServlet {
         String searchContent = request.getParameter("searchContent");
         List<User> userList = new ArrayList<>();
         try {
-            User user ;
             HttpSession session = request.getSession();
             Integer idUser = (Integer) session.getAttribute("idAccount");
+            User user = userDAO.getUserById(idUser);
             List<Status> list = statusDAO.findStatus(searchContent);
             List<Status> post = new ArrayList<>();
+            User userPost;
             for (Status status : list){
-                user = userDAO.getUserById(status.getId());
+                userPost = userDAO.getUserById(status.getId());
                 if (status.getIdUser() != idUser){
                     if (status.getPermission() == 2){
                         continue;
                     }
                     post.add(status);
-                    userList.add(user);
+                    userList.add(userPost);
                 }
-                post.add(status);
-                userList.add(user);
             }
+            request.setAttribute("user",user);
             request.setAttribute("listStatusFindBySearch",post);
             request.setAttribute("listUser",userList);
-            request.getRequestDispatcher("display-home/homeFB.jsp").forward(request,response);
+            request.getRequestDispatcher("display-home/resultSearchFB.jsp").forward(request,response);
         } catch (SQLException | ClassNotFoundException | ServletException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -100,8 +100,6 @@ public class HomeServlet extends HttpServlet {
                         if (status.getPermission() == 2){
                             continue;
                         }
-                        post.add(status);
-                        userList.add(userPost);
                     }
                     post.add(status);
                     userList.add(userPost);
@@ -116,4 +114,5 @@ public class HomeServlet extends HttpServlet {
 
         }
     }
+
 

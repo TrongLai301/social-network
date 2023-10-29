@@ -1,17 +1,18 @@
 package model;
 
 import java.sql.Blob;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Status {
     private int id;
-    private LocalDateTime createTime;
+    private LocalDate createTime;
     private String description;
     private String media;
     private int permission;
     private int idUser;
 
-    public Status(int id, LocalDateTime createTime, String description, String media, int permission, int idUser) {
+
+    public Status(int id, LocalDate createTime, String description, String media, int permission, int idUser) {
         this.id = id;
         this.createTime = createTime;
         this.description = description;
@@ -23,7 +24,7 @@ public class Status {
     public Status() {
     }
 
-    public Status(String description, int idUser, LocalDateTime createTime, String media, int permission) {
+    public Status(String description, int idUser, LocalDate createTime, String media, int permission) {
         this.createTime = createTime;
         this.description = description;
         this.media = media;
@@ -39,11 +40,11 @@ public class Status {
         this.id = id;
     }
 
-    public LocalDateTime getCreateTime() {
+    public LocalDate getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(LocalDate createTime) {
         this.createTime = createTime;
     }
 
