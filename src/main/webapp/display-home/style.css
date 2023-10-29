@@ -59,6 +59,7 @@ ul.navlogo li svg {
     height: 45px;
     width: 28px;
     margin: 0 30px;
+    fill: white;
 }
 .nav-left{
     width: 340px;
@@ -71,7 +72,7 @@ ul.navlogo li svg {
     width: 650px;
 }
 .navlogo li{
-    cursor: pointer;
+    cursor: pointer ;
     margin:0 15px;
     transition: 0.25s;
     border-bottom: 2px #eeebeb solid ;
@@ -730,4 +731,88 @@ img.coverImage {
 }
 .gallery-photos-rowFirst div p {
     font-size: 14px;
+}
+
+.fa-ellipsis-v::before{
+    color: black;
+}
+
+.option{
+    width: 100px;
+    height: 300px;
+    border: 1px solid;
+}
+
+.option ul li{
+    list-style: none;
+}
+.ellipsis-container {
+    position: relative;
+}
+
+.options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 100%;
+    background-color: #f9f9f9;
+    padding: 10px 20px 5px 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    z-index: 1;
+    list-style: none;
+    width: 300px;
+    height: 120px;
+}
+.choose{
+    cursor: pointer;
+    transition: 0.25s;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+.choose:hover{
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: #817f7f;
+    transition: 0.25s;
+}
+
+.options.show{
+    display: block;
+    box-shadow: 4px 5px 10px 0px #353434;
+}
+
+
+.option-ul li{
+    margin-bottom: 10px;
+}
+
+.div-li{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    transition: 0.25s;
+    padding: 6px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.div-li:hover{
+    background-color: #b2b2b2;
+    transition: 0.25s;
+    color: whitesmoke;
+}
+
+.underline{
+    border-bottom: 1px solid #afadad;
+    margin: 5px 0 5px 0;
+}
+.icon-option{
+    width: 20px;
+    height: 20px;
+    fill: #406dff;
 }

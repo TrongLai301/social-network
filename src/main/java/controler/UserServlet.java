@@ -233,8 +233,12 @@ public class UserServlet extends HttpServlet {
     }
 
     //doGet
-    private void showHomePageForUser(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.getRequestDispatcher("display-home/homeFB.jsp").forward(req,resp);
+    private void showHomePageForUser(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException, SQLException, ClassNotFoundException {
+        HttpSession session = req.getSession();
+        Integer idUser = (Integer) session.getAttribute("idAccount");
+        User useForCreateStatus = userDAO.getUserById(idUser);
+        req.setAttribute("useForCreateStatus", useForCreateStatus);
+        req.getRequestDispatcher("/home").forward(req,resp);
     }
 
 }

@@ -15,7 +15,7 @@ public class StatusDAOImpl implements IStatusDAO {
     public List<Status> getAllStatus() throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media, namePermission from status inner join permissionStatus on status.idPermission = permissionStatus.idPermision");
+        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media, namePermission , idUser from status inner join permissionStatus on status.idPermission = permissionStatus.idPermision");
         List<Status> statusList = new ArrayList<>();
         Status status = new Status();
         while (resultSet.next()) {
@@ -24,6 +24,7 @@ public class StatusDAOImpl implements IStatusDAO {
             status.setDescription(resultSet.getString("description"));
             status.setMedia(resultSet.getString("media"));
             status.setPermission(resultSet.getInt("idPermission"));
+            status.setIdUser(resultSet.getInt("idUser"));
             statusList.add(status);
         }
         return statusList;
@@ -37,13 +38,14 @@ public class StatusDAOImpl implements IStatusDAO {
         Status status = new Status();
         switch (option) {
             case "description":
-                ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media ,namePermission from status inner join permissionStatus on status.idPermission = permissionStatus.idPermision where description like %'" + searchContent + "'%");
+                ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media ,namePermission,idUser from status inner join permissionStatus on status.idPermission = permissionStatus.idPermision  where description like %'" + searchContent + "'%");
                 while (resultSet.next()) {
                     status.setId(resultSet.getInt("idStatus"));
                     status.setCreateTime(LocalDateTime.parse(resultSet.getString("createTime")));
                     status.setDescription(resultSet.getString("description"));
                     status.setMedia(resultSet.getString("media"));
                     String permission = resultSet.getString("namePermission");
+                    status.setIdUser(resultSet.getInt("idUser"));
                     if (permission.equals("private")) {
                         continue;
                     }
@@ -58,6 +60,7 @@ public class StatusDAOImpl implements IStatusDAO {
                     status.setDescription(resultStatusByNameUser.getString("description"));
                     status.setMedia(resultStatusByNameUser.getString("media"));
                    String permission = resultStatusByNameUser.getString("namePermission");
+                   status.setIdUser(resultStatusByNameUser.getInt("idUser"));
                     if (permission.equals("private")) {
                         continue;
                     }

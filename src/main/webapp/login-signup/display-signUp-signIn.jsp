@@ -115,7 +115,7 @@
                 </div>
                 <div class="div-date">
                     <label>
-                        <input type="date" id="date" class="date" />
+                        <input type="date" id="validationCustom05" class="date" />
                     </label>
                 </div>
                 <div class="div-submit">
@@ -147,6 +147,8 @@
         const passwordConfirm = document.getElementById("validationCustom03");
         const notify = document.getElementById("notify");
         passwordConfirm.addEventListener("input", checkPassword);
+        password.addEventListener("input", checkPassword);
+
 
         const form = document.querySelector('.form-signUp');
 
@@ -186,7 +188,7 @@
                         password: document.getElementById("validationCustom02").value,
                         email: document.getElementById("validationCustom01").value,
                         phoneNumber: document.getElementById("validationCustom04").value,
-                        date: document.getElementById("date").value
+                        date: document.getElementById("validationCustom05").value
                     },
                     success: (response) => {
                         console.log(response);
