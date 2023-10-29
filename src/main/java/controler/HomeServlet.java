@@ -34,7 +34,7 @@ public class HomeServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
-            case "findStatus":
+            case "search":
                   findStatusByName(req,resp);
                 break;
             default:
@@ -43,13 +43,12 @@ public class HomeServlet extends HttpServlet {
     }
     public void findStatusByName(HttpServletRequest request ,HttpServletResponse response){
         String searchContent = request.getParameter("searchContent");
-        String option = request.getParameter("option");
         List<User> userList = new ArrayList<>();
         try {
             User user ;
             HttpSession session = request.getSession();
             Integer idUser = (Integer) session.getAttribute("idAccount");
-            List<Status> list = statusDAO.findStatus(searchContent,option);
+            List<Status> list = statusDAO.findStatus(searchContent);
             List<Status> post = new ArrayList<>();
             for (Status status : list){
                 user = userDAO.getUserById(status.getId());
@@ -89,23 +88,25 @@ public class HomeServlet extends HttpServlet {
         public void showHomePage(HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException {
             try {
                 List<User> userList = new ArrayList<>();
-                User user;
                 HttpSession session = request.getSession();
                 Integer idUser = (Integer) session.getAttribute("idAccount");
+                User user = userDAO.getUserById(idUser);
+                User userPost;
                 List<Status> list = statusDAO.getAllStatus();
                 List<Status> post = new ArrayList<>();
                 for (Status status : list){
-                    user = userDAO.getUserById(status.getId());
+                    userPost = userDAO.getUserById(status.getId());
                     if (status.getIdUser() != idUser){
                         if (status.getPermission() == 2){
                             continue;
                         }
                         post.add(status);
-                        userList.add(user);
+                        userList.add(userPost);
                     }
                     post.add(status);
-                    userList.add(user);
+                    userList.add(userPost);
                 }
+                request.setAttribute("user",user);
                 request.setAttribute("listStatus",post);
                 request.setAttribute("listUser",userList);
                 request.getRequestDispatcher("display-home/homeFB.jsp").forward(request,response);
