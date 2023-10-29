@@ -241,6 +241,7 @@
                                    name="password" class="input-a-signIn-signUp inputLogin border-login"
                                    required>
                         </div>
+
                     </div>
                     <div class="div-input-submit  loginDiv">
                         <input type="submit" value="Log in"

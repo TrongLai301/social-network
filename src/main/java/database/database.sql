@@ -66,3 +66,5 @@ create table status(
                        foreign key(idPermission) references permissionStatus(idPermission)
 );
 
+select * from user;
+
