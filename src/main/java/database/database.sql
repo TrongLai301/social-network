@@ -16,7 +16,7 @@ create table user(
                      phone varchar(20),
                      gender boolean,
                      hobby nvarchar(200),
-                     avatar nvarchar(200),
+                     avatar nvarchar(500),
                      address nvarchar(200),
                      status enum('working','block') default 'working',
                      CONSTRAINT CHK_PasswordLength CHECK (length(password) >= 6 AND length(password)<= 32),
@@ -56,7 +56,7 @@ create table permissionStatus(
 -- bang status
 create table status(
                        idStatus int auto_increment primary key,
-                       createTime datetime,
+                       createTime date,
                        description nvarchar(600),
                        media text(65530),
                        idUser int,

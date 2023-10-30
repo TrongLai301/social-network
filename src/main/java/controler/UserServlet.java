@@ -172,11 +172,14 @@ public class UserServlet extends HttpServlet {
     // Chuc nang update user profile va hien thi userProfile
     private void showUserProfile (HttpServletRequest req, HttpServletResponse resp){
         try {
+            int id = Integer.parseInt(req.getParameter("id"));
+            User userProfile = userDAO.getUserById(id);
             HttpSession session = req.getSession();
             Integer idUser = (Integer) session.getAttribute("idAccount");
-            User userNeedToEdit = userDAO.getUserById(idUser);
-            req.setAttribute("userNeedToEdit", userNeedToEdit);
-            req.getRequestDispatcher("/user/userProfile/profile-view.jsp").forward(req, resp);
+            User userMain = userDAO.getUserById(idUser);
+            req.setAttribute("userProfile", userProfile);
+            req.setAttribute("userMain",userMain);
+            req.getRequestDispatcher("/user/userProfile/displayProfile/homeFB.jsp").forward(req, resp);
         } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
