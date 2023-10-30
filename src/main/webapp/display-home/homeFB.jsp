@@ -137,7 +137,7 @@
             <hr>
             <div class="settings-links">
                 <img src="../display-home/images/setting.png" alt="" class="settings-icon">
-                <a href="/user?actionGet=showEditPassword">Settings & Privary <img src="../display-home/images/arrow.png" alt=""></a>
+                <a href="/user?actionGet=showEditPassword">Settings your password <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -146,8 +146,8 @@
             </div>
 
             <div class="settings-links">
-                <img src="../display-home/images/Display.png" alt="" class="settings-icon">
-                <a href="#">Display & Accessibility <img src="../display-home/images/arrow.png" alt=""></a>
+                <img src="../display-home/images/display.png" alt="" class="settings-icon">
+                <a href="/user?actionGet=updateUserProfile">Display & Edit your profile <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -215,7 +215,7 @@
                         <div class="user-profile" >
                             <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
                             <div>
-                                <a href="/user?action=showUserProfile&id=${user.id}" style="text-decoration: none;color: black">${user.name}</a><br>
+                                <a href="/user?actionGet=showUserProfile&id=${user.id}" style="text-decoration: none;color: black">${user.name}</a><br>
                                 <small>${post.createTime}</small>
                             </div>
                         </div>

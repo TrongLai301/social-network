@@ -27,7 +27,7 @@
 
             <div class="underline-edit"></div>
             <div class="infoHost">
-                <img class="imgHost" src="../../../display-home/images/profile-pic.png" alt="">
+                <img class="imgHost" src="/../../display-home/images/profile-pic.png" alt="">
                 <p>${requestScope.userMain.name}</p>
             </div>
             <div class="imgTextEdit">
@@ -109,16 +109,16 @@
 <%--        logo user--%>
         <div class="nav-right">
             <div class="profile-image online" onclick="UserSettingToggle()">
-                <img src="${requestScope.userMain.getAvatar()}" alt="">
+                <img src="${requestScope.user.getAvatar()}" alt="">
             </div>
 
         </div>
         <div class="user-settings">
             <div class="profile-darkButton">
                 <div class="user-profile">
-                    <img src="${requestScope.userMain.avatar}" alt="">
+                    <img src="${requestScope.user.avatar}" alt="">
                     <div>
-                        <p>${requestScope.userMain.name}</p>
+                        <p>${requestScope.user.name}</p>
                         <a href="/user?actionGet=showUserProfile">See your profile</a>
                     </div>
                 </div>

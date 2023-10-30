@@ -48,6 +48,9 @@ public class UserServlet extends HttpServlet {
                 case "showUserProfile":
                     showUserProfile(req, resp);
                     break;
+                case "updateUserProfile":
+                    EditUserProfile(req,resp);
+                    break;
                 case "showUploadNewStatusForm":
                     showUploadNewStatusForm(req, resp);
                     break;
@@ -159,8 +162,7 @@ public class UserServlet extends HttpServlet {
             } else {
                 try {
                     userDAO.editPasswordUser(idAccount, newPassword);
-                    req.setAttribute("message", "Doi mat khau thanh cong");
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp");
                     dispatcher.forward(req, resp);
                 } catch (SQLException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
@@ -170,15 +172,22 @@ public class UserServlet extends HttpServlet {
     }
 
     // Chuc nang update user profile va hien thi userProfile
+    private void EditUserProfile (HttpServletRequest req, HttpServletResponse resp){
+        try {
+            HttpSession session = req.getSession();
+            Integer idUser = (Integer) session.getAttribute("idAccount");
+            User userEdit = userDAO.getUserById(idUser);
+            req.setAttribute("userNeedToEdit",userEdit);
+            req.getRequestDispatcher("/user/userProfile/profile-view.jsp").forward(req, resp);
+        } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void showUserProfile (HttpServletRequest req, HttpServletResponse resp){
         try {
             int id = Integer.parseInt(req.getParameter("id"));
-            User userProfile = userDAO.getUserById(id);
-            HttpSession session = req.getSession();
-            Integer idUser = (Integer) session.getAttribute("idAccount");
-            User userMain = userDAO.getUserById(idUser);
-            req.setAttribute("userProfile", userProfile);
-            req.setAttribute("userMain",userMain);
+            User user = userDAO.getUserById(id);
+            req.setAttribute("userProfile",user);
             req.getRequestDispatcher("/user/userProfile/displayProfile/homeFB.jsp").forward(req, resp);
         } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
