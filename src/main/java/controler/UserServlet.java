@@ -196,6 +196,8 @@ public class UserServlet extends HttpServlet {
             List<User> userList = new ArrayList<>();
             User userPost;
             int id = Integer.parseInt(req.getParameter("id"));
+            User user = userDAO.getUserById(id);
+            req.setAttribute("userFind",user);
             List<Status> defaultPost = statusDAO.getAllStatus();
             List<Status> newPost = new ArrayList<>();
             for (Status status : defaultPost){

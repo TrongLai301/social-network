@@ -147,7 +147,7 @@
 
             <div class="settings-links">
                 <img src="../display-home/images/display.png" alt="" class="settings-icon">
-                <a href="#">Display & Accessibility <img src="../display-home/images/arrow.png" alt=""></a>
+                <a href="user?actionGet=updateUserProfile">Display & Accessibility <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">

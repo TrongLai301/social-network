@@ -110,7 +110,7 @@
 <%--        logo user--%>
         <div class="nav-right">
             <div class="profile-image online" onclick="UserSettingToggle()">
-                <img src="${requestScope.user.getAvatar()}" style="height: 50px;" alt="">
+                <img src="${requestScope.user.getAvatar()}" style="height: 40px;" alt="">
             </div>
 
         </div>
@@ -148,7 +148,7 @@
 
             <div class="settings-links">
                 <img src="../display-home/images/display.png" alt="" class="settings-icon">
-                <a href="#">Display & Accessibility <img src="../display-home/images/arrow.png" alt=""></a>
+                <a href="user?actionGet=updateUserProfile">Display & Accessibility <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -168,12 +168,29 @@
         }
     </script>
     <div style="width: 100% ; height: 400px;background-color: #4e9afa">
+    </div>
+    <div style="width: 100% ; height: 150px;background-color: #ffffff;display: inline-flex;justify-content: space-between">
+       <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
+           <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;"></div>
+           <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}</p></div>
+       </div>
+        <div style="float: right">
+
+        </div>
 
     </div>
-    <div class="container" >
-        <!-- main-content------- -->
+    <div class="container" style="justify-content: space-between;display: flex" >
 
-        <div class="content-area">
+        <!-- main-content------- -->
+       <div style="float: left;height: 100%;width: 300px;" >
+           <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
+             <p ><h3 style="align-items: center">Giới thiệu</h3></p>
+               <div style="text-align: center">${requestScope.userFind.hobby}</div>
+           </div><br>
+           <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">2</div><br>
+           <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">3</div>
+       </div>
+        <div class="content-area" style="float: right">
             <div class="write-post-container">
                 <div class="user-profile">
                     <img src="${requestScope.user.getAvatar()}" style="height: 50px" alt="">
@@ -295,8 +312,9 @@
                             </script>
                             <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
                         </div>
+
                     </div>
-                </div>
+               </div>
 
                 <footer id="footer">
                     <p>&copy; Copyright 2021 - Socialbook All Rights Reserved</p>
