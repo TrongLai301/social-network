@@ -325,23 +325,23 @@ img.advertisement-image {
 }
 
 .story.story1 {
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(images/status-1.png) no-repeat center center /cover;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(../images/status-1.png) no-repeat center center /cover;
 }
 
 .story.story2 {
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(images/status-2.png) no-repeat center center /cover;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(../images/status-2.png) no-repeat center center /cover;
 }
 
 .story.story3 {
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(images/status-3.png) no-repeat center center /cover;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(../images/status-3.png) no-repeat center center /cover;
 }
 
 .story.story4 {
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(images/status-4.png) no-repeat center center /cover;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(../images/status-4.png) no-repeat center center /cover;
 }
 
 .story.story5 {
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(images/status-5.png) no-repeat center center /cover;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(../images/status-5.png) no-repeat center center /cover;
 }
 
 .story.story1 img {
@@ -1068,4 +1068,9 @@ img.coverImage {
     margin: 300px 440px;
     width: 400px;
     height: 200px;
+}
+
+
+.buttonImg{
+
 }

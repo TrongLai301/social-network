@@ -27,39 +27,80 @@
 
             <div class="underline-edit"></div>
             <div class="infoHost">
-                <img class="imgHost" src="images/profile-pic.png" alt="">
+                <img class="imgHost" src="../images/profile-pic.png" alt="">
                 <p>Trọng Lại</p>
             </div>
             <div class="imgTextEdit">
                 <div class="contentWrapper">
                     <div class="textarea">
                         <textarea placeholder="What do you think?" oninput="description(this)"
-                                  class="textareaDescription"></textarea>
+                                  class="textareaDescription">
+
+                        </textarea>
                     </div>
-                    <div class="divImgEdit" id="imgStatus">
-                        <input type="button" onclick="deleteImg()" value="x">
-                        <img src="images/feed-image-1.png" alt="">
+                    <div>
+
                     </div>
                 </div>
             </div>
             <div class="submit-edit">
-                <input type="submit" value="edit">
+                <button id="saveImg">Submit</button>
             </div>
         </form>
     </div>
 </div>
+<script>
+    let imgPush = document.getElementById("imgPush");
+    const inputFile = document.getElementById("input-file")
+    const saveImg = document.getElementById("saveImg");
+    inputFile.onchange = function () {
+        imgPush.src = URL.createObjectURL(inputFile.files[0])
+    }
+    console.log(imgPush.src)
+
+    saveImg.addEventListener('click', function () {
+        // function saveImg(){
+        const file = inputFile.files[0];
+        console.log(file)
+        if (file) {
+            const reader = new FileReader();
+            reader.addEventListener('load', function () {
+                const imgData = reader.result;
+                const fileName = "../imageStatus/" + file.name
+                saveImage(imgData, fileName)
+            })
+            reader.readAsArrayBuffer(file);
+            // }
+        }
+    });
+
+    function saveImage(imageData, fileName) {
+        fetch('imagesStatus', {
+            method: 'POST',
+            body: imageData
+        })
+            .then(response => {
+                console.log('Đã lưu ảnh thành công.');
+            })
+            .catch(error => {
+                console.error('Lỗi khi lưu ảnh:', error);
+            });
+    }
+
+
+</script>
 
 <div class="form-post" id="post">
     <div class="editFormDiv" id="divPostForm">
         <form class="editForm" id="postForm">
             <div class="header-edit">
-                <p>Chỉnh sửa bài viết</p>
+                <p>Đăng bài viết</p>
                 <input type="button" id="closePost" onclick="hidePost()" value="x">
             </div>
 
             <div class="underline-edit"></div>
             <div class="infoHost">
-                <img class="imgHost" src="images/profile-pic.png" alt="">
+                <img class="imgHost" src="../images/profile-pic.png" alt="">
                 <p>Trọng Lại</p>
             </div>
             <div class="imgTextEdit">
@@ -70,8 +111,9 @@
                     </div>
                     <div class="divImgEdit" id="imgStatusPost">
                         <input type="button" onclick="deleteImg()" value="x">
-                        <img src="" alt="">
+                        <img src="" alt="" id="myImage">
                     </div>
+
                 </div>
             </div>
             <div class="submit-edit">
@@ -80,13 +122,6 @@
         </form>
     </div>
 </div>
-
-
-
-
-
-
-
 
 <script>
     function description(textarea) {
@@ -98,14 +133,23 @@
         let img = document.getElementById("imgStatus");
         img.innerHTML = "";
     }
+
+    let imgStatusPost = document.getElementById("imgStatusPost");
+    let myImage = document.getElementById("myImage")
+    if (myImage.src === "") {
+        imgStatusPost.style.display = "none";
+    } else {
+        imgStatusPost.style.display = "block";
+    }
+
 </script>
 <div class="divFather">
     <nav class="navbar">
         <div class="nav-left">
             <%--        <img class="logo" src="images/logo.png" alt="">--%>
-            <img class="logo" id="logoFB" onclick="loadWeb()" src="../display-home/images/logoFB.webp" alt="">
+            <img class="logo" id="logoFB" onclick="loadWeb()" src="../images/logoFB.webp" alt="">
             <div class="search-box">
-                <img src="images/search.png" alt="">
+                <img src="../images/search.png" alt="">
                 <input type="text" placeholder="Search">
             </div>
         </div>
@@ -145,14 +189,14 @@
         </div>
         <div class="nav-right">
             <div class="profile-image online" onclick="UserSettingToggle()">
-                <img src="images/profile-pic.png" alt="">
+                <img src="../images/profile-pic.png" alt="">
             </div>
 
         </div>
         <div class="user-settings">
             <div class="profile-darkButton">
                 <div class="user-profile">
-                    <img src="images/profile-pic.png" alt="">
+                    <img src="../images/profile-pic.png" alt="">
                     <div>
                         <p> Alex Carry</p>
                         <a href="#">See your profile</a>
@@ -164,7 +208,7 @@
             </div>
             <hr>
             <div class="user-profile">
-                <img src="images/feedback.png" alt="">
+                <img src="../images/feedback.png" alt="">
                 <div>
                     <p> Give Feedback</p>
                     <a href="#">Help us to improve</a>
@@ -172,23 +216,23 @@
             </div>
             <hr>
             <div class="settings-links">
-                <img src="images/setting.png" alt="" class="settings-icon">
-                <a href="#">Settings & Privary <img src="images/arrow.png" alt=""></a>
+                <img src="../images/setting.png" alt="" class="settings-icon">
+                <a href="#">Settings & Privary <img src="../images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
-                <img src="images/help.png" alt="" class="settings-icon">
-                <a href="#">Help & Support <img src="images/arrow.png" alt=""></a>
+                <img src="../images/help.png" alt="" class="settings-icon">
+                <a href="#">Help & Support <img src="../images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
-                <img src="images/Display.png" alt="" class="settings-icon">
-                <a href="#">Display & Accessibility <img src="images/arrow.png" alt=""></a>
+                <img src="../images/Display.png" alt="" class="settings-icon">
+                <a href="#">Display & Accessibility <img src="../images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
-                <img src="images/logout.png" alt="" class="settings-icon">
-                <a href="#">Logout <img src="images/arrow.png" alt=""></a>
+                <img src="../images/logout.png" alt="" class="settings-icon">
+                <a href="#">Logout <img src="../images/arrow.png" alt=""></a>
             </div>
 
         </div>
@@ -211,14 +255,14 @@
     <div class="container">
         <div class="left-sidebar">
             <div class="important-links">
-                <a href="#"><img src="images/friends.png" alt="">Friends</a>
+                <a href="#"><img src="../images/friends.png" alt="">Friends</a>
             </div>
             <div class="shortcut-links">
                 <p>Your Shortcuts</p>
-                <a href="#"> <img src="images/shortcut-1.png" alt="">Web Developers</a>
-                <a href="#"> <img src="images/shortcut-2.png" alt="">Web Design Course</a>
-                <a href="#"> <img src="images/shortcut-3.png" alt="">Full Stack Development</a>
-                <a href="#"> <img src="images/shortcut-4.png" alt="">Website Experts</a>
+                <a href="#"> <img src="../images/shortcut-1.png" alt="">Web Developers</a>
+                <a href="#"> <img src="../images/shortcut-2.png" alt="">Web Design Course</a>
+                <a href="#"> <img src="../images/shortcut-3.png" alt="">Full Stack Development</a>
+                <a href="#"> <img src="../images/shortcut-4.png" alt="">Website Experts</a>
             </div>
         </div>
 
@@ -226,7 +270,7 @@
         <div class="content-area">
             <div class="write-post-container">
                 <div class="user-profile">
-                    <img src="images/profile-pic.png" alt="">
+                    <img src="../images/profile-pic.png" alt="">
                     <div>
                         <p> Alex Carry</p>
                         <small>Public <i class="fas fa-caret-down"></i></small>
@@ -234,11 +278,12 @@
                 </div>
 
                 <div class="post-upload-textarea">
-                    <textarea name="" placeholder="What's on your mind, Alex?" id="" cols="30" rows="3" onclick="post()"></textarea>
+                    <textarea name="" placeholder="What's on your mind, Alex?" id="" cols="30" rows="3"
+                              onclick="post()"></textarea>
                     <div class="add-post-links">
-                        <a href="#"><img src="images/live-video.png" alt="">Live Video</a>
-                        <a href="#"><img src="images/photo.png" alt="">Photo/Video</a>
-                        <a href="#"><img src="images/feeling.png" alt="">Feeling Activity</a>
+                        <a href="#"><img src="../images/live-video.png" alt="">Live Video</a>
+                        <a href="#"><img src="../images/photo.png" alt="">Photo/Video</a>
+                        <a href="#"><img src="../images/feeling.png" alt="">Feeling Activity</a>
                     </div>
                 </div>
             </div>
@@ -300,21 +345,20 @@
                     </div>
                     <div class="post-reaction">
                         <div class="activity-icons">
-                            <div><img src="images/like-blue.png" alt="">0</div>
-                            <div><img src="images/comments.png" alt="">0</div>
-                            <div><img src="images/share.png" alt="">0</div>
+                            <div><img src="../images/like-blue.png" alt="">0</div>
+                            <div><img src="../images/comments.png" alt="">0</div>
+                            <div><img src="../images/share.png" alt="">0</div>
                         </div>
                     </div>
                 </div>
             </c:forEach>
 
 
-
             <%--            Mẫu 1 status--%>
             <div class="status-field-container write-post-container">
                 <div class="user-profile-box">
                     <div class="user-profile">
-                        <img src="images/profile-pic.png" alt="">
+                        <img src="../images/profile-pic.png" alt="">
                         <div>
                             <p> Alex Carry</p>
                             <small>August 13 1999, 09.18 pm</small>
@@ -364,14 +408,14 @@
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis dolores praesentium dicta
                         laborum nihil accusantium odit laboriosam, sed sit autem! <a
                                 href="#">#This_Post_is_faster!!!!</a></p>
-                    <img src="images/feed-image-3.png" alt="">
+                    <img src="../images/feed-image-3.png" alt="">
 
                 </div>
                 <div class="post-reaction">
                     <div class="activity-icons">
-                        <div><img src="images/like-blue.png" alt="">120</div>
-                        <div><img src="images/comments.png" alt="">52</div>
-                        <div><img src="images/share.png" alt="">35</div>
+                        <div><img src="../images/like-blue.png" alt="">120</div>
+                        <div><img src="../images/comments.png" alt="">52</div>
+                        <div><img src="../images/share.png" alt="">35</div>
                     </div>
                 </div>
             </div>
@@ -382,15 +426,18 @@
                 let formPost;
 
                 let body = document.querySelector("body");
+
                 function edit() {
                     body.style.overflow = "hidden"
 
                 }
+
                 function toggleOptions(event) {
                     options = event.target.nextElementSibling;
                     options.classList.toggle("show");
 
                 }
+
                 function optionEdit() {
                     formEdit = document.querySelector(".form-edit");
                     options = document.querySelector(".options")
@@ -405,11 +452,13 @@
 
                     body.style.overflow = "auto";
                 }
-                function post(){
+
+                function post() {
                     formPost = document.querySelector(".form-post");
                     formPost.classList.toggle("showPost");
                 }
-                function hidePost(){
+
+                function hidePost() {
                     formPost = document.querySelector(".form-post");
                     formPost.classList.toggle("showPost");
                 }
@@ -429,7 +478,7 @@
                 <a href="">Close</a>
             </div>
             <div class="advertisement">
-                <img src="images/advertisement.png" class="advertisement-image" alt="">
+                <img src="../images/advertisement.png" class="advertisement-image" alt="">
             </div>
 
             <div class="heading-link">
@@ -439,20 +488,20 @@
 
             <div class="online-list">
                 <div class="online">
-                    <img src="images/member-1.png" alt="">
+                    <img src="../images/member-1.png" alt="">
                 </div>
                 <p>Alison Mina</p>
             </div>
 
             <div class="online-list">
                 <div class="online">
-                    <img src="images/member-2.png" alt="">
+                    <img src="../images/member-2.png" alt="">
                 </div>
                 <p>Jackson Aston</p>
             </div>
             <div class="online-list">
                 <div class="online">
-                    <img src="images/member-3.png" alt="">
+                    <img src="../images/member-3.png" alt="">
                 </div>
                 <p>Samona Rose</p>
             </div>
