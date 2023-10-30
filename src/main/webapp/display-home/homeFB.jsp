@@ -43,11 +43,51 @@
                 </div>
             </div>
             <div class="submit-edit">
-                <input type="submit" value="Post">
+                <input type="submit" value="edit">
             </div>
         </form>
     </div>
 </div>
+
+<div class="form-post" id="post">
+    <div class="editFormDiv" id="divPostForm">
+        <form class="editForm" id="postForm">
+            <div class="header-edit">
+                <p>Chỉnh sửa bài viết</p>
+                <input type="button" id="closePost" onclick="hidePost()" value="x">
+            </div>
+
+            <div class="underline-edit"></div>
+            <div class="infoHost">
+                <img class="imgHost" src="images/profile-pic.png" alt="">
+                <p>Trọng Lại</p>
+            </div>
+            <div class="imgTextEdit">
+                <div class="contentWrapper">
+                    <div class="textarea">
+                        <textarea placeholder="What do you think?" oninput="description(this)"
+                                  class="textareaDescription"></textarea>
+                    </div>
+                    <div class="divImgEdit" id="imgStatusPost">
+                        <input type="button" onclick="deleteImg()" value="x">
+                        <img src="" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="submit-edit">
+                <input type="submit" value="edit">
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
 <script>
     function description(textarea) {
         textarea.style.height = "auto";
@@ -183,7 +223,6 @@
         </div>
 
         <!-- main-content------- -->
-
         <div class="content-area">
             <div class="write-post-container">
                 <div class="user-profile">
@@ -195,7 +234,7 @@
                 </div>
 
                 <div class="post-upload-textarea">
-                    <textarea name="" placeholder="What's on your mind, Alex?" id="" cols="30" rows="3"></textarea>
+                    <textarea name="" placeholder="What's on your mind, Alex?" id="" cols="30" rows="3" onclick="post()"></textarea>
                     <div class="add-post-links">
                         <a href="#"><img src="images/live-video.png" alt="">Live Video</a>
                         <a href="#"><img src="images/photo.png" alt="">Photo/Video</a>
@@ -270,7 +309,8 @@
             </c:forEach>
 
 
-<%--            Mẫu 1 status--%>
+
+            <%--            Mẫu 1 status--%>
             <div class="status-field-container write-post-container">
                 <div class="user-profile-box">
                     <div class="user-profile">
@@ -339,17 +379,18 @@
                 let options;
                 let formEdit;
                 let hideOption = document.getElementsByClassName("options")
-                let body = document.querySelector("body");
+                let formPost;
 
+                let body = document.querySelector("body");
                 function edit() {
                     body.style.overflow = "hidden"
-                }
 
+                }
                 function toggleOptions(event) {
                     options = event.target.nextElementSibling;
                     options.classList.toggle("show");
-                }
 
+                }
                 function optionEdit() {
                     formEdit = document.querySelector(".form-edit");
                     options = document.querySelector(".options")
@@ -361,11 +402,21 @@
                 function hideEdit() {
                     formEdit = document.querySelector(".form-edit");
                     formEdit.classList.toggle("showEdit");
+
                     body.style.overflow = "auto";
+                }
+                function post(){
+                    formPost = document.querySelector(".form-post");
+                    formPost.classList.toggle("showPost");
+                }
+                function hidePost(){
+                    formPost = document.querySelector(".form-post");
+                    formPost.classList.toggle("showPost");
                 }
             </script>
             <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
         </div>
+
 
         <!-- sidebar------------ -->
         <div class="right-sidebar">
@@ -406,6 +457,7 @@
                 <p>Samona Rose</p>
             </div>
         </div>
+
     </div>
 </div>
 
