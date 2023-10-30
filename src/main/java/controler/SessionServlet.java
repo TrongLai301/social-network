@@ -76,7 +76,6 @@ public class SessionServlet extends HttpServlet {
         }
     }
 
-
     private void logOut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Xóa session
         req.getSession().invalidate();

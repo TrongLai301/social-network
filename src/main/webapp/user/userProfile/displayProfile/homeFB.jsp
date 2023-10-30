@@ -12,9 +12,9 @@
     <title>Facebook</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
-    <link rel="stylesheet" href="../display-home/style.css">
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
-    <%--    <script src="../display-home/function.js"></script>--%>
+    <link rel="stylesheet" href="../../../public/css/user/profile.css">
+<%--    <script src="../display-home/function.js"></script>--%>
 </head>
 <body>
 <div class="form-edit" id="edit">
@@ -159,35 +159,16 @@
     </nav>
     <script>
         const logo = document.getElementById("logoFB");
-
         function loadWeb() {
             setTimeout(function () {
                 location.reload()
                 location.scrollTo(0, 0)
             }, 1000)
         }
-
-
     </script>
 
-    <!-- content-area------------ -->
-
     <div class="container">
-        <div class="left-sidebar">
-            <div class="important-links">
-                <a href="#"><img src="../display-home/images/friends.png" alt="">Friends</a>
-            </div>
-            <div class="shortcut-links">
-                <p>Your Shortcuts</p>
-                <a href="#"> <img src="../display-home/images/shortcut-1.png" alt="">Web Developers</a>
-                <a href="#"> <img src="../display-home/images/shortcut-2.png" alt="">Web Design Course</a>
-                <a href="#"> <img src="../display-home/images/shortcut-3.png" alt="">Full Stack Development</a>
-                <a href="#"> <img src="../display-home/images/shortcut-4.png" alt="">Website Experts</a>
-            </div>
-        </div>
-
         <!-- main-content------- -->
-
         <div class="content-area">
             <div class="write-post-container">
                 <div class="user-profile">
@@ -457,46 +438,6 @@
                 }
             </script>
             <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
-        </div>
-
-        <!-- sidebar------------ -->
-        <div class="right-sidebar">
-            <div class="heading-link">
-                <h4>Events</h4>
-                <a href="">See All</a>
-            </div>
-            <div class="heading-link">
-                <h4>Advertisement</h4>
-                <a href="">Close</a>
-            </div>
-            <div class="advertisement">
-                <img src="../display-home/images/advertisement.png" class="advertisement-image" alt="">
-            </div>
-
-            <div class="heading-link">
-                <h4>Conversation</h4>
-                <a href="">Hide Chat</a>
-            </div>
-
-            <div class="online-list">
-                <div class="online">
-                    <img src="../display-home/images/member-1.png" alt="">
-                </div>
-                <p>Alison Mina</p>
-            </div>
-
-            <div class="online-list">
-                <div class="online">
-                    <img src="../display-home/images/member-2.png" alt="">
-                </div>
-                <p>Jackson Aston</p>
-            </div>
-            <div class="online-list">
-                <div class="online">
-                    <img src="../display-home/images/member-3.png" alt="">
-                </div>
-                <p>Samona Rose</p>
-            </div>
         </div>
     </div>
 </div>
