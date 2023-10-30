@@ -28,7 +28,7 @@
             <div class="underline-edit"></div>
             <div class="infoHost">
                 <img class="imgHost" src="../display-home/images/profile-pic.png" alt="">
-                <p>${requestScope.user.getUsername()}</p>
+                <p>${requestScope.user.name}</p>
             </div>
             <div class="imgTextEdit">
                 <div class="contentWrapper">
@@ -118,7 +118,7 @@
                 <div class="user-profile">
                     <img src="../display-home/images/profile-pic.png" alt="">
                     <div>
-                        <p>${requestScope.user.getUsername()}</p>
+                        <p>${requestScope.user.name}</p>
                         <a href="#">See your profile</a>
                     </div>
                 </div>
@@ -193,7 +193,7 @@
                 <div class="user-profile">
                     <img src="${requestScope.user.getAvatar()}" alt="">
                     <div>
-                        <p>${requestScope.user.getUsername()}</p>
+                        <p>${requestScope.user.name}</p>
                         <small>Public <i class="fas fa-caret-down"></i></small>
                     </div>
                 </div>
@@ -215,7 +215,7 @@
                         <div class="user-profile">
                             <img src="${user.avatar}" alt="Avatar">
                             <div>
-                                <p>${user.username}</p>
+                                <p>${user.name}</p>
                                 <small>${post.createTime}</small>
                             </div>
                         </div>

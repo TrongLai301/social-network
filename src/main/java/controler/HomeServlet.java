@@ -59,6 +59,9 @@ public class HomeServlet extends HttpServlet {
                     }
                     post.add(status);
                     userList.add(userPost);
+                }else{
+                    post.add(status);
+                    userList.add(userPost);
                 }
             }
             request.setAttribute("user",user);
@@ -97,7 +100,7 @@ public class HomeServlet extends HttpServlet {
                 for (Status status : list){
                     userPost = userDAO.getUserById(status.getId());
                     if (status.getIdUser() != idUser){
-                        if (status.getPermission() == 2){
+                        if (status.getPermission() == 2) {
                             continue;
                         }
                     }

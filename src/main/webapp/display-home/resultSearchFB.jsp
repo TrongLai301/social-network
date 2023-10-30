@@ -28,7 +28,7 @@
             <div class="underline-edit"></div>
             <div class="infoHost">
                 <img class="imgHost" src="../display-home/images/profile-pic.png" alt="">
-                <p>${requestScope.user.getUsername()}</p>
+                <p>${requestScope.user.name}</p>
             </div>
             <div class="imgTextEdit">
                 <div class="contentWrapper">
@@ -67,7 +67,7 @@
             <div class="search-box">
                 <img src="../display-home/images/search.png" alt="">
                 <form action="home?action=search" method="post">
-                <input type="text" placeholder="Search" name="searchContent">
+                    <input type="text" placeholder="Search" name="searchContent">
                 </form>
             </div>
         </div>
@@ -106,7 +106,7 @@
                 </li>
             </ul>
         </div>
-<%--        logo user--%>
+        <%--        logo user--%>
         <div class="nav-right">
             <div class="profile-image online" onclick="UserSettingToggle()">
                 <img src="${requestScope.user.getAvatar()}" alt="">
@@ -118,7 +118,7 @@
                 <div class="user-profile">
                     <img src="../display-home/images/profile-pic.png" alt="">
                     <div>
-                        <p>${requestScope.user.getUsername()}</p>
+                        <p>${requestScope.user.name}</p>
                         <a href="#">See your profile</a>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
 
     <!-- content-area------------ -->
 
-    <div class="container" style="justify-content: space-around">
+    <div class="container">
         <div class="left-sidebar">
             <div class="important-links">
                 <a href="#"><img src="../display-home/images/friends.png" alt="">Friends</a>
@@ -188,12 +188,12 @@
 
         <!-- main-content------- -->
 
-        <div class="content-area">
+        <div class="content-area" style="justify-content: space-around">
             <div class="write-post-container">
                 <div class="user-profile">
                     <img src="${requestScope.user.getAvatar()}" alt="">
                     <div>
-                        <p>${requestScope.user.getUsername()}</p>
+                        <p>${requestScope.user.name}</p>
                         <small>Public <i class="fas fa-caret-down"></i></small>
                     </div>
                 </div>
@@ -208,8 +208,6 @@
                 </div>
             </div>
 
-
-            <%--Display status--%>
             <c:forEach var="post" items="${requestScope.listStatusFindBySearch}" varStatus="status">
                 <c:set var="user" value="${requestScope.listUser[status.index]}" />
                 <div class="status-field-container write-post-container">
@@ -217,7 +215,7 @@
                         <div class="user-profile">
                             <img src="${user.avatar}" alt="Avatar">
                             <div>
-                                <p>${user.username}</p>
+                                <p>${user.name}</p>
                                 <small>${post.createTime}</small>
                             </div>
                         </div>

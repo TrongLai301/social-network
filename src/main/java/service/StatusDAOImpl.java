@@ -35,18 +35,15 @@ public class StatusDAOImpl implements IStatusDAO {
         Connection connection = DataConnector.getConnection();
         Statement statement = connection.createStatement();
         List<Status> list = new ArrayList<>();
-        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media ,status.idPermission ,idUser , username , namePermission from status inner join permissionStatus on status.idPermission = permissionStatus.idPermission inner join user on status.idUser = user.id where description like '%" + searchContent + "%' or username like '%" + searchContent +"%' ");
+        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media ,status.idPermission ,idUser , username , namePermission from status inner join permissionStatus on status.idPermission = permissionStatus.idPermission inner join user on status.idUser = user.id where description like '%" + searchContent + "%' or fullname like '%" + searchContent +"%' ");
                 while (resultSet.next()) {
                     Status status = new Status();
                     status.setId(resultSet.getInt("idStatus"));
                     status.setCreateTime(LocalDate.parse(resultSet.getString("createTime")));
                     status.setDescription(resultSet.getString("description"));
                     status.setMedia(resultSet.getString("media"));
-                    String permission = resultSet.getString("namePermission");
+                    status.setPermission(resultSet.getInt("idPermission"));
                     status.setIdUser(resultSet.getInt("idUser"));
-                    if (permission.equals("private")) {
-                        continue;
-                    }
                     list.add(status);
                 }
         return list;
