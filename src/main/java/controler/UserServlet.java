@@ -2,6 +2,7 @@ package controler;
 
 import model.Status;
 import model.User;
+import service.StatusDAOImpl;
 import service.UserDAOImpl;
 import service.Validate.PasswordValidate;
 
@@ -19,6 +20,8 @@ import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @WebServlet(name = "UserServlet", value = "/user")
@@ -26,12 +29,14 @@ import java.util.Objects;
 public class UserServlet extends HttpServlet {
     PasswordValidate passwordValidate;
     UserDAOImpl userDAO;
+    StatusDAOImpl statusDAO;
     private static final String IMG_DIR = "/WEB-INF/img"; // Đường dẫn đến thư mục lưu trữ ảnh và video đính kèm
 
     @Override
     public void init() throws ServletException {
         passwordValidate = new PasswordValidate();
         userDAO = new UserDAOImpl();
+        statusDAO = new StatusDAOImpl();
     }
 
     @Override
@@ -186,9 +191,22 @@ public class UserServlet extends HttpServlet {
     private void showUserProfile (HttpServletRequest req, HttpServletResponse resp){
         try {
             int id = Integer.parseInt(req.getParameter("id"));
-            User user = userDAO.getUserById(id);
-            req.setAttribute("userProfile",user);
-            req.getRequestDispatcher("/user/userProfile/displayProfile/homeFB.jsp").forward(req, resp);
+            User userFind = userDAO.getUserById(id);
+            List<User> userList = new ArrayList<>();
+            User userPost;
+            List<Status> defaultPost = statusDAO.getAllStatus();
+            List<Status> newPost = new ArrayList<>();
+            for (Status status : defaultPost){
+                userPost = userDAO.getUserById(status.getIdUser());
+                if (status.getIdUser() == id){
+                    newPost.add(status);
+                    userList.add(userPost);
+                }
+            }
+            req.setAttribute("user",userFind);
+            req.setAttribute("listStatus",newPost);
+            req.setAttribute("listUser",userList);
+            req.getRequestDispatcher("/user/userProfile/displayProfile/profile.jsp").forward(req, resp);
         } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
