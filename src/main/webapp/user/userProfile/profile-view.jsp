@@ -118,7 +118,7 @@
                             <hr>
                             <div class="row">
                                 <div class="d-flex justify-content-center mb-2">
-                                    <button id="js.submitButton" disabled type="submit" class="btn btn-primary">Save</button>
+                                    <button id="js.submitButton" type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                             <div class="row ">

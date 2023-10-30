@@ -44,15 +44,18 @@ public class HomeServlet extends HttpServlet {
     public void findStatusByName(HttpServletRequest request ,HttpServletResponse response){
         String searchContent = request.getParameter("searchContent");
         List<User> userList = new ArrayList<>();
+
+
         try {
             HttpSession session = request.getSession();
             Integer idUser = (Integer) session.getAttribute("idAccount");
             User user = userDAO.getUserById(idUser);
             List<Status> list = statusDAO.findStatus(searchContent);
             List<Status> post = new ArrayList<>();
+            List<User> userResult = statusDAO.getAllUserToSearch(searchContent);
             User userPost;
             for (Status status : list){
-                userPost = userDAO.getUserById(status.getId());
+                userPost = userDAO.getUserById(status.getIdUser());
                 if (status.getIdUser() != idUser){
                     if (status.getPermission() == 2){
                         continue;
@@ -64,6 +67,7 @@ public class HomeServlet extends HttpServlet {
                     userList.add(userPost);
                 }
             }
+            request.setAttribute("UserResult",userResult);
             request.setAttribute("user",user);
             request.setAttribute("listStatusFindBySearch",post);
             request.setAttribute("listUser",userList);
@@ -98,7 +102,7 @@ public class HomeServlet extends HttpServlet {
                 List<Status> list = statusDAO.getAllStatus();
                 List<Status> post = new ArrayList<>();
                 for (Status status : list){
-                    userPost = userDAO.getUserById(status.getId());
+                    userPost = userDAO.getUserById(status.getIdUser());
                     if (status.getIdUser() != idUser){
                         if (status.getPermission() == 2) {
                             continue;

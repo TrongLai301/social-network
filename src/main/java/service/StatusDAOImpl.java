@@ -29,13 +29,31 @@ public class StatusDAOImpl implements IStatusDAO {
         }
         return statusList;
     }
+    public List<User> getAllUserToSearch(String searchContent) throws SQLException, ClassNotFoundException {
+        Connection connection = DataConnector.getConnection();
+        Statement statement = connection.createStatement();
+        List<User> list = new ArrayList<>();
+        ResultSet resultSet = statement.executeQuery(" select * from user where username  like '%" + searchContent +"%' or fullname like '%"+searchContent+"%'");
+        while (resultSet.next()) {
+            User user = new User();
+            user.setId(resultSet.getInt("id"));
+            user.setUsername(resultSet.getString("username"));
+            user.setAvatar(resultSet.getString("avatar"));
+            user.setName(resultSet.getString("fullname"));
+            user.setAddress(resultSet.getString("address"));
+            user.setHobby(resultSet.getString("hobby"));
+            list.add(user);
+        }
+        return list;
+    }
+
 
     @Override
     public List<Status> findStatus(String searchContent) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
         Statement statement = connection.createStatement();
         List<Status> list = new ArrayList<>();
-        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media ,status.idPermission ,idUser , username , namePermission from status inner join permissionStatus on status.idPermission = permissionStatus.idPermission inner join user on status.idUser = user.id where description like '%" + searchContent + "%' or fullname like '%" + searchContent +"%' ");
+        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media ,status.idPermission ,idUser , username , namePermission from status inner join permissionStatus on status.idPermission = permissionStatus.idPermission left join user on status.idUser = user.id where description like '%" + searchContent + "%' or fullname like '%" + searchContent +"%' ");
                 while (resultSet.next()) {
                     Status status = new Status();
                     status.setId(resultSet.getInt("idStatus"));

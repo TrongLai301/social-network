@@ -16,7 +16,7 @@ create table user(
                      phone varchar(20),
                      gender boolean,
                      hobby nvarchar(200),
-                     avatar nvarchar(200),
+                     avatar nvarchar(500),
                      address nvarchar(200),
                      status enum('working','block') default 'working',
                      CONSTRAINT CHK_PasswordLength CHECK (length(password) >= 6 AND length(password)<= 32),

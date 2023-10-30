@@ -172,7 +172,7 @@
 
     <!-- content-area------------ -->
 
-    <div class="container">
+    <div class="container" style="padding: 30px;justify-content: space-around">
         <div class="left-sidebar">
             <div class="important-links">
                 <a href="#"><img src="../display-home/images/friends.png" alt="">Friends</a>
@@ -190,30 +190,28 @@
 
         <div class="content-area" style="justify-content: space-around">
             <div class="write-post-container">
-                <div class="user-profile">
-                    <img src="${requestScope.user.getAvatar()}" alt="">
-                    <div>
-                        <p>${requestScope.user.name}</p>
-                        <small>Public <i class="fas fa-caret-down"></i></small>
-                    </div>
-                </div>
-
+                          <div style="text-align: center">Người dùng liên quan</div>
                 <div class="post-upload-textarea">
-                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3"></textarea>
-                    <div class="add-post-links">
-                        <a href="#"><img src="../display-home/images/live-video.png" alt="">Live Video</a>
-                        <a href="#"><img src="../display-home/images/photo.png" alt="">Photo/Video</a>
-                        <a href="#"><img src="../display-home/images/feeling.png" alt="">Feeling Activity</a>
+                 <c:forEach var="item" items="${requestScope.UserResult}">
+                    <div style="display: inline-flex; justify-content: flex-start;margin-bottom: 30px;width: 100%;">
+                        <div><img src="${item.avatar}" style="border: 1px solid;border-radius: 50%;width: 50px;height: 50px" alt="Avatar"></div>
+                        <div style="margin-left: 40px" >
+                            <p>${item.name}</p>
+                            <p>${item.hobby}</p>
+                        </div>
                     </div>
+
+
+                 </c:forEach>
                 </div>
             </div>
-
+            <div style="text-align: center;padding-top: 40px">Các bài viết liên quan</div>
             <c:forEach var="post" items="${requestScope.listStatusFindBySearch}" varStatus="status">
                 <c:set var="user" value="${requestScope.listUser[status.index]}" />
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
-                            <img src="${user.avatar}" alt="Avatar">
+                            <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
                             <div>
                                 <p>${user.name}</p>
                                 <small>${post.createTime}</small>

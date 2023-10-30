@@ -27,8 +27,8 @@
 
             <div class="underline-edit"></div>
             <div class="infoHost">
-                <img class="imgHost" src="../display-home/images/profile-pic.png" alt="">
-                <p>${requestScope.user.name}</p>
+                <img class="imgHost" src="/../../display-home/images/profile-pic.png" alt="">
+                <p>${requestScope.userMain.name}</p>
             </div>
             <div class="imgTextEdit">
                 <div class="contentWrapper">
@@ -118,7 +118,7 @@
                 <div class="user-profile">
                     <img src="${requestScope.user.avatar}" alt="">
                     <div>
-                        <p>${requestScope.user.name} </p>
+                        <p>${requestScope.user.name}</p>
                         <a href="/user?actionGet=showUserProfile">See your profile</a>
                     </div>
                 </div>
@@ -137,7 +137,7 @@
             <hr>
             <div class="settings-links">
                 <img src="../display-home/images/setting.png" alt="" class="settings-icon">
-                <a href="/user?actionGet=showEditPassword">Settings your password <img src="../display-home/images/arrow.png" alt=""></a>
+                <a href="/user?actionGet=showEditPassword">Settings & Privary <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -146,8 +146,8 @@
             </div>
 
             <div class="settings-links">
-                <img src="../display-home/images/display.png" alt="" class="settings-icon">
-                <a href="/user?actionGet=updateUserProfile">Display & Edit your profile <img src="../display-home/images/arrow.png" alt=""></a>
+                <img src="../display-home/images/Display.png" alt="" class="settings-icon">
+                <a href="#">Display & Accessibility <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -215,7 +215,7 @@
                         <div class="user-profile" >
                             <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
                             <div>
-                                <a href="/user?actionGet=showUserProfile&id=${user.id}" style="text-decoration: none;color: black">${user.name}</a><br>
+                                <p>${user.name}</p>
                                 <small>${post.createTime}</small>
                             </div>
                         </div>
