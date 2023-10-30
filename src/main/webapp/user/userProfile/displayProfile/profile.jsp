@@ -1,10 +1,10 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: trong
-  Date: 10/25/23
-  Time: 9:10 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.io.PrintWriter" %><%--&lt;%&ndash;--%>
+<%--  Created by IntelliJ IDEA.--%>
+<%--  User: trong--%>
+<%--  Date: 10/25/23--%>
+<%--  Time: 9:10 AM--%>
+<%--  To change this template use File | Settings | File Templates.--%>
+<%--&ndash;%&gt;--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -18,35 +18,65 @@
 <%--    <script src="../display-home/function.js"></script>--%>
 </head>
 <body>
+<c:if test="${requestScope.messageDelete != null}">
+    <%
+        PrintWriter printWriter = response.getWriter();
+        printWriter.println("<script type=\"text/javascript\">");
+        printWriter.println("alert('xóa bài viết thành công');");
+        printWriter.println("</script>");
+    %>
+</c:if><c:if test="${requestScope.messageDeleteFalse != null}">
+    <%
+        PrintWriter printWriter = response.getWriter();
+        printWriter.println("<script type=\"text/javascript\">");
+        printWriter.println("alert('xóa bài viết thất bại');");
+        printWriter.println("</script>");
+    %>
+</c:if>
+<c:if test="${requestScope.messageEditComplete != null}">
+    <%
+        PrintWriter printWriter = response.getWriter();
+        printWriter.println("<script type=\"text/javascript\">");
+        printWriter.println("alert('sửa bài viết thành công');");
+        printWriter.println("</script>");
+    %>
+</c:if><c:if test="${requestScope.messageEditFalse != null}">
+    <%
+        PrintWriter printWriter = response.getWriter();
+        printWriter.println("<script type=\"text/javascript\">");
+        printWriter.println("alert('sửa bài viết thất bại');");
+        printWriter.println("</script>");
+    %>
+</c:if>
 <div class="form-edit" id="edit">
     <div class="editFormDiv" id="divEditForm">
-        <form class="editForm" id="editForm">
-            <div class="header-edit">
-                <p>Chỉnh sửa bài viết</p>
-                <input type="button" id="close" onclick="hideEdit()" value="x">
-            </div>
+<%--        <form class="editForm" method="post" action="/user?actionPost=editStatus" id="editForm">--%>
+<%--            <div class="header-edit">--%>
+<%--                <p>Chỉnh sửa bài viết</p>--%>
+<%--                <input type="button" id="close" onclick="hideEdit()" value="x">--%>
+<%--            </div>--%>
 
-            <div class="underline-edit"></div>
-            <div class="infoHost">
-                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px" alt="">
-                <p>${requestScope.user.name}</p>
-            </div>
-            <div class="imgTextEdit">
-                <div class="contentWrapper">
-                    <div class="textarea">
-                        <textarea placeholder="What do you think?" oninput="description(this)"
-                                  class="textareaDescription"></textarea>
-                    </div>
-                    <div class="divImgEdit" id="imgStatus">
-                        <input type="button" onclick="deleteImg()" value="x">
-                        <img src="${requestScope.user}" alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="submit-edit">
-                <input type="submit" value="Post">
-            </div>
-        </form>
+<%--            <div class="underline-edit"></div>--%>
+<%--            <div class="infoHost">--%>
+<%--                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px" alt="">--%>
+<%--                <p>${requestScope.user.name}</p>--%>
+<%--            </div>--%>
+<%--            <div class="imgTextEdit">--%>
+<%--                <div class="contentWrapper"></div>--%>
+<%--                            <option value="1">public</option>--%>
+<%--                            <option value="2">private</option>--%>
+<%--                        </select>--%>
+<%--                    </div>--%>
+<%--&lt;%&ndash;                    <div class="divImgEdit" id="imgStatus">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <input type="button" onclick="deleteImg()" value="x">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <img src="${requestScope.user}" alt="">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div class="submit-edit">--%>
+<%--                <input type="submit" value="Edit">--%>
+<%--            </div>--%>
+<%--        </form>--%>
     </div>
 </div>
 <script>
@@ -138,7 +168,7 @@
             <hr>
             <div class="settings-links">
                 <img src="../display-home/images/setting.png" alt="" class="settings-icon">
-                <a href="/user?actionGet=showEditPassword">Settings & Privary <img src="../display-home/images/arrow.png" alt=""></a>
+                <a href="/user?actionGet=showEditPassword">Settings password <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -148,7 +178,7 @@
 
             <div class="settings-links">
                 <img src="../display-home/images/display.png" alt="" class="settings-icon">
-                <a href="user?actionGet=updateUserProfile">Display & Accessibility <img src="../display-home/images/arrow.png" alt=""></a>
+                <a href="user?actionGet=updateUserProfile">Edit Profile <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -225,13 +255,20 @@
                             <p class="choose" onclick="toggleOptions(event)">
                                 ...
                             </p>
-                            <div class="options" id="option">
+                            <div class="options" id="option" style="height: 500px">
                                 <ul class="option-ul" style="list-style: none">
-                                    <li onclick="optionEdit(event)">
-                                        <div class="div-li" onclick="edit()">
-                                        <span>
-                                            Edit
-                                        </span>
+                                    <li onclick="">
+                                        <div class="div-li"  onclick="edit()">
+                                            <form action="/user?actionPost=editStatus" method="post">
+                                                <input type="hidden" name="idStatus" value="${post.id}">
+                                                <input type="text" name="description" value="${post.description}" >
+                                                <input type="text" name="media" value="${post.media}" >
+                                                <select name="option">
+                                                    <option value="1">public</option>
+                                                    <option value="2">private</option>
+                                                </select>
+                                                <input type="submit" value="Edit Status"/>
+                                            </form>
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                                                 <style>svg {
                                                     fill: #2265d8
@@ -245,7 +282,10 @@
                                     </li>
                                     <li>
                                         <div class="div-li">
-                                            <span>Delete</span>
+                                            <form action="/user?actionPost=deleteStatus" method="post">
+                                                <input type="hidden" name="idStatus" value="${post.id}">
+                                                <input type="submit" value="Delete"/>
+                                            </form>
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
                                                  class="icon-option">
                                                 <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -260,8 +300,7 @@
                             </div>
                         </div>
                     </div>
-
-                                  <div class="status-field">
+                                 <div class="status-field">
                                      <p>${post.description}</p>
                                      <img src="${post.media}"/>
                                     </div>

@@ -41,6 +41,7 @@ public class HomeServlet extends HttpServlet {
                 break;
         }
     }
+
     public void findStatusByName(HttpServletRequest request ,HttpServletResponse response){
         String searchContent = request.getParameter("searchContent");
         List<User> userList = new ArrayList<>();
