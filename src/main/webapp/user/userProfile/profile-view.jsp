@@ -1,4 +1,4 @@
-<%@ page import="java.io.PrintWriter" %><%--@elvariable id="userNeedToEdit" type="model.User"--%>
+<%@ page import="java.io.PrintWriter" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin

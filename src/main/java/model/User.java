@@ -56,12 +56,13 @@ public class User {
     }
 
 
-    public User(int id, String username, String password, String permission, String status) {
+    public User(int id, String username, String password, String permission, String status,String email) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.permission = permission;
         this.status = status;
+        this.email = email;
     }
 
     public User() {
