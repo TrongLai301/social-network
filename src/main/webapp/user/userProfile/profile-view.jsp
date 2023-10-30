@@ -1,4 +1,4 @@
-<%@ page import="java.io.PrintWriter" %><%--@elvariable id="userNeedToEdit" type="model.User"--%>
+<%@ page import="java.io.PrintWriter" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -118,7 +118,7 @@
                             <hr>
                             <div class="row">
                                 <div class="d-flex justify-content-center mb-2">
-                                    <button id="js.submitButton" disabled type="submit" class="btn btn-primary">Save</button>
+                                    <button id="js.submitButton" type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                             <div class="row ">
