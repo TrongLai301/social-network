@@ -185,8 +185,9 @@ public class UserServlet extends HttpServlet {
     }
     private void showUserProfile (HttpServletRequest req, HttpServletResponse resp){
         try {
-            int id = Integer.parseInt(req.getParameter("id"));
-            User user = userDAO.getUserById(id);
+            HttpSession session = req.getSession();
+            Integer idUser = (Integer) session.getAttribute("idAccount");
+            User user = userDAO.getUserById(idUser);
             req.setAttribute("userProfile",user);
             req.getRequestDispatcher("/user/userProfile/displayProfile/homeFB.jsp").forward(req, resp);
         } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
