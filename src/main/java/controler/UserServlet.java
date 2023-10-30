@@ -190,10 +190,12 @@ public class UserServlet extends HttpServlet {
     }
     private void showUserProfile (HttpServletRequest req, HttpServletResponse resp){
         try {
-            int id = Integer.parseInt(req.getParameter("id"));
-            User userFind = userDAO.getUserById(id);
+            HttpSession session = req.getSession();
+            Integer idUser = (Integer) session.getAttribute("idAccount");
+            User userFind = userDAO.getUserById(idUser);
             List<User> userList = new ArrayList<>();
             User userPost;
+            int id = Integer.parseInt(req.getParameter("id"));
             List<Status> defaultPost = statusDAO.getAllStatus();
             List<Status> newPost = new ArrayList<>();
             for (Status status : defaultPost){
@@ -202,7 +204,9 @@ public class UserServlet extends HttpServlet {
                     newPost.add(status);
                     userList.add(userPost);
                 }
+
             }
+
             req.setAttribute("user",userFind);
             req.setAttribute("listStatus",newPost);
             req.setAttribute("listUser",userList);

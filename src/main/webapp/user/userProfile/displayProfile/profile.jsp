@@ -167,9 +167,12 @@
             }, 1000)
         }
     </script>
+    <div style="width: 100% ; height: 400px;background-color: #4e9afa">
 
-    <div class="container">
+    </div>
+    <div class="container" >
         <!-- main-content------- -->
+
         <div class="content-area">
             <div class="write-post-container">
                 <div class="user-profile">

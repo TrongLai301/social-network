@@ -119,7 +119,7 @@
                     <img src="${requestScope.user.avatar}" alt="">
                     <div>
                         <p>${requestScope.user.name} </p>
-                        <a href="/user?actionGet=showUserProfile">See your profile</a>
+                        <a href="/user?actionGet=showUserProfile&id=${requestScope.user.id}">See your profile</a>
                     </div>
                 </div>
                 <div id="dark-button" onclick="darkModeON()">
@@ -146,7 +146,7 @@
             </div>
 
             <div class="settings-links">
-                <img src="../display-home/images/Display.png" alt="" class="settings-icon">
+                <img src="../display-home/images/display.png" alt="" class="settings-icon">
                 <a href="#">Display & Accessibility <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
