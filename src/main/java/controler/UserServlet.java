@@ -202,11 +202,18 @@ public class UserServlet extends HttpServlet {
             List<Status> newPost = new ArrayList<>();
             for (Status status : defaultPost){
                 userPost = userDAO.getUserById(status.getIdUser());
-                if (status.getIdUser() == id){
-                    newPost.add(status);
-                    userList.add(userPost);
+                if (status.getIdUser() == id) {
+                    if (id == userFind.getId()) {
+                        newPost.add(status);
+                        userList.add(userPost);
+                    }else{
+                        if (status.getPermission() == 2){
+                            continue;
+                        }
+                        newPost.add(status);
+                        userList.add(userPost);
+                    }
                 }
-
             }
 
             req.setAttribute("user",userFind);
