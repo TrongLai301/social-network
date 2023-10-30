@@ -571,7 +571,24 @@ img.coverImage {
 }
 
 .profile-container {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    padding: 20px 20%;
+=======
+>>>>>>> 28cba3224abad9b06b19f0ecb9015ea1a70ea202
+<<<<<<< HEAD
     padding: 20px 15%;
+=======
+    padding: 20px 20%;
+>>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
+<<<<<<< HEAD
+=======
+    padding: 20px 20%;
+>>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
+=======
+>>>>>>> 76a496f1f1cb50cca46256f56329afa254163a27
+>>>>>>> 28cba3224abad9b06b19f0ecb9015ea1a70ea202
     color: #626262;
 }
 
@@ -650,7 +667,24 @@ img.coverImage {
 }
 
 .content-area.profile-content-area {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    flex-basis: 100%;
+=======
+>>>>>>> 28cba3224abad9b06b19f0ecb9015ea1a70ea202
+<<<<<<< HEAD
     flex-basis: 65%;
+=======
+    flex-basis: 100%;
+>>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
+<<<<<<< HEAD
+=======
+    flex-basis: 100%;
+>>>>>>> 20f8fd11897852297bf3b73924fffe8750c205dd
+=======
+>>>>>>> 76a496f1f1cb50cca46256f56329afa254163a27
+>>>>>>> 28cba3224abad9b06b19f0ecb9015ea1a70ea202
 }
 
 .left-profile-sidebar-top {
