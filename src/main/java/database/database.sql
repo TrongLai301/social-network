@@ -56,7 +56,7 @@ create table permissionStatus(
 -- bang status
 create table status(
                        idStatus int auto_increment primary key,
-                       createTime datetime,
+                       createTime date,
                        description nvarchar(600),
                        media text(65530),
                        idUser int,
