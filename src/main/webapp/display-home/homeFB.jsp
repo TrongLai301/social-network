@@ -37,13 +37,13 @@
     <div class="editFormDiv" id="divEditForm">
         <form class="editForm" id="editForm">
             <div class="header-edit">
-                <p>Chỉnh sửa bài viết</p>
+                <p>Edit status</p>
                 <input type="button" id="close" onclick="hideEdit()" value="x">
             </div>
 
             <div class="underline-edit"></div>
             <div class="infoHost">
-                <img class="imgHost" src="${requestScope.user.avatar}" alt="">
+                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">
                 <p>${requestScope.user.name}</p>
             </div>
             <div class="imgTextEdit">
@@ -62,42 +62,84 @@
         </form>
     </div>
 </div>
+<%--<div class="form-post" id="post">--%>
+<%--    <div class="editFormDiv" id="divPostForm">--%>
+<%--        <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">--%>
+<%--            <div class="header-edit">--%>
+<%--                <p>Đăng bài viết</p>--%>
+<%--                <input type="button" id="closePost" onclick="hidePost()" value="x">--%>
+<%--            </div>--%>
+
+<%--            <div class="underline-edit"></div>--%>
+<%--            <div class="infoHost">--%>
+<%--                <img class="imgHost" src="${requestScope.user.avatar}" alt="">--%>
+<%--                <p>${requestScope.user.name}</p>--%>
+<%--            </div>--%>
+<%--            <div class="imgTextEdit">--%>
+<%--                <div class="contentWrapper">--%>
+<%--                    <div class="textarea">--%>
+<%--                        <textarea placeholder="What do you think?" oninput="description(this)"--%>
+<%--                                 name="description" class="textareaDescription"></textarea>--%>
+<%--                    </div>--%>
+<%--                    <div class="textarea">--%>
+<%--                        <textarea placeholder="your picture?" oninput="description(this)"--%>
+<%--                                  name="media" class="textareaDescription"></textarea>--%>
+<%--                    </div>--%>
+<%--                    <c:if test="${sessionScope.error != null}">--%>
+<%--                        <span style="color: red">${sessionScope.error}</span>--%>
+<%--                    </c:if>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div>--%>
+<%--                <input type="file" accept="image/*,video/*" id="media" value="" name="fileImage">--%>
+<%--            </div>--%>
+<%--            <div>--%>
+<%--                <select name="option">--%>
+<%--                    <option value="1">public</option>--%>
+<%--                    <option value="2">private</option>--%>
+<%--                </select>--%>
+<%--            </div>--%>
+<%--            <div class="submit-edit">--%>
+<%--                <input type="submit" value="upload">--%>
+<%--            </div>--%>
+<%--        </form>--%>
+<%--    </div>--%>
+<%--</div>--%>
+<%--<script>--%>
+<%--    function description(textarea) {--%>
+<%--        textarea.style.height = "auto";--%>
+<%--        textarea.style.height = textarea.scrollHeight + "px";--%>
+<%--    }--%>
+<%--</script>--%>
 <div class="form-post" id="post">
     <div class="editFormDiv" id="divPostForm">
         <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">
             <div class="header-edit">
-                <p>Đăng bài viết</p>
+                <p>Post status</p>
                 <input type="button" id="closePost" onclick="hidePost()" value="x">
             </div>
 
             <div class="underline-edit"></div>
             <div class="infoHost">
-                <img class="imgHost" src="${requestScope.user.avatar}" alt="">
-                <p>${requestScope.user.name}</p>
+                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">
+                <div class="displayName">
+                    <p class="p">${requestScope.user.name}</p>
+                    <select class="select1" name="option">
+                        <option value="1">public</option>
+                        <option value="2">private</option>
+                    </select>
+                </div>
             </div>
             <div class="imgTextEdit">
                 <div class="contentWrapper">
                     <div class="textarea">
-                        <textarea placeholder="What do you think?" oninput="description(this)"
-                                 name="description" class="textareaDescription"></textarea>
+                        <textarea placeholder="What do you think?" oninput="descriptions(this)"
+                                  name="description" class="textareaDescription"></textarea>
                     </div>
                     <div class="textarea">
-                        <textarea placeholder="your picture?" oninput="description(this)"
-                                  name="media" class="textareaDescription"></textarea>
+                        <textarea placeholder="your picture?" name="media" class="textareaDescription"></textarea>
                     </div>
-                    <c:if test="${sessionScope.error != null}">
-                        <span style="color: red">${sessionScope.error}</span>
-                    </c:if>
                 </div>
-            </div>
-            <div>
-                <input type="file" accept="image/*,video/*" id="media" value="" name="fileImage">
-            </div>
-            <div>
-                <select name="option">
-                    <option value="1">public</option>
-                    <option value="2">private</option>
-                </select>
             </div>
             <div class="submit-edit">
                 <input type="submit" value="upload">
@@ -106,12 +148,11 @@
     </div>
 </div>
 <script>
-    function description(textarea) {
+    function descriptions(textarea) {
         textarea.style.height = "auto";
         textarea.style.height = textarea.scrollHeight + "px";
     }
 </script>
-
 <div class="divFather">
     <nav class="navbar">
         <div class="nav-left">
@@ -162,14 +203,14 @@
         <%--        logo user--%>
         <div class="nav-right">
             <div class="profile-image online" onclick="UserSettingToggle()">
-                <img src="${requestScope.user.getAvatar()}" alt="">
+                <img src="${requestScope.user.getAvatar()}" style="height: 50px;width: 50px" alt="">
             </div>
 
         </div>
         <div class="user-settings">
             <div class="profile-darkButton">
                 <div class="user-profile">
-                    <img src="${requestScope.user.avatar}" alt="">
+                    <img src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">
                     <div>
                         <p>${requestScope.user.name} </p>
                         <a href="user?actionGet=showUserProfile&id=${requestScope.user.id}">See your profile</a>
@@ -246,7 +287,7 @@
         <div class="content-area">
             <div class="write-post-container">
                 <div class="user-profile">
-                    <img src="${requestScope.user.getAvatar()}" alt="">
+                    <img src="${requestScope.user.getAvatar()}" style="height: 50px;width: 50px" alt="">
                     <div>
                         <p>${requestScope.user.name}</p>
                         <small>Public <i class="fas fa-caret-down"></i></small>
@@ -268,11 +309,19 @@
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
-                            <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
+                            <img src="${user.avatar}" style="height: 50px;width: 50px" alt="Avatar">
                             <div>
                                 <a href="/user?actionGet=showUserProfile&id=${user.id}"
                                    style="text-decoration: none;color: black">${user.name}</a><br>
                                 <small>${post.createTime}</small>
+                                <c:choose>
+                                <c:when test="${post.permission == 1}">
+                                    <small>public</small>
+                                </c:when>
+                                <c:otherwise>
+                                    <small>private</small>
+                                </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                         <div class="ellipsis-container">
@@ -283,7 +332,10 @@
                                 <ul class="option-ul" style="list-style: none ;height: 60px;">
                                     <li>
                                         <div class="div-li">
-                                            <span>Delete</span>
+                                            <form action="/user?actionPost=deleteStatus" method="post">
+                                                <input type="hidden" name="idStatus" value="${post.id}">
+                                                <input type="submit" value="Delete"/>
+                                            </form>
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
                                                  class="icon-option">
                                                 <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->

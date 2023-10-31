@@ -79,6 +79,42 @@
 <%--        </form>--%>
     </div>
 </div>
+<div class="form-post" id="post">
+    <div class="editFormDiv" id="divPostForm">
+        <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">
+            <div class="header-edit">
+                <p>Post stauts</p>
+                <input type="button" id="closePost" onclick="hidePost()" value="x">
+            </div>
+
+            <div class="underline-edit"></div>
+            <div class="infoHost">
+                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">
+                <div class="displayName">
+                    <p class="p">${requestScope.user.name}</p>
+                    <select class="select1" name="option">
+                        <option value="1">public</option>
+                        <option value="2">private</option>
+                    </select>
+                </div>
+            </div>
+            <div class="imgTextEdit">
+                <div class="contentWrapper">
+                    <div class="textarea">
+                        <textarea placeholder="What do you think?" oninput="descriptions(this)"
+                                  name="description" class="textareaDescription"></textarea>
+                    </div>
+                    <div class="textarea">
+                        <textarea placeholder="your picture?" name="media" class="textareaDescription"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="submit-edit">
+                <input type="submit" value="upload">
+            </div>
+        </form>
+    </div>
+</div>
 <script>
     function description(textarea) {
         textarea.style.height = "auto";
@@ -147,7 +183,7 @@
         <div class="user-settings">
             <div class="profile-darkButton">
                 <div class="user-profile">
-                    <img src="${requestScope.user.avatar}" style="height: 50px" alt="">
+                    <img src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">
                     <div>
                         <p>${requestScope.user.name}</p>
                         <a href="/user?actionGet=showUserProfile">See your profile</a>
@@ -201,7 +237,7 @@
     </div>
     <div style="width: 100% ; height: 160px;background-color: #ffffff;display: inline-flex;justify-content: space-between;border-radius: 15px">
        <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
-           <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;"></div>
+           <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
            <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
                                                                                                     <p style="padding-left: 20px;">Bạn bè : </p></div>
        </div>
@@ -215,11 +251,11 @@
              <div><button style="border: 1px solid;
     border-radius: 15px;
     width: 100px;
-    height: 30px;">Thêm vào tin</button></div>
+    height: 30px;">up status</button></div>
              <div><button style="border: 1px solid;
     border-radius: 15px;
     width: 200px;
-    height: 30px;">Chỉnh sửa trang cá nhân</button></div>
+    height: 30px;">Edit profile</button></div>
         </div>
 
     </div>
@@ -238,7 +274,7 @@
                <div style="text-align: center">${requestScope.userFind.birth}</div>
            </div><br>
            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
-               <p ><h3 >Kho ảnh đã đăng</h3></p>
+               <p ><h3 >Picture library</h3></p>
                <br>
                <c:forEach var="media" items="${requestScope.listStatus}">
                    <div style="padding-top: 20px;padding-left: 10px">
@@ -251,7 +287,7 @@
         <div class="content-area" style="float: right">
             <div class="write-post-container">
                 <div class="user-profile">
-                    <img src="${requestScope.user.getAvatar()}" style="height: 50px" alt="">
+                    <img src="${requestScope.user.getAvatar()}" style="height: 50px;width: 50px" alt="">
                     <div>
                         <p>${requestScope.user.name}</p>
                         <small>Public <i class="fas fa-caret-down"></i></small>
@@ -259,7 +295,7 @@
                 </div>
 
                 <div class="post-upload-textarea">
-                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3"></textarea>
+                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3" onclick="post()"></textarea>
                     <div class="add-post-links">
                         <a href="#"><img src="../display-home/images/live-video.png" alt="">Live Video</a>
                         <a href="#"><img src="../display-home/images/photo.png" alt="">Photo/Video</a>
@@ -273,10 +309,18 @@
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
-                            <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
+                            <img src="${user.avatar}" style="height: 50px;width: 50px" alt="Avatar">
                             <div>
                                 <p>${user.name}</p>
                                 <small>${post.createTime}</small>
+                                <c:choose>
+                                    <c:when test="${post.permission == 1}">
+                                        <small>public</small>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <small>private</small>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                         <div class="ellipsis-container">
@@ -376,6 +420,16 @@
                                     formEdit.classList.toggle("showEdit");
                                     body.style.overflow = "auto";
                                 }
+
+                            function post() {
+                                formPost = document.querySelector(".form-post");
+                                formPost.classList.toggle("showPost");
+                            }
+
+                            function hidePost() {
+                                formPost = document.querySelector(".form-post");
+                                formPost.classList.toggle("showPost");
+                            }
                             </script>
                             <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
                         </div>
