@@ -46,7 +46,24 @@ public class StatusDAOImpl implements IStatusDAO {
         }
         return list;
     }
-
+    public Status getStatusById(int id) throws SQLException, ClassNotFoundException {
+        Connection connection = DataConnector.getConnection();
+        Statement statement = connection.createStatement();
+        List<Status> list = new ArrayList<>();
+        Status status = null;
+        ResultSet resultSet = statement.executeQuery("select * from status where idStatus = '" + id + "'");
+        while (resultSet.next()) {
+            status = new Status();
+            status.setId(resultSet.getInt("idStatus"));
+            status.setCreateTime(LocalDate.parse(resultSet.getString("createTime")));
+            status.setDescription(resultSet.getString("description"));
+            status.setMedia(resultSet.getString("media"));
+            status.setPermission(resultSet.getInt("idPermission"));
+            status.setIdUser(resultSet.getInt("idUser"));
+            list.add(status);
+        }
+        return status;
+    }
 
     @Override
     public List<Status> findStatus(String searchContent) throws SQLException, ClassNotFoundException {

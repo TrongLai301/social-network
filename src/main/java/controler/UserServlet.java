@@ -1,7 +1,9 @@
 package controler;
 
+import DBcontext.DataConnector;
 import model.Status;
 import model.User;
+import service.StatusDAOImpl;
 import service.UserDAOImpl;
 import service.Validate.PasswordValidate;
 
@@ -16,9 +18,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @WebServlet(name = "UserServlet", value = "/user")
@@ -26,12 +32,14 @@ import java.util.Objects;
 public class UserServlet extends HttpServlet {
     PasswordValidate passwordValidate;
     UserDAOImpl userDAO;
+    StatusDAOImpl statusDAO;
     private static final String IMG_DIR = "/WEB-INF/img"; // Đường dẫn đến thư mục lưu trữ ảnh và video đính kèm
 
     @Override
     public void init() throws ServletException {
         passwordValidate = new PasswordValidate();
         userDAO = new UserDAOImpl();
+        statusDAO = new StatusDAOImpl();
     }
 
     @Override
@@ -51,9 +59,6 @@ public class UserServlet extends HttpServlet {
                 case "updateUserProfile":
                     EditUserProfile(req,resp);
                     break;
-                case "showUploadNewStatusForm":
-                    showUploadNewStatusForm(req, resp);
-                    break;
                 default:
                     showHomePageForUser(req, resp);
                     break;
@@ -63,9 +68,6 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    private void showUploadNewStatusForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/user/upNewStatus.jsp").forward(request, response);
-    }
 
     private void showEditPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String actionGet = req.getParameter("actionGet");
@@ -102,7 +104,14 @@ public class UserServlet extends HttpServlet {
                 case "uploadNewStatus":
                     uploadNewStatus(req, resp);
                     break;
+                case "deleteStatus":
+                    deleteStatus(req, resp);
+                    break;
+                case "editStatus":
+                    editStatus(req, resp);
+                    break;
                 default:
+                    break;
             }
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -110,34 +119,103 @@ public class UserServlet extends HttpServlet {
     }
 
     private void uploadNewStatus(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+            HttpSession session = request.getSession();
+            int userID = (int) session.getAttribute("idAccount");
+            String description = request.getParameter("description");
+            String mediaPart = request.getParameter("media");
+            int permission = Integer.parseInt(request.getParameter("option"));
+            if (mediaPart != null){
+                try (Connection connection = DataConnector.getConnection()) {
+                    // Insert bài viết vào bảng status
+                    String insertStatusQuery = "INSERT INTO status (createTime, description, media, idUser, idPermission) VALUES (?, ?, ?, ?, ?)";
+                    PreparedStatement insertStatusStatement = connection.prepareStatement(insertStatusQuery);
+                    insertStatusStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+                    insertStatusStatement.setString(2, description);
+                    insertStatusStatement.setString(3, mediaPart);
+                    insertStatusStatement.setInt(4, userID); // Lấy ID người dùng từ session
+                    insertStatusStatement.setInt(5, permission); // Lấy ID quyền
+                    insertStatusStatement.executeUpdate();
+                    connection.close();
+                    response.sendRedirect("/home");
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            }else {
+                try (Connection connection = DataConnector.getConnection()) {
+                    // Insert bài viết vào bảng status
+                    String insertStatusQuery = "INSERT INTO status (createTime, description, idUser, idPermission) VALUES (?, ?, ?, ?)";
+                    PreparedStatement insertStatusStatement = connection.prepareStatement(insertStatusQuery);
+                    insertStatusStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+                    insertStatusStatement.setString(2, description);
+                    insertStatusStatement.setInt(3, userID); // Lấy ID người dùng từ session
+                    insertStatusStatement.setInt(4, permission); // Lấy ID quyền
+                    insertStatusStatement.executeUpdate();
+                    connection.close();
+                    response.sendRedirect("/home");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+                // Lưu trữ tệp đa phương tiện (hình ảnh, video) vào thư mục trên máy chủ
+//            String fileName = mediaPart.getSubmittedFileName();
+//            InputStream mediaInput = mediaPart.getInputStream();
+//            Path mediaPath = Paths.get("src/main/webapp/images", fileName);
+//            Files.copy(mediaInput, mediaPath, StandardCopyOption.REPLACE_EXISTING);
+
+            // Lưu thông tin bài viết và đường dẫn tệp đa phương tiện vào cơ sở dữ liệu
+
+            // Chuyển hướng người dùng sau khi đăng bài viết thành công
+        }
+
+    private void deleteStatus(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, ClassNotFoundException {
+        int idStatus = Integer.parseInt(request.getParameter("idStatus"));
         HttpSession session = request.getSession();
         int userID = (int) session.getAttribute("idAccount");
-
-        if (Objects.isNull(userID)) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Bạn chưa đăng nhập");
-            return;
+        User user = userDAO.getUserById(userID);
+        Status status = statusDAO.getStatusById(idStatus);
+        if (user.getId() == status.getIdUser()) {
+                try (Connection conn = DataConnector.getConnection()) {
+                    String query = "DELETE FROM status WHERE idStatus = ?";
+                    PreparedStatement statement = conn.prepareStatement(query);
+                    statement.setInt(1,idStatus);
+                    statement.executeUpdate();
+                    session.setAttribute("messageDelete","delete complete");
+                    response.sendRedirect("/home");
+                }
+        }else{
+            session.setAttribute("messageDeleteFalse","delete false");
+            response.sendRedirect("/home");
         }
-
+    }
+    private void editStatus(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, ClassNotFoundException {
+        int idStatus = Integer.parseInt(request.getParameter("idStatus"));
         String description = request.getParameter("description");
-        Part mediaPart = request.getPart("media");
-        int permission = Integer.parseInt(request.getParameter("permission"));
-
-        String mediaPath = null;
-        if (mediaPart != null && mediaPart.getSize() > 0) {
-            String fileName = LocalDateTime.now().toString().replace(':', '-') + ".png";
-            Path uploadPath = Paths.get(getServletContext().getRealPath(IMG_DIR), fileName);
-            try (InputStream inputStream = mediaPart.getInputStream()) {
-                Files.copy(inputStream, uploadPath, StandardCopyOption.REPLACE_EXISTING);
+        String media = request.getParameter("media");
+        int permission = Integer.parseInt(request.getParameter("option"));
+        HttpSession session = request.getSession();
+        int userID = (int) session.getAttribute("idAccount");
+        User user = userDAO.getUserById(userID);
+        Status status = statusDAO.getStatusById(idStatus);
+        if (user.getId() == status.getIdUser()) {
+            try (Connection conn = DataConnector.getConnection()) {
+                String query = "update status set description = ? , media = ? , idPermission = ?  WHERE idStatus = ?";
+                PreparedStatement statement = conn.prepareStatement(query);
+                statement.setInt(4,idStatus);
+                statement.setString(1,description);
+                statement.setString(2,media);
+                statement.setInt(3,permission);
+                statement.executeUpdate();
+                session.setAttribute("messageEditComplete","Edit complete");
+                response.sendRedirect("/home");
             }
-            mediaPath = request.getContextPath() + IMG_DIR + "/" + fileName;
+        }else{
+            session.setAttribute("messageEditFalse","Edit false");
+            response.sendRedirect("/home");
         }
-
-        // Lưu thông tin trạng thái vào CSDL
-        Status newStatus = new Status(description, userID, LocalDate.now(), mediaPath, permission);
-        userDAO.insertStatus(newStatus);
-
-        request.setAttribute("messagePost","upload success");
-        request.getRequestDispatcher("user/home.jsp").forward(request,response);
     }
 
     private void editPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException, ClassNotFoundException {
@@ -187,9 +265,34 @@ public class UserServlet extends HttpServlet {
         try {
             HttpSession session = req.getSession();
             Integer idUser = (Integer) session.getAttribute("idAccount");
-            User user = userDAO.getUserById(idUser);
-            req.setAttribute("userProfile",user);
-            req.getRequestDispatcher("/user/userProfile/displayProfile/homeFB.jsp").forward(req, resp);
+            User userFind = userDAO.getUserById(idUser);
+            List<User> userList = new ArrayList<>();
+            User userPost;
+            int id = Integer.parseInt(req.getParameter("id"));
+            User user = userDAO.getUserById(id);
+            req.setAttribute("userFind",user);
+            List<Status> defaultPost = statusDAO.getAllStatus();
+            List<Status> newPost = new ArrayList<>();
+            for (Status status : defaultPost){
+                userPost = userDAO.getUserById(status.getIdUser());
+                if (status.getIdUser() == id) {
+                    if (id == userFind.getId()) {
+                        newPost.add(status);
+                        userList.add(userPost);
+                    }else{
+                        if (status.getPermission() == 2){
+                            continue;
+                        }
+                        newPost.add(status);
+                        userList.add(userPost);
+                    }
+                }
+            }
+
+            req.setAttribute("user",userFind);
+            req.setAttribute("listStatus",newPost);
+            req.setAttribute("listUser",userList);
+            req.getRequestDispatcher("/user/userProfile/displayProfile/profile.jsp").forward(req, resp);
         } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
