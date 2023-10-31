@@ -124,29 +124,50 @@ public class UserServlet extends HttpServlet {
             String description = request.getParameter("description");
             String mediaPart = request.getParameter("media");
             int permission = Integer.parseInt(request.getParameter("option"));
+            if (mediaPart != null){
+                try (Connection connection = DataConnector.getConnection()) {
+                    // Insert bài viết vào bảng status
+                    String insertStatusQuery = "INSERT INTO status (createTime, description, media, idUser, idPermission) VALUES (?, ?, ?, ?, ?)";
+                    PreparedStatement insertStatusStatement = connection.prepareStatement(insertStatusQuery);
+                    insertStatusStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+                    insertStatusStatement.setString(2, description);
+                    insertStatusStatement.setString(3, mediaPart);
+                    insertStatusStatement.setInt(4, userID); // Lấy ID người dùng từ session
+                    insertStatusStatement.setInt(5, permission); // Lấy ID quyền
+                    insertStatusStatement.executeUpdate();
+                    connection.close();
+                    response.sendRedirect("/home");
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
 
-            // Lưu trữ tệp đa phương tiện (hình ảnh, video) vào thư mục trên máy chủ
+            }else {
+                try (Connection connection = DataConnector.getConnection()) {
+                    // Insert bài viết vào bảng status
+                    String insertStatusQuery = "INSERT INTO status (createTime, description, idUser, idPermission) VALUES (?, ?, ?, ?)";
+                    PreparedStatement insertStatusStatement = connection.prepareStatement(insertStatusQuery);
+                    insertStatusStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+                    insertStatusStatement.setString(2, description);
+                    insertStatusStatement.setInt(3, userID); // Lấy ID người dùng từ session
+                    insertStatusStatement.setInt(4, permission); // Lấy ID quyền
+                    insertStatusStatement.executeUpdate();
+                    connection.close();
+                    response.sendRedirect("/home");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+                // Lưu trữ tệp đa phương tiện (hình ảnh, video) vào thư mục trên máy chủ
 //            String fileName = mediaPart.getSubmittedFileName();
 //            InputStream mediaInput = mediaPart.getInputStream();
 //            Path mediaPath = Paths.get("src/main/webapp/images", fileName);
 //            Files.copy(mediaInput, mediaPath, StandardCopyOption.REPLACE_EXISTING);
 
             // Lưu thông tin bài viết và đường dẫn tệp đa phương tiện vào cơ sở dữ liệu
-            try (Connection connection = DataConnector.getConnection()) {
-                // Insert bài viết vào bảng status
-                String insertStatusQuery = "INSERT INTO status (createTime, description, media, idUser, idPermission) VALUES (?, ?, ?, ?, ?)";
-                PreparedStatement insertStatusStatement = connection.prepareStatement(insertStatusQuery);
-                insertStatusStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
-                insertStatusStatement.setString(2, description);
-                insertStatusStatement.setString(3, mediaPart);
-                insertStatusStatement.setInt(4, userID); // Lấy ID người dùng từ session
-                insertStatusStatement.setInt(5, permission); // Lấy ID quyền
-                insertStatusStatement.executeUpdate();
-                connection.close();
-                response.sendRedirect("/home");
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+
             // Chuyển hướng người dùng sau khi đăng bài viết thành công
         }
 
