@@ -197,15 +197,29 @@
             }, 1000)
         }
     </script>
-    <div style="width: 100% ; height: 400px;background-color: #4e9afa">
+    <div style="width: 100% ; height: 400px;background: url('https://images5.alphacoders.com/129/1298299.jpg') no-repeat;background-size: 100% 100%">
     </div>
-    <div style="width: 100% ; height: 150px;background-color: #ffffff;display: inline-flex;justify-content: space-between">
+    <div style="width: 100% ; height: 160px;background-color: #ffffff;display: inline-flex;justify-content: space-between;border-radius: 15px">
        <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
            <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;"></div>
-           <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}</p></div>
+           <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
+                                                                                                    <p style="padding-left: 20px;">Bạn bè : </p></div>
        </div>
-        <div style="float: right">
-
+        <div style="float: right;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 350px;
+    padding-right: 30px;
+}">
+             <div><button style="border: 1px solid;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;">Thêm vào tin</button></div>
+             <div><button style="border: 1px solid;
+    border-radius: 15px;
+    width: 200px;
+    height: 30px;">Chỉnh sửa trang cá nhân</button></div>
         </div>
 
     </div>
@@ -214,10 +228,24 @@
         <!-- main-content------- -->
        <div style="float: left;height: 100%;width: 300px;" >
            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
-             <p ><h3 style="align-items: center">Giới thiệu</h3></p>
+             <p ><h3 >Giới thiệu</h3></p>
+               <br>
                <div style="text-align: center">${requestScope.userFind.hobby}</div>
+               <p><h4>Quê quán</h4></p>
+               <div style="text-align: center">${requestScope.userFind.address}</div>
+               <br>
+               <p><h4>Sinh nhật</h4></p>
+               <div style="text-align: center">${requestScope.userFind.birth}</div>
            </div><br>
-           <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">2</div><br>
+           <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
+               <p ><h3 >Kho ảnh đã đăng</h3></p>
+               <br>
+               <c:forEach var="media" items="${requestScope.listStatus}">
+                   <div style="padding-top: 20px;padding-left: 10px">
+                       <div ><img src="${media.media}" style="width: 100px"></div>
+                   </div>
+               </c:forEach>
+           </div><br>
            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">3</div>
        </div>
         <div class="content-area" style="float: right">

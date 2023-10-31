@@ -25,27 +25,11 @@
         printWriter.println("</script>");
     %>
 </c:if>
-<c:if test="${sessionScope.messageDeleteFalse != null}">
-    <%
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println("<script type=\"text/javascript\">");
-        printWriter.println("alert('xóa bài viết thất bại');");
-        printWriter.println("</script>");
-    %>
-</c:if>
 <c:if test="${sessionScope.messageEditComplete != null}">
     <%
         PrintWriter printWriter = response.getWriter();
         printWriter.println("<script type=\"text/javascript\">");
         printWriter.println("alert('sửa bài viết thành công');");
-        printWriter.println("</script>");
-    %>
-</c:if>
-<c:if test="${sessionScope.messageEditFalse != null}">
-    <%
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println("<script type=\"text/javascript\">");
-        printWriter.println("alert('sửa bài viết thất bại');");
         printWriter.println("</script>");
     %>
 </c:if>
