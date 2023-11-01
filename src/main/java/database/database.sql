@@ -88,7 +88,7 @@ create table status
     media        text(65530),
     idUser       int,
     idPermission int,
-    like int,
+    likeCount int,
     foreign key (idUser) references user (id),
     foreign key (idPermission) references permissionStatus (idPermission)
 );
