@@ -325,73 +325,77 @@
                     <p>24 <span>mutual friends</span></p>
                 </div>
                 <div class="showFrs">
-<%--                    <c:forEach var="" items="" end="7">--%>
-<%--                        <div class="frsManual">--%>
-<%--                            <a href="">--%>
-<%--                                <div class="imgFrs">--%>
-<%--                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"--%>
-<%--                                         alt="avatar">--%>
-<%--                                </div>--%>
-<%--                                <div class="nameFrs"><span>chuyền tên vào đây</span></div>--%>
-<%--                            </a>--%>
-<%--                        </div>--%>
-<%--                    </c:forEach>--%>
+                    <%--                    <c:forEach var="" items="" end="7">--%>
+                    <%--                        <div class="frsManual">--%>
+                    <%--                            <a href="">--%>
+                    <%--                                <div class="imgFrs">--%>
+                    <%--                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"--%>
+                    <%--                                         alt="avatar">--%>
+                    <%--                                </div>--%>
+                    <%--                                <div class="nameFrs"><span>chuyền tên vào đây</span></div>--%>
+                    <%--                            </a>--%>
+                    <%--                        </div>--%>
+                    <%--                    </c:forEach>--%>
 
 
-                                        ĐÂY LÀ MẪU HÌNH DUNG
-                                        <div class="frsManual">
-                                            <a href="https://poe.com/chat/2p27wsfs0urhtnw99ts">
-                                                <div class="imgFrs">
-                                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
-                                                </div>
-                                                <div class="nameFrs"><span>heheheh</span></div>
-                                            </a>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
+                    ĐÂY LÀ MẪU HÌNH DUNG
+                    <div class="frsManual">
+                        <a href="https://poe.com/chat/2p27wsfs0urhtnw99ts">
+                            <div class="imgFrs">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
+                                     alt="avatar">
+                            </div>
+                            <div class="nameFrs"><span>heheheh</span></div>
+                        </a>
+                    </div>
+                    <div class="frsManual">
+                        <div class="imgFrs">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
+                                 alt="avatar">
+                        </div>
+                        <div class="nameFrs"><span>heheheh</span></div>
+                    </div>
+                    <div class="frsManual">
+                        <div class="imgFrs">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
+                                 alt="avatar">
 
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
+                        </div>
+                        <div class="nameFrs"><span>heheheh</span></div>
+                    </div>
+                    <div class="frsManual">
+                        <div class="imgFrs">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
+                                 alt="avatar">
 
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
+                        </div>
+                        <div class="nameFrs"><span>heheheh</span></div>
+                    </div>
+                    <div class="frsManual">
+                        <div class="imgFrs">
+                        </div>
+                        <div class="nameFrs"><span>heheheh</span></div>
+                    </div>
+                    <div class="frsManual">
+                        <div class="imgFrs">
+                        </div>
+                        <div class="nameFrs"><span>heheheh</span></div>
+                    </div>
+                    <div class="frsManual">
+                        <div class="imgFrs">
+                        </div>
+                        <div class="nameFrs"><span>heheheh</span></div>
+                    </div>
+                    <div class="frsManual">
+                        <div class="imgFrs">
+                        </div>
+                        <div class="nameFrs"><span>heheheh</span></div>
+                    </div>
+                    <div class="frsManual">
+                        <div class="imgFrs">
+                        </div>
+                        <div class="nameFrs"><span>heheheh</span></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -494,12 +498,6 @@
                 let hideOption = document.getElementsByClassName("options")
                 let body = document.querySelector("body");
 
-                function edit() {
-                    body.style.overflow = "hidden"
-                }
-            </script>
-
-            <script>
                 function toggleOptions(event) {
                     let options = event.target.nextElementSibling;
                     options.classList.toggle("show");
@@ -532,6 +530,12 @@
                     formPost = document.querySelector(".form-post");
                     formPost.classList.toggle("showPost");
                 }
+
+                var postIdList = [];
+                <c:forEach var="post" items="${requestScope.listStatus}" varStatus="status">
+                postIdList.push("${post.id}");
+                </c:forEach>
+                console.log(postIdList);
             </script>
             <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
         </div>
