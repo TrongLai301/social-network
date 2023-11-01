@@ -196,7 +196,7 @@
                     <div style="display: inline-flex; justify-content: flex-start;margin-bottom: 30px;width: 100%;">
                         <div><img src="${item.avatar}" style="border: 1px solid;border-radius: 50%;width: 50px;height: 50px" alt="Avatar"></div>
                         <div style="margin-left: 40px" >
-                            <p>${item.name}</p>
+                            <a href="/user?actionGet=showUserProfile&id=${user.id}" style="text-decoration: none;color: black"><p>${item.name}</p></a>
                             <p>${item.hobby}</p>
                         </div>
                     </div>
@@ -211,9 +211,9 @@
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
-                            <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
+                           <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
                             <div>
-                                <p>${user.name}</p>
+                                <a href="/user?actionGet=showUserProfile&id=${user.id}" style="text-decoration: none;color: black">${user.name}</a><br>
                                 <small>${post.createTime}</small>
                             </div>
                         </div>
@@ -263,7 +263,7 @@
                     </div>
                     <div class="post-reaction">
                         <div class="activity-icons">
-                            <div><img src="../display-home/images/like-blue.png" alt="">0</div>
+                            <div><img src="../display-home/images/like-blue.png" alt=""> ${post.likeCount}</div>
                             <div><img src="../display-home/images/comments.png" alt="">0</div>
                             <div><img src="../display-home/images/share.png" alt="">0</div>
                         </div>

@@ -86,7 +86,10 @@ public class HomeServlet extends HttpServlet {
                 actionGet = "";
             }
             switch (actionGet) {
-                case "Alam" :
+                case "like" :
+                    likeStatus(req,resp);
+                    break;
+                case "dislike" :
                     break;
                 default:
                     showHomePage(req,resp);
@@ -120,6 +123,15 @@ public class HomeServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
+        }
+        public void likeStatus(HttpServletRequest request , HttpServletResponse response){
+            try {
+            HttpSession session = request.getSession();
+            Integer idUser = (Integer) session.getAttribute("idAccount");
+            User user = userDAO.getUserById(idUser);
+            } catch (SQLException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

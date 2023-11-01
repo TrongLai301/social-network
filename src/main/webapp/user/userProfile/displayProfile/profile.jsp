@@ -378,7 +378,7 @@
                                     </div>
                                     <div class="post-reaction">
                                         <div class="activity-icons">
-                                            <div><img src="../display-home/images/like-blue.png" alt="">120</div>
+                                            <div><img src="../display-home/images/like-blue.png" alt=""> ${post.likeCount}</div>
                                             <div><img src="../display-home/images/comments.png" alt="">52</div>
                                             <div><img src="../display-home/images/share.png" alt="">35</div>
                                         </div>

@@ -309,10 +309,9 @@
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
-                            <img src="${user.avatar}" style="height: 50px;width: 50px" alt="Avatar">
+                          <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
                             <div>
-                                <a href="/user?actionGet=showUserProfile&id=${user.id}"
-                                   style="text-decoration: none;color: black">${user.name}</a><br>
+                                <a href="/user?actionGet=showUserProfile&id=${user.id}" style="text-decoration: none;color: black">${user.name}</a><br>
                                 <small>${post.createTime}</small>
                                 <c:choose>
                                 <c:when test="${post.permission == 1}">
@@ -357,14 +356,60 @@
                     </div>
                     <div class="post-reaction">
                         <div class="activity-icons">
-                            <div><img src="../display-home/images/like-blue.png" alt="">0</div>
+                            <div>
+                                <div id="likeButton">
+                                    <button onclick="likeStatus()"><img src="../display-home/images/like.png"></button>
+                                </div>
+
+                                <div id="dislikeButton" style="display: none;">
+                                    <button onclick="dislikeStatus()"><img src="../display-home/images/like.png"></button>
+                                </div>
+                                    ${post.likeCount}</div>
                             <div><img src="../display-home/images/comments.png" alt="">0</div>
                             <div><img src="../display-home/images/share.png" alt="">0</div>
                         </div>
                     </div>
                 </div>
             </c:forEach>
+            <script>
+                function likeStatus() {
+                    // Perform AJAX request to your servlet to handle the "Like" action
+                    // On success, hide the "Like" button and show the "Dislike" button
+                    $.ajax({
+                        type: "POST",
+                        url: "HomeServlet",
+                        data: {
+                            action: "like"
+                        },
+                        success: function(response) {
+                            $("#likeButton").hide();
+                            $("#dislikeButton").show();
+                        },
+                        error: function() {
+                            alert("An error occurred while processing your request.");
+                        }
+                    });
+                }
 
+                function dislikeStatus() {
+                    // Perform AJAX request to your servlet to handle the "Dislike" action
+                    // On success, hide the "Dislike" button and show the "Like" button
+                    $.ajax({
+                        type: "POST",
+                        url: "HomeServlet",
+                        data: {
+                            action: "dislike"
+                        },
+                        success: function(response) {
+                            $("#dislikeButton").hide();
+                            $("#likeButton").show();
+                        },
+                        error: function() {
+                            alert("An error occurred while processing your request.");
+                        }
+                    });
+                }
+            </script>
             <script>
                 let formPost;
                 let formEdit;
