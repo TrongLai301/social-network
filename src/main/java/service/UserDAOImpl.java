@@ -192,10 +192,9 @@ public class UserDAOImpl implements IUserDAO {
             callableStatement.setInt(5, status.getPermission());
             callableStatement.executeUpdate();
             connection.close();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
 }
