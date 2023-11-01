@@ -212,10 +212,21 @@
     width: 350px;
     padding-right: 30px;
 }">
-             <div><button style="border: 1px solid;
+            <c:choose>
+                <c:when test="${requestScope.relationship.equals('stranger')}">
+                    <div><button style="border: 1px solid;
     border-radius: 15px;
     width: 100px;
-    height: 30px;">Thêm vào tin</button></div>
+    height: 30px;"><a href="${pageContext.request.contextPath}/friend?actionGet=sendFriendRequest&id=${requestScope.userFind.id}"> Add Friend </a></button></div>
+                </c:when>
+                <c:when test="${requestScope.relationship.equals('pending')}">
+                    <div><button style="border: 1px solid;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;"><a href=""> x Cancel </a></button></div>
+                </c:when>
+            </c:choose>
+
              <div><button style="border: 1px solid;
     border-radius: 15px;
     width: 200px;

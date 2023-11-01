@@ -301,10 +301,10 @@ VALUES ('user1', 'password1', 'John Doe', 'john.doe@example.com', NULL, '1234567
 
 CREATE table Friendships
 (
-    requestId int primary key auto_increment,
-    senderId    int,
-    receiverId  int,
-    status    varchar(10),
+    requestId  int primary key auto_increment,
+    senderId   int,
+    receiverId int,
+    status     varchar(10) default 'pending',
     FOREIGN KEY (senderId) references user (id),
     FOREIGN KEY (receiverId) references user (id)
 );
@@ -326,10 +326,22 @@ SELECT DISTINCT CASE
                     END friend
 FROM Friendships
 WHERE (senderId = 13
-   OR receiverId = 13) and status = 'accepted'
-;
+    OR receiverId = 13)
+  and status = 'accepted';
 
-# Lay danh sach nguoi duoc gui loi moi
-SELECT  receiverId from Friendships WHERE  senderId = 15 and status = 'pending';
+# Lay danh sach nguoi duoc gui loi moi tu mot nguoi cu the
+SELECT receiverId
+from Friendships
+WHERE senderId = 15
+  and status = 'pending';
+
+SELECT senderId
+from Friendships
+where receiverId = 16
+and status = 'pending';
+
+select * from Friendships;
+
+
 
 

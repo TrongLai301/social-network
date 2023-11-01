@@ -27,4 +27,5 @@ public interface IUserDAO {
     void insertUser(User user);
 
     void insertStatus(Status status);
+
 }
