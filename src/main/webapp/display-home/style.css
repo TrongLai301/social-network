@@ -768,7 +768,7 @@ img.coverImage {
     z-index: 1;
     list-style: none;
     width: 300px;
-    height: 70px;
+    height: 60px;
 }
 
 .choose {
@@ -799,8 +799,19 @@ img.coverImage {
 .option-ul li {
     margin-bottom: 10px;
 }
-
+.div-li input{
+    border: none;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: 0.25s;
+}
+.div-li input:hover{
+    background-color: #b2b2b2;
+    transition: 0.25s;
+    color: whitesmoke;
+}
 .div-li {
+    align-items: center;
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
@@ -998,9 +1009,9 @@ img.coverImage {
     border: none;
     resize: none;
     width: 450px;
-    margin: 10px 20px;
+    margin: 20px 20px 10px 20px;
     padding: 0 0 0 10px;
-    max-height: 100px;
+    max-height: 140px;
 }
 
 .divImgEdit {
@@ -1085,4 +1096,15 @@ img.coverImage {
 #saveImg:hover{
     background-color: #d0d0d0;
     transition: 0.25s;
+}
+
+
+.p{
+    margin-left: 9px;
+}
+.select1{
+    border: none;
+    margin-left: 5px;
+    background-color: #f6f5f5;
+    outline: none;
 }
