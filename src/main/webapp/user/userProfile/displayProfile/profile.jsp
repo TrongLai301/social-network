@@ -12,10 +12,10 @@
     <title>Facebook</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
-    <link rel="stylesheet" href="../../../display-home/style.css">
+    <%--    <link rel="stylesheet" href="../../../display-home/style.css">--%>
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../../public/css/user/profile.css">
-<%--    <script src="../display-home/function.js"></script>--%>
+    <%--    <script src="../display-home/function.js"></script>--%>
 </head>
 <body>
 <c:if test="${requestScope.messageDelete != null}">
@@ -48,37 +48,56 @@
         printWriter.println("</script>");
     %>
 </c:if>
-<div class="form-edit" id="edit">
-    <div class="editFormDiv" id="divEditForm">
-<%--        <form class="editForm" method="post" action="/user?actionPost=editStatus" id="editForm">--%>
-<%--            <div class="header-edit">--%>
-<%--                <p>Chỉnh sửa bài viết</p>--%>
-<%--                <input type="button" id="close" onclick="hideEdit()" value="x">--%>
-<%--            </div>--%>
+<c:forEach var="post" items="${requestScope.listStatus}" varStatus="status">
+    <c:set var="user" value="${requestScope.listUser[status.index]}"/>
+    <div class="form-edit" id="edit">
+        <div class="editFormDiv" id="divEditForm">
+            <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">
+                <div class="header-edit">
+                    <p>Edit status</p>
+                    <input type="button" id="close" onclick="hideEdit()" value="x">
+                </div>
 
-<%--            <div class="underline-edit"></div>--%>
-<%--            <div class="infoHost">--%>
-<%--                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px" alt="">--%>
-<%--                <p>${requestScope.user.name}</p>--%>
-<%--            </div>--%>
-<%--            <div class="imgTextEdit">--%>
-<%--                <div class="contentWrapper"></div>--%>
-<%--                            <option value="1">public</option>--%>
-<%--                            <option value="2">private</option>--%>
-<%--                        </select>--%>
-<%--                    </div>--%>
-<%--&lt;%&ndash;                    <div class="divImgEdit" id="imgStatus">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                        <input type="button" onclick="deleteImg()" value="x">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                        <img src="${requestScope.user}" alt="">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--            <div class="submit-edit">--%>
-<%--                <input type="submit" value="Edit">--%>
-<%--            </div>--%>
-<%--        </form>--%>
+                <div class="underline-edit"></div>
+                <div class="infoHost">
+                    <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">
+                    <div class="displayName">
+                        <p class="p">${requestScope.user.name}</p>
+                        <select class="select1" name="option">
+                            <option value="1">public</option>
+                            <option value="2">private</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="imgTextEdit">
+                    <div class="contentWrapper">
+                        <div class="textarea">
+                            <input type="hidden" name="descriptionInput" id="descriptionInput-${status.index}">
+                            <textarea placeholder="What do you think?" oninput="descriptions(this)" name="description"
+                                      class="textareaDescription"
+                                      id="description-${status.index}">${post.description}</textarea>
+                        </div>
+                        <div class="textarea">
+                            <textarea placeholder="your picture?" name="media" class="textareaDescription"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit-edit">
+                    <input type="submit" value="upload">
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+</c:forEach>
+<script>
+    function descriptions(textarea) {
+        var index = textarea.id.split("-")[1]; // Lấy chỉ số từ id của textarea
+        var description = textarea.value; // Lấy giá trị của textarea
+        var descriptionInput = document.getElementById("descriptionInput-" + index); // Tìm input hidden tương ứng với chỉ số
+        descriptionInput.value = description; // Gán giá trị description cho input hidden
+    }
+</script>
+
 <div class="form-post" id="post">
     <div class="editFormDiv" id="divPostForm">
         <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">
@@ -134,13 +153,13 @@
             <div class="search-box">
                 <img src="../display-home/images/search.png" alt="">
                 <form action="home?action=search" method="post">
-                <input type="text" placeholder="Search" name="searchContent">
+                    <input type="text" placeholder="Search" name="searchContent">
                 </form>
             </div>
         </div>
         <div class="nav-center">
             <ul class="navlogo">
-                       <li><img src="images/notification.png" alt=""></li>
+                <li><img src="images/notification.png" alt=""></li>
                 <li><a href="/home" style="text-decoration: none">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
                         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -151,7 +170,7 @@
                     </svg>
                 </a>
                 </li>
-<%--                        <li><img src="images/inbox.png" alt=""></li>--%>
+                <%--                        <li><img src="images/inbox.png" alt=""></li>--%>
                 <li>
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
                         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -173,7 +192,7 @@
                 </li>
             </ul>
         </div>
-<%--        logo user--%>
+        <%--        logo user--%>
         <div class="nav-right">
             <div class="profile-image online" onclick="UserSettingToggle()">
                 <img src="${requestScope.user.getAvatar()}" style="height: 40px;" alt="">
@@ -204,7 +223,8 @@
             <hr>
             <div class="settings-links">
                 <img src="../display-home/images/setting.png" alt="" class="settings-icon">
-                <a href="/user?actionGet=showEditPassword">Settings password <img src="../display-home/images/arrow.png" alt=""></a>
+                <a href="/user?actionGet=showEditPassword">Settings password <img src="../display-home/images/arrow.png"
+                                                                                  alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -214,7 +234,8 @@
 
             <div class="settings-links">
                 <img src="../display-home/images/display.png" alt="" class="settings-icon">
-                <a href="user?actionGet=updateUserProfile">Edit Profile <img src="../display-home/images/arrow.png" alt=""></a>
+                <a href="user?actionGet=updateUserProfile">Edit Profile <img src="../display-home/images/arrow.png"
+                                                                             alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -226,6 +247,7 @@
     </nav>
     <script>
         const logo = document.getElementById("logoFB");
+
         function loadWeb() {
             setTimeout(function () {
                 location.reload()
@@ -235,12 +257,14 @@
     </script>
     <div style="width: 100% ; height: 400px;background: url('https://images5.alphacoders.com/129/1298299.jpg') no-repeat;background-size: 100% 100%">
     </div>
-    <div style="width: 100% ; height: 160px;background-color: #ffffff;display: inline-flex;justify-content: space-between;border-radius: 15px">
-       <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
-           <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
-           <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
-                                                                                                    <p style="padding-left: 20px;">Bạn bè : </p></div>
-       </div>
+    <div style="padding: 0 100px; width: 100% ; height: 160px;background-color: #ffffff;display: inline-flex;justify-content: space-between;border-radius: 15px">
+        <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
+            <div><img src="${requestScope.userFind.avatar}"
+                      style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
+            <div>
+                <p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
+                <p style="padding-left: 20px;">Bạn bè : </p></div>
+        </div>
         <div style="float: right;
     display: inline-flex;
     justify-content: space-between;
@@ -248,42 +272,129 @@
     width: 350px;
     padding-right: 30px;
 }">
-             <div><button style="border: 1px solid;
+            <div>
+                <button style="border: 1px solid;
     border-radius: 15px;
     width: 100px;
-    height: 30px;">up status</button></div>
-             <div><button style="border: 1px solid;
+    height: 30px;">up status
+                </button>
+            </div>
+            <div>
+                <button style="border: 1px solid;
     border-radius: 15px;
     width: 200px;
-    height: 30px;">Edit profile</button></div>
+    height: 30px;">Edit profile
+                </button>
+            </div>
         </div>
 
     </div>
-    <div class="container" style="justify-content: space-between;display: flex" >
+    <div class="container">
 
         <!-- main-content------- -->
-       <div style="float: left;height: 100%;width: 300px;" >
-           <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
-             <p ><h3 >Giới thiệu</h3></p>
-               <br>
-               <div style="text-align: center">${requestScope.userFind.hobby}</div>
-               <p><h4>Quê quán</h4></p>
-               <div style="text-align: center">${requestScope.userFind.address}</div>
-               <br>
-               <p><h4>Sinh nhật</h4></p>
-               <div style="text-align: center">${requestScope.userFind.birth}</div>
-           </div><br>
-           <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
-               <p ><h3 >Picture library</h3></p>
-               <br>
-               <c:forEach var="media" items="${requestScope.listStatus}">
-                   <div style="padding-top: 20px;padding-left: 10px">
-                       <div ><img src="${media.media}" style="width: 100px"></div>
-                   </div>
-               </c:forEach>
-           </div><br>
-           <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">3</div>
-       </div>
+        <div style="float: left;height: 100%;width: 500px;">
+            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
+                <p>
+                <h3>Giới thiệu</h3></p>
+                <br>
+                <div style="text-align: center">${requestScope.userFind.hobby}</div>
+                <p><h4>Quê quán</h4></p>
+                <div style="text-align: center">${requestScope.userFind.address}</div>
+                <br>
+                <p><h4>Sinh nhật</h4></p>
+                <div style="text-align: center">${requestScope.userFind.birth}</div>
+            </div>
+            <br>
+            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
+                <p>
+                <h3>Picture library</h3></p>
+                <br>
+                <c:forEach var="media" items="${requestScope.listStatus}">
+                    <div style="padding-top: 20px;padding-left: 10px">
+                        <div><img src="${media.media}" style="width: 100px"></div>
+                    </div>
+                </c:forEach>
+            </div>
+            <br>
+            <div class="friend-profile">
+                <div class="header-frs">
+                    <span>Friends</span>
+                    <a href="">View all friend</a>
+                </div>
+                <div>
+                    <p>24 <span>mutual friends</span></p>
+                </div>
+                <div class="showFrs">
+<%--                    <c:forEach var="" items="" end="7">--%>
+<%--                        <div class="frsManual">--%>
+<%--                            <a href="">--%>
+<%--                                <div class="imgFrs">--%>
+<%--                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"--%>
+<%--                                         alt="avatar">--%>
+<%--                                </div>--%>
+<%--                                <div class="nameFrs"><span>chuyền tên vào đây</span></div>--%>
+<%--                            </a>--%>
+<%--                        </div>--%>
+<%--                    </c:forEach>--%>
+
+
+                                        ĐÂY LÀ MẪU HÌNH DUNG
+                                        <div class="frsManual">
+                                            <a href="https://poe.com/chat/2p27wsfs0urhtnw99ts">
+                                                <div class="imgFrs">
+                                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
+                                                </div>
+                                                <div class="nameFrs"><span>heheheh</span></div>
+                                            </a>
+                                        </div>
+                                        <div class="frsManual">
+                                            <div class="imgFrs">
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
+                                            </div>
+                                            <div class="nameFrs"><span>heheheh</span></div>
+                                        </div>
+                                        <div class="frsManual">
+                                            <div class="imgFrs">
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
+
+                                            </div>
+                                            <div class="nameFrs"><span>heheheh</span></div>
+                                        </div>
+                                        <div class="frsManual">
+                                            <div class="imgFrs">
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
+
+                                            </div>
+                                            <div class="nameFrs"><span>heheheh</span></div>
+                                        </div>
+                                        <div class="frsManual">
+                                            <div class="imgFrs">
+                                            </div>
+                                            <div class="nameFrs"><span>heheheh</span></div>
+                                        </div>
+                                        <div class="frsManual">
+                                            <div class="imgFrs">
+                                            </div>
+                                            <div class="nameFrs"><span>heheheh</span></div>
+                                        </div>
+                                        <div class="frsManual">
+                                            <div class="imgFrs">
+                                            </div>
+                                            <div class="nameFrs"><span>heheheh</span></div>
+                                        </div>
+                                        <div class="frsManual">
+                                            <div class="imgFrs">
+                                            </div>
+                                            <div class="nameFrs"><span>heheheh</span></div>
+                                        </div>
+                                        <div class="frsManual">
+                                            <div class="imgFrs">
+                                            </div>
+                                            <div class="nameFrs"><span>heheheh</span></div>
+                                        </div>
+                </div>
+            </div>
+        </div>
         <div class="content-area" style="float: right">
             <div class="write-post-container">
                 <div class="user-profile">
@@ -295,7 +406,8 @@
                 </div>
 
                 <div class="post-upload-textarea">
-                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3" onclick="post()"></textarea>
+                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3"
+                              onclick="post()"></textarea>
                     <div class="add-post-links">
                         <a href="#"><img src="../display-home/images/live-video.png" alt="">Live Video</a>
                         <a href="#"><img src="../display-home/images/photo.png" alt="">Photo/Video</a>
@@ -305,7 +417,7 @@
             </div>
 
             <c:forEach var="post" items="${requestScope.listStatus}" varStatus="status">
-                <c:set var="user" value="${requestScope.listUser[status.index]}" />
+                <c:set var="user" value="${requestScope.listUser[status.index]}"/>
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
@@ -330,17 +442,7 @@
                             <div class="options" id="option" style="height: 500px">
                                 <ul class="option-ul" style="list-style: none">
                                     <li onclick="">
-                                        <div class="div-li"  onclick="edit()">
-                                            <form action="/user?actionPost=editStatus" method="post">
-                                                <input type="hidden" name="idStatus" value="${post.id}">
-                                                <input type="text" name="description" value="${post.description}" >
-                                                <input type="text" name="media" value="${post.media}" >
-                                                <select name="option">
-                                                    <option value="1">public</option>
-                                                    <option value="2">private</option>
-                                                </select>
-                                                <input type="submit" value="Edit Status"/>
-                                            </form>
+                                        <div class="div-li" onclick="edit()">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                                                 <style>svg {
                                                     fill: #2265d8
@@ -372,74 +474,74 @@
                             </div>
                         </div>
                     </div>
-                                 <div class="status-field">
-                                     <p>${post.description}</p>
-                                     <img src="${post.media}"/>
-                                    </div>
-                                    <div class="post-reaction">
-                                        <div class="activity-icons">
-                                            <div><img src="../display-home/images/like-blue.png" alt="">120</div>
-                                            <div><img src="../display-home/images/comments.png" alt="">52</div>
-                                            <div><img src="../display-home/images/share.png" alt="">35</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:forEach>
-
-                            <script>
-                                let options;
-                                let formEdit;
-                                let hideOption = document.getElementsByClassName("options")
-                                let body = document.querySelector("body");
-
-                                function edit() {
-                                    body.style.overflow = "hidden"
-                                }
-                            </script>
-
-                        <script>
-                            function toggleOptions(event) {
-                               let options = event.target.nextElementSibling;
-                                options.classList.toggle("show");
-                            }
-
-                                function toggleOptions(event) {
-                                    options = event.target.nextElementSibling;
-                                    options.classList.toggle("show");
-                                }
-
-                                function optionEdit() {
-                                    formEdit = document.querySelector(".form-edit");
-                                    options = document.querySelector(".options")
-                                    options.classList.toggle("show");
-                                    formEdit.classList.toggle("showEdit");
-                                }
-
-                                function hideEdit() {
-                                    formEdit = document.querySelector(".form-edit");
-                                    formEdit.classList.toggle("showEdit");
-                                    body.style.overflow = "auto";
-                                }
-
-                            function post() {
-                                formPost = document.querySelector(".form-post");
-                                formPost.classList.toggle("showPost");
-                            }
-
-                            function hidePost() {
-                                formPost = document.querySelector(".form-post");
-                                formPost.classList.toggle("showPost");
-                            }
-                            </script>
-                            <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
-                        </div>
-
+                    <div class="status-field">
+                        <p>${post.description}</p>
+                        <img src="${post.media}"/>
                     </div>
-               </div>
+                    <div class="post-reaction">
+                        <div class="activity-icons">
+                            <div><img src="../display-home/images/like-blue.png" alt="">120</div>
+                            <div><img src="../display-home/images/comments.png" alt="">52</div>
+                            <div><img src="../display-home/images/share.png" alt="">35</div>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
 
-                <footer id="footer">
-                    <p>&copy; Copyright 2021 - Socialbook All Rights Reserved</p>
-                </footer>
-                <script src="../display-home/function.js"></script>
-                </body>
-                </html>
+            <script>
+                let options;
+                let formEdit;
+                let hideOption = document.getElementsByClassName("options")
+                let body = document.querySelector("body");
+
+                function edit() {
+                    body.style.overflow = "hidden"
+                }
+            </script>
+
+            <script>
+                function toggleOptions(event) {
+                    let options = event.target.nextElementSibling;
+                    options.classList.toggle("show");
+                }
+
+                function toggleOptions(event) {
+                    options = event.target.nextElementSibling;
+                    options.classList.toggle("show");
+                }
+
+                function edit() {
+                    formEdit = document.querySelector(".form-edit");
+                    options = document.querySelector(".options")
+                    options.classList.toggle("show");
+                    formEdit.classList.toggle("showEdit");
+                }
+
+                function hideEdit() {
+                    formEdit = document.querySelector(".form-edit");
+                    formEdit.classList.toggle("showEdit");
+                    body.style.overflow = "auto";
+                }
+
+                function post() {
+                    formPost = document.querySelector(".form-post");
+                    formPost.classList.toggle("showPost");
+                }
+
+                function hidePost() {
+                    formPost = document.querySelector(".form-post");
+                    formPost.classList.toggle("showPost");
+                }
+            </script>
+            <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
+        </div>
+
+    </div>
+</div>
+
+<footer id="footer">
+    <p>&copy; Copyright 2021 - Socialbook All Rights Reserved</p>
+</footer>
+<script src="../display-home/function.js"></script>
+</body>
+</html>

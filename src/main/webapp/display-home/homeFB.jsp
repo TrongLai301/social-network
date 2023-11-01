@@ -33,35 +33,35 @@
 <%--        printWriter.println("</script>");--%>
 <%--    %>--%>
 <%--</c:if>--%>
-<div class="form-edit" id="edit">
-    <div class="editFormDiv" id="divEditForm">
-        <form class="editForm" id="editForm">
-            <div class="header-edit">
-                <p>Edit status</p>
-                <input type="button" id="close" onclick="hideEdit()" value="x">
-            </div>
+<%--<div class="form-edit" id="edit">--%>
+<%--    <div class="editFormDiv" id="divEditForm">--%>
+<%--        <form class="editForm" id="editForm">--%>
+<%--            <div class="header-edit">--%>
+<%--                <p>Edit status</p>--%>
+<%--                <input type="button" id="close" onclick="hideEdit()" value="x">--%>
+<%--            </div>--%>
 
-            <div class="underline-edit"></div>
-            <div class="infoHost">
-                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">
-                <p>${requestScope.user.name}</p>
-            </div>
-            <div class="imgTextEdit">
-                <div class="contentWrapper">
-                    <div class="textarea">
-                        <textarea placeholder="What do you think?" oninput="description(this)"
-                                name="description" class="textareaDescription"></textarea>
-                    </div>
-                    <div>
-                    </div>
-                </div>
-            </div>
-            <div class="submit-edit">
-                <button id="saveImg" value="submit">Submit</button>
-            </div>
-        </form>
-    </div>
-</div>
+<%--            <div class="underline-edit"></div>--%>
+<%--            <div class="infoHost">--%>
+<%--                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">--%>
+<%--                <p>${requestScope.user.name}</p>--%>
+<%--            </div>--%>
+<%--            <div class="imgTextEdit">--%>
+<%--                <div class="contentWrapper">--%>
+<%--                    <div class="textarea">--%>
+<%--                        <textarea placeholder="What do you think?" oninput="description(this)"--%>
+<%--                                name="description" class="textareaDescription"></textarea>--%>
+<%--                    </div>--%>
+<%--                    <div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div class="submit-edit">--%>
+<%--                <button id="saveImg" value="submit">Submit</button>--%>
+<%--            </div>--%>
+<%--        </form>--%>
+<%--    </div>--%>
+<%--</div>--%>
 <%--<div class="form-post" id="post">--%>
 <%--    <div class="editFormDiv" id="divPostForm">--%>
 <%--        <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">--%>
@@ -70,47 +70,7 @@
 <%--                <input type="button" id="closePost" onclick="hidePost()" value="x">--%>
 <%--            </div>--%>
 
-<%--            <div class="underline-edit"></div>--%>
-<%--            <div class="infoHost">--%>
-<%--                <img class="imgHost" src="${requestScope.user.avatar}" alt="">--%>
-<%--                <p>${requestScope.user.name}</p>--%>
-<%--            </div>--%>
-<%--            <div class="imgTextEdit">--%>
-<%--                <div class="contentWrapper">--%>
-<%--                    <div class="textarea">--%>
-<%--                        <textarea placeholder="What do you think?" oninput="description(this)"--%>
-<%--                                 name="description" class="textareaDescription"></textarea>--%>
-<%--                    </div>--%>
-<%--                    <div class="textarea">--%>
-<%--                        <textarea placeholder="your picture?" oninput="description(this)"--%>
-<%--                                  name="media" class="textareaDescription"></textarea>--%>
-<%--                    </div>--%>
-<%--                    <c:if test="${sessionScope.error != null}">--%>
-<%--                        <span style="color: red">${sessionScope.error}</span>--%>
-<%--                    </c:if>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--            <div>--%>
-<%--                <input type="file" accept="image/*,video/*" id="media" value="" name="fileImage">--%>
-<%--            </div>--%>
-<%--            <div>--%>
-<%--                <select name="option">--%>
-<%--                    <option value="1">public</option>--%>
-<%--                    <option value="2">private</option>--%>
-<%--                </select>--%>
-<%--            </div>--%>
-<%--            <div class="submit-edit">--%>
-<%--                <input type="submit" value="upload">--%>
-<%--            </div>--%>
-<%--        </form>--%>
-<%--    </div>--%>
-<%--</div>--%>
-<%--<script>--%>
-<%--    function description(textarea) {--%>
-<%--        textarea.style.height = "auto";--%>
-<%--        textarea.style.height = textarea.scrollHeight + "px";--%>
-<%--    }--%>
-<%--</script>--%>
+
 <div class="form-post" id="post">
     <div class="editFormDiv" id="divPostForm">
         <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">
