@@ -14,6 +14,7 @@
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
     <link rel="stylesheet" href="../display-home/style.css">
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <%--    <script src="../display-home/function.js"></script>--%>
 </head>
 <body>
@@ -113,7 +114,7 @@
 <%--</script>--%>
 <div class="form-post" id="post">
     <div class="editFormDiv" id="divPostForm">
-        <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">
+        <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus"  enctype="multipart/form-data">
             <div class="header-edit">
                 <p>Post status</p>
                 <input type="button" id="closePost" onclick="hidePost()" value="x">
@@ -136,8 +137,19 @@
                         <textarea placeholder="What do you think?" oninput="descriptions(this)"
                                   name="description" class="textareaDescription"></textarea>
                     </div>
-                    <div class="textarea">
-                        <textarea placeholder="your picture?" name="media" class="textareaDescription"></textarea>
+                    <div style="text-align: center">
+                        <img src="" alt="" id="image" width="400" height="250" > <br/> <br/>
+                        <input type="file" onchange="chooseFile(this)" id="imageFile" name="file" value="" size="60" />
+                        <script>
+                            function chooseFile(fileInput){
+                                var reader = new FileReader();
+
+                                reader.onload = function (e){
+                                    $('#image').attr('src', e.target.result);
+                                }
+                                reader.readAsDataURL(fileInput.files[0]);
+                            }
+                        </script>
                     </div>
                 </div>
             </div>
