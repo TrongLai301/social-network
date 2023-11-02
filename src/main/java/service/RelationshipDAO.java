@@ -53,16 +53,37 @@ public class RelationshipDAO implements iRelationshipDAO{
             throw new RuntimeException(e);
         }
     }
-
+    // Kiểm tra xem có phải là người gửi hay không nếu có trả về true
     @Override
-    public boolean isSender(int senderId) {
+    public boolean isSender(int senderId, int receiverId) {
         try {
             Connection con = DataConnector.getConnection();
             CallableStatement cs = con.prepareCall("SELECT receiverId\n" +
                     "from Friendships\n" +
                     "WHERE senderId = ?\n" +
-                    "  and status = 'pending';");
+                    "  and status = 'pending' and receiverId = ?");
             cs.setInt(1,senderId);
+            cs.setInt(2,receiverId);
+            ResultSet rs = cs.executeQuery();
+            if (rs.next()){
+                return true;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+    // Kiểm tra xem fromID có phải là người được nhận lời mời kê bạn hay không
+    @Override
+    public boolean isReceiver(int fromId, int toId) {
+        try {
+            Connection con = DataConnector.getConnection();
+            CallableStatement cs = con.prepareCall("SELECT senderId\n" +
+                    "from Friendships\n" +
+                    "WHERE receiverId = ?\n" +
+                    "  and status = 'pending' and senderId = ?;");
+            cs.setInt(1,fromId);
+            cs.setInt(2,toId);
             ResultSet rs = cs.executeQuery();
             if (rs.next()){
                 return true;
@@ -74,21 +95,34 @@ public class RelationshipDAO implements iRelationshipDAO{
     }
 
     @Override
-    public boolean isReceiver(int receiveId) {
+    public void addFriend(int senderId, int receiverId) {
         try {
             Connection con = DataConnector.getConnection();
-            CallableStatement cs = con.prepareCall("SELECT senderId\n" +
-                    "from Friendships\n" +
-                    "WHERE receiverId = ?\n" +
-                    "  and status = 'pending';");
-            cs.setInt(1,receiveId);
-            ResultSet rs = cs.executeQuery();
-            if (rs.next()){
-                return true;
-            }
+            CallableStatement cs = con.prepareCall("update Friendships set status = 'accepted' where (senderId = ? and receiverId = ?) or (senderId = ? and receiverId = ?)");
+            cs.setInt(1,senderId);
+            cs.setInt(2,receiverId);
+            cs.setInt(3,receiverId);
+            cs.setInt(4,senderId);
+            cs.executeUpdate();
+            con.close();
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
-        return false;
+    }
+
+    @Override
+    public void deleteRelationshipOf(int firstUser, int secondUser) {
+        try {
+            Connection con = DataConnector.getConnection();
+            CallableStatement cs = con.prepareCall("delete from Friendships where (senderId = ? and receiverId = ?) or (senderId = ? and receiverId = ?)");
+            cs.setInt(1,firstUser);
+            cs.setInt(2,secondUser);
+            cs.setInt(3,secondUser);
+            cs.setInt(4,firstUser);
+            cs.executeUpdate();
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

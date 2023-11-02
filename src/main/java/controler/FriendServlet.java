@@ -29,10 +29,40 @@ public class FriendServlet extends HttpServlet {
                 case "sendFriendRequest":
                     sendAddFriendRequest(req,resp);
                     break;
+                case "acceptRequest" :
+                    acceptRequest(req,resp);
+                    break;
+                case "deleteRelationship" :
+                    deleteRelationship(req,resp);
+                    break;
                 default:
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void deleteRelationship(HttpServletRequest req, HttpServletResponse resp) {
+        int firstUserId = (int) req.getSession().getAttribute("idAccount");
+        int secondUserId = Integer.parseInt(req.getParameter("id"));
+
+        relationshipDAO.deleteRelationshipOf(firstUserId,secondUserId);
+        try {
+            req.getRequestDispatcher("/user?actionGet=showUserProfile&id=" + secondUserId).forward(req,resp);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void acceptRequest(HttpServletRequest req, HttpServletResponse resp) {
+        int receiverId = (int) req.getSession().getAttribute("idAccount");
+        int senderId = Integer.parseInt(req.getParameter("id"));
+
+        relationshipDAO.addFriend(senderId,receiverId);
+        try {
+            req.getRequestDispatcher("/user?actionGet=showUserProfile&id=" + senderId).forward(req,resp);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
