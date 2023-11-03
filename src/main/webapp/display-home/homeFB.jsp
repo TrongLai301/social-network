@@ -317,25 +317,60 @@
                         <img src="${post.media}" alt="">
                     </div>
                     <div class="post-reaction">
-                        <div class="activity-icons" style="padding-top: 20px;">
-                            <div>
-    <c:choose>
-        <c:when test="${status == 'like'}">
-            <div><a href="/home?actionGet=dislike&id=${post.id}"><img src="../display-home/images/like-blue.png"></a> </div>
-        </c:when>
-        <c:otherwise>
-            <div><a href="/home?actionGet=like&id=${post.id}"><img src="../display-home/images/like.png"></a> </div>
-        </c:otherwise>
-    </c:choose>
-
-
-                                    ${post.likeCount}</div>
+                        <div class="activity-icons">
+                            <div class="likeAndUnlikeButton">
+                                <c:choose>
+                                    <c:when test="${ status != null}">
+                                        <div>
+                                            <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
+                                                <img class="like-button liked" src="../display-home/images/like-blue.png">
+                                            </a>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div>
+                                            <a onclick="toggleLike(${post.id}, 'like', this)" href="#">
+                                                <img class="like-button" src="../display-home/images/like.png">
+                                            </a>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                                <span class="likeCount">${post.likeCount}</span>
+                            </div>
                             <div><img src="../display-home/images/comments.png" alt="">0</div>
                             <div><img src="../display-home/images/share.png" alt="">0</div>
                         </div>
                     </div>
+
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                    <script>
+                        function toggleLike(idStatus, action, element) {
+                            event.preventDefault();
+                            var xhr = new XMLHttpRequest();
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState === 4 && xhr.status === 200) {
+                                    var response = JSON.parse(xhr.responseText);
+                                    updateLikeCount(response.likeCount, element);
+                                    $(element).toggleClass("liked");
+                                }
+                            };
+                            xhr.open("GET", "user?actionGet=likeStatus&action=" + action + "&idStatus=" + idStatus, true);
+                            xhr.send();
+                        }
+
+                        function updateLikeCount(likeCount, element) {
+                            var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
+                            likeCountElement.text(likeCount);
+                        }
+
+                        function updateLikeCount(likeCount, element) {
+                            var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
+                            likeCountElement.text(likeCount);
+                        }
+                    </script>
                 </div>
             </c:forEach>
+
             <script>
                 let formPost;
                 let formEdit;
