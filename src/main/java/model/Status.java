@@ -13,7 +13,7 @@ public class Status {
     private int likeCount;
 
 
-    public Status(int id, LocalDate createTime, String description, String media, int permission, int idUser,int likeCount) {
+    public Status(int id, LocalDate createTime, String description, String media, int permission, int idUser, int likeCount) {
         this.id = id;
         this.createTime = createTime;
         this.description = description;
@@ -26,12 +26,12 @@ public class Status {
     public Status() {
     }
 
-    public Status(String description, int idUser, LocalDate createTime, String media, int permission,int likeCount) {
+    public Status(String description, int idUser, LocalDate createTime, String media, int permission, int likeCount) {
         this.createTime = createTime;
         this.description = description;
         this.media = media;
         this.idUser = idUser;
-        this.permission=permission;
+        this.permission = permission;
         this.likeCount = likeCount;
     }
 
@@ -82,6 +82,7 @@ public class Status {
     public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
+
 
     public int getLikeCount() {
         return likeCount;

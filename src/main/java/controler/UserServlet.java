@@ -3,6 +3,7 @@ package controler;
 import DBcontext.DataConnector;
 import model.Status;
 import model.User;
+import service.RelationshipDAO;
 import service.StatusDAOImpl;
 import service.UserDAOImpl;
 import service.Validate.PasswordValidate;
@@ -33,6 +34,7 @@ public class UserServlet extends HttpServlet {
     PasswordValidate passwordValidate;
     UserDAOImpl userDAO;
     StatusDAOImpl statusDAO;
+    RelationshipDAO relationshipDAO;
     private static final String IMG_DIR = "/WEB-INF/img"; // Đường dẫn đến thư mục lưu trữ ảnh và video đính kèm
 
     @Override
@@ -40,6 +42,7 @@ public class UserServlet extends HttpServlet {
         passwordValidate = new PasswordValidate();
         userDAO = new UserDAOImpl();
         statusDAO = new StatusDAOImpl();
+        relationshipDAO = new RelationshipDAO();
     }
 
     @Override
@@ -265,7 +268,7 @@ public class UserServlet extends HttpServlet {
         try {
             HttpSession session = req.getSession();
             Integer idUser = (Integer) session.getAttribute("idAccount");
-            User userFind = userDAO.getUserById(idUser);
+            User currentUser = userDAO.getUserById(idUser);
             List<User> userList = new ArrayList<>();
             User userPost;
             int id = Integer.parseInt(req.getParameter("id"));
@@ -276,7 +279,7 @@ public class UserServlet extends HttpServlet {
             for (Status status : defaultPost){
                 userPost = userDAO.getUserById(status.getIdUser());
                 if (status.getIdUser() == id) {
-                    if (id == userFind.getId()) {
+                    if (id == currentUser.getId()) {
                         newPost.add(status);
                         userList.add(userPost);
                     }else{
@@ -288,8 +291,10 @@ public class UserServlet extends HttpServlet {
                     }
                 }
             }
+            System.out.println(getRelationship(idUser,id));
 
-            req.setAttribute("user",userFind);
+            req.setAttribute("relationship",getRelationship(idUser,id));
+            req.setAttribute("user",currentUser);
             req.setAttribute("listStatus",newPost);
             req.setAttribute("listUser",userList);
             req.getRequestDispatcher("/user/userProfile/displayProfile/profile.jsp").forward(req, resp);
@@ -355,6 +360,22 @@ public class UserServlet extends HttpServlet {
         User useForCreateStatus = userDAO.getUserById(idUser);
         req.setAttribute("useForCreateStatus", useForCreateStatus);
         req.getRequestDispatcher("/home").forward(req,resp);
+    }
+    public String getRelationship(int firstId, int secondID){
+        String relationship = relationshipDAO.getRelationshipBetween(firstId,secondID);
+        if (firstId == secondID){
+            return  "myself";
+        }
+        if (relationship == null){
+            return  "stranger";
+        }
+        if (relationshipDAO.isSender(firstId)){
+            return  "pending";
+        }
+        if (relationshipDAO.isReceiver(firstId)){
+            return  "not_received";
+        }
+        return relationship;
     }
 
 }
