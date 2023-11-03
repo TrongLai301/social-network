@@ -261,7 +261,7 @@
     width: 100px;
     height: 30px;">
                             <a href="${pageContext.request.contextPath}/friend?actionGet=sendFriendRequest&id=${requestScope.userFind.id}">
-                                Add Friend </a></button>
+                               + Add Friend </a></button>
                     </div>
                 </c:when>
                 <c:when test="${requestScope.relationship.equals('pending')}">
@@ -269,7 +269,29 @@
                         <button style="border: 1px solid;
     border-radius: 15px;
     width: 100px;
-    height: 30px;"><a href=""> x Cancel </a></button>
+    height: 30px;"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> x Cancel </a></button>
+                    </div>
+                </c:when>
+                <c:when test="${requestScope.relationship.equals('not_received')}">
+                    <div>
+                        <button style="border: 1px solid;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> Reject  </a></button>
+                    </div>
+                    <div>
+                        <button style="border: 1px solid;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;"><a href="/friend?actionGet=acceptRequest&id=${requestScope.userFind.id}"> Accept  </a></button>
+                    </div>
+                </c:when>
+                <c:when test="${requestScope.relationship.equals('accepted')}">
+                    <div>
+                        <button style="border: 1px solid;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> - Unfriend  </a></button>
                     </div>
                 </c:when>
             </c:choose>

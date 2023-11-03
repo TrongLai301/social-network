@@ -291,7 +291,7 @@ public class UserServlet extends HttpServlet {
                     }
                 }
             }
-            System.out.println(getRelationship(idUser,id));
+            System.out.println(idUser + "to" +getRelationship(idUser,id));
 
             req.setAttribute("relationship",getRelationship(idUser,id));
             req.setAttribute("user",currentUser);
@@ -369,10 +369,10 @@ public class UserServlet extends HttpServlet {
         if (relationship == null){
             return  "stranger";
         }
-        if (relationshipDAO.isSender(firstId)){
+        if (relationshipDAO.isSender(firstId, secondID)){
             return  "pending";
         }
-        if (relationshipDAO.isReceiver(firstId)){
+        if (relationshipDAO.isReceiver(firstId, secondID)){
             return  "not_received";
         }
         return relationship;
