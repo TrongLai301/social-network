@@ -1,5 +1,6 @@
 package controler;
 
+import model.Like;
 import model.Status;
 import model.User;
 import service.StatusDAOImpl;
@@ -54,6 +55,7 @@ public class HomeServlet extends HttpServlet {
             List<Status> list = statusDAO.findStatus(searchContent);
             List<Status> post = new ArrayList<>();
             List<User> userResult = statusDAO.getAllUserToSearch(searchContent);
+            List<Like> listLike = new ArrayList<>();
             User userPost;
             for (Status status : list){
                 userPost = userDAO.getUserById(status.getIdUser());
@@ -67,7 +69,17 @@ public class HomeServlet extends HttpServlet {
                     post.add(status);
                     userList.add(userPost);
                 }
+                if (userDAO.checkLikedPost(status.getId(), idUser)){
+                    Like like = new Like();
+                    like.setStatus(1);
+                    listLike.add(like);
+                }else {
+                    Like like = new Like();
+                    like = null;
+                    listLike.add(like);
+                }
             }
+            request.setAttribute("check",listLike);
             request.setAttribute("UserResult",userResult);
             request.setAttribute("user",user);
             request.setAttribute("listStatusFindBySearch",post);
@@ -86,11 +98,6 @@ public class HomeServlet extends HttpServlet {
                 actionGet = "";
             }
             switch (actionGet) {
-                case "like" :
-                    likeStatus(req,resp);
-                    break;
-                case "dislike" :
-                    break;
                 default:
                     showHomePage(req,resp);
                     break;
@@ -105,33 +112,39 @@ public class HomeServlet extends HttpServlet {
                 User userPost;
                 List<Status> list = statusDAO.getAllStatus();
                 List<Status> post = new ArrayList<>();
-                for (Status status : list){
+                List<Like> listLike = new ArrayList<>();
+
+                for (Status status : list) {
+
                     userPost = userDAO.getUserById(status.getIdUser());
-                    if (status.getIdUser() != idUser){
+                    if (status.getIdUser() != idUser) {
                         if (status.getPermission() == 2) {
                             continue;
                         }
                     }
+                    if (userDAO.checkLikedPost(status.getId(), idUser)){
+                        Like like = new Like();
+                        like.setStatus(1);
+                        listLike.add(like);
+                    }else {
+                        Like like = new Like();
+                        like = null;
+                        listLike.add(like);
+                    }
+
                     post.add(status);
                     userList.add(userPost);
                 }
-                request.setAttribute("user",user);
-                request.setAttribute("listStatus",post);
-                request.setAttribute("listUser",userList);
-                request.getRequestDispatcher("display-home/homeFB.jsp").forward(request,response);
+                request.setAttribute("check",listLike);
+                request.setAttribute("user", user);
+                request.setAttribute("listStatus", post);
+                request.setAttribute("listUser", userList);
+
+                request.getRequestDispatcher("display-home/homeFB.jsp").forward(request, response);
             } catch (SQLException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
 
-        }
-        public void likeStatus(HttpServletRequest request , HttpServletResponse response){
-            try {
-            HttpSession session = request.getSession();
-            Integer idUser = (Integer) session.getAttribute("idAccount");
-            User user = userDAO.getUserById(idUser);
-            } catch (SQLException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 

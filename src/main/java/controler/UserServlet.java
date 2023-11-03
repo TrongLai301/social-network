@@ -3,6 +3,7 @@ package controler;
 import DBcontext.DataConnector;
 import model.Status;
 import model.User;
+import org.json.simple.JSONObject;
 import service.StatusDAOImpl;
 import service.UserDAOImpl;
 import service.Validate.PasswordValidate;
@@ -59,6 +60,12 @@ public class UserServlet extends HttpServlet {
                 case "updateUserProfile":
                     EditUserProfile(req,resp);
                     break;
+                case "likeStatus":
+                    likeStatus(req, resp);
+                    break;
+                case "getLikeCount":
+                    getLikeCount(req, resp);
+                    break;
                 default:
                     showHomePageForUser(req, resp);
                     break;
@@ -67,6 +74,38 @@ public class UserServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+    private void getLikeCount(HttpServletRequest req, HttpServletResponse resp) {
+        int idStatus = Integer.parseInt(req.getParameter("idStatus"));
+        userDAO.getLikeCount(idStatus);
+    }
+
+    private void likeStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        HttpSession session = req.getSession();
+        int idUser = (Integer) session.getAttribute("idAccount");
+        int idStatus = Integer.parseInt(req.getParameter("idStatus"));
+        String action = req.getParameter("action");
+
+        if (action.equals("like")) {
+            userDAO.updatePlusLikeCount(idStatus, idUser);
+        } else if (action.equals("unlike")) {
+            userDAO.updateMinusLikeCount(idStatus, idUser);
+        }
+
+        int likeCount = userDAO.getLikeCount(idStatus); // Lấy số lượng like mới
+        boolean liked = userDAO.checkLikedPost(idStatus, idUser); // Kiểm tra xem người dùng đã like bài viết hay chưa
+
+        // Tạo đối tượng JSON chứa thông tin cập nhật
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("likeCount", likeCount);
+        responseJson.put("liked", liked);
+
+        // Thiết lập kiểu nội dung là JSON
+        resp.setContentType("application/json");
+        // Gửi phản hồi về client
+        resp.getWriter().write(responseJson.toString());
+    }
+
 
 
     private void showEditPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -160,15 +199,6 @@ public class UserServlet extends HttpServlet {
                 }
 
             }
-                // Lưu trữ tệp đa phương tiện (hình ảnh, video) vào thư mục trên máy chủ
-//            String fileName = mediaPart.getSubmittedFileName();
-//            InputStream mediaInput = mediaPart.getInputStream();
-//            Path mediaPath = Paths.get("src/main/webapp/images", fileName);
-//            Files.copy(mediaInput, mediaPath, StandardCopyOption.REPLACE_EXISTING);
-
-            // Lưu thông tin bài viết và đường dẫn tệp đa phương tiện vào cơ sở dữ liệu
-
-            // Chuyển hướng người dùng sau khi đăng bài viết thành công
         }
 
     private void deleteStatus(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, ClassNotFoundException {

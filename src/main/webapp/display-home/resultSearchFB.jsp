@@ -208,6 +208,7 @@
             <div style="text-align: center;padding-top: 40px">Các bài viết liên quan</div>
             <c:forEach var="post" items="${requestScope.listStatusFindBySearch}" varStatus="status">
                 <c:set var="user" value="${requestScope.listUser[status.index]}" />
+                <c:set var="status" value="${requestScope.check[status.index]}"/>
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
@@ -261,13 +262,86 @@
                         <p>${post.description}</p>
                         <img src="${post.media}" alt="">
                     </div>
+<%--                    <div class="post-reaction">--%>
+<%--                        <div class="activity-icons">--%>
+<%--                            <div id="likeAndUnlikeButton">--%>
+<%--                                <c:choose>--%>
+<%--                                    <c:when test="${status != null}">--%>
+<%--                                        <div><a href="user?actionGet=likeStatus&idStatus=${post.id}&action=unlike"><img src="../display-home/images/like-blue.png"></a> </div>--%>
+<%--                                    </c:when>--%>
+<%--                                    <c:otherwise>--%>
+<%--                                        <div><a href="user?actionGet=likeStatus&idStatus=${post.id}&action=like"><img src="../display-home/images/like.png"></a> </div>--%>
+<%--                                    </c:otherwise>--%>
+<%--                                </c:choose>--%>
+
+<%--                                    ${post.likeCount}--%>
+<%--                            </div>--%>
+<%--                            <div><img src="../display-home/images/comments.png" alt="">0</div>--%>
+<%--                            <div><img src="../display-home/images/share.png" alt="">0</div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
                     <div class="post-reaction">
                         <div class="activity-icons">
-                            <div><img src="../display-home/images/like-blue.png" alt=""> ${post.likeCount}</div>
+                            <div id="likeAndUnlikeButton">
+                                <c:choose>
+                                    <c:when test="${status != null}">
+                                        <div>
+                                            <a onclick="likePost(${post.id}, 'unlike')"
+                                               href="javascript:void(0);">
+                                                <img src="../display-home/images/like-blue.png">
+                                            </a>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div>
+                                            <a onclick="likePost(${post.id}, 'like')"
+                                               href="javascript:void(0);">
+                                                <img src="../display-home/images/like.png">
+                                            </a>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                                <span id="likeCount">${post.likeCount}</span>
+                            </div>
                             <div><img src="../display-home/images/comments.png" alt="">0</div>
                             <div><img src="../display-home/images/share.png" alt="">0</div>
                         </div>
                     </div>
+                    <script>
+                        function likePost(idStatus, action) {
+                            // Tạo yêu cầu Ajax
+                            var xhr = new XMLHttpRequest();
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState === XMLHttpRequest.DONE) {
+                                    if (xhr.status === 200) {
+                                        var response = JSON.parse(xhr.responseText);
+                                        updateLikeCount(response.likeCount);
+                                        updateLikeButton(response.liked);
+                                    } else {
+                                        console.error('Có lỗi xảy ra.');
+                                    }
+                                }
+                            };
+
+                            // Gửi yêu cầu Ajax đến servlet
+                            xhr.open("GET", "user?actionGet=likeStatus&idStatus=" + idStatus + "&action=" + action, true);
+                            xhr.send();
+                        }
+
+                        function updateLikeCount(likeCount) {
+                            var likeCountElement = document.getElementById("likeCount");
+                            likeCountElement.innerText = likeCount;
+                        }
+
+                        function updateLikeButton(liked) {
+                            var likeButton = document.getElementById("likeAndUnlikeButton").getElementsByTagName("a")[0];
+                            if (liked) {
+                                likeButton.innerHTML = '<img src="../display-home/images/like-blue.png">';
+                            } else {
+                                likeButton.innerHTML = '<img src="../display-home/images/like.png">';
+                            }
+                        }
+                    </script>
                 </div>
             </c:forEach>
 
