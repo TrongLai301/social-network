@@ -239,21 +239,11 @@
     <div style="width: 100% ; height: 400px;background: url('https://images5.alphacoders.com/129/1298299.jpg') no-repeat;background-size: 100% 100%">
     </div>
     <div style="width: 100% ; height: 160px;background-color: #ffffff;display: inline-flex;justify-content: space-between;border-radius: 15px">
-<<<<<<< HEAD
        <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
            <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
            <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
                <p style="padding-left: 20px;">Bạn bè : </p></div>
        </div>
-=======
-        <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
-            <div><img src="${requestScope.userFind.avatar}"
-                      style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
-            <div>
-                <p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
-                <p style="padding-left: 20px;">Bạn bè : </p></div>
-        </div>
->>>>>>> d95855cf166175efa19b94cf4afaaefb5037875a
         <div style="float: right;
     display: inline-flex;
     justify-content: space-between;
