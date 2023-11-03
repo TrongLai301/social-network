@@ -56,6 +56,9 @@ public class UserServlet extends HttpServlet {
                 case "showEditPassword":
                     showEditPassword(req, resp);
                     break;
+                case "moreInformation":
+                    moreInformation(req,resp);
+                    break;
                 case "showUserProfile":
                     showUserProfile(req, resp);
                     break;
@@ -77,12 +80,25 @@ public class UserServlet extends HttpServlet {
         RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
         dispatcher.forward(req, resp);
         switch (actionGet) {
-            case "":
-                break;
             default:
                 viewUserMain(req, resp);
                 break;
 
+        }
+    }
+    public void moreInformation(HttpServletRequest req , HttpServletResponse resp){
+        try {
+            HttpSession session = req.getSession();
+            Integer idUser = (Integer) session.getAttribute("idAccount");
+            User currentUser = userDAO.getUserById(idUser);
+            int id = Integer.parseInt(req.getParameter("id"));
+            User user = userDAO.getUserById(id);
+            req.setAttribute("userFind",user);
+            req.setAttribute("relationship",getRelationship(idUser,id));
+            req.setAttribute("user",currentUser);
+            req.getRequestDispatcher("/user/userProfile/displayProfile/information.jsp").forward(req, resp);
+        } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

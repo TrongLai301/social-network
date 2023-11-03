@@ -18,36 +18,6 @@
     <%--    <script src="../display-home/function.js"></script>--%>
 </head>
 
-<c:if test="${requestScope.messageDelete != null}">
-    <%
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println("<script type=\"text/javascript\">");
-        printWriter.println("alert('xóa bài viết thành công');");
-        printWriter.println("</script>");
-    %>
-</c:if><c:if test="${requestScope.messageDeleteFalse != null}">
-    <%
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println("<script type=\"text/javascript\">");
-        printWriter.println("alert('xóa bài viết thất bại');");
-        printWriter.println("</script>");
-    %>
-</c:if>
-<c:if test="${requestScope.messageEditComplete != null}">
-    <%
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println("<script type=\"text/javascript\">");
-        printWriter.println("alert('sửa bài viết thành công');");
-        printWriter.println("</script>");
-    %>
-</c:if><c:if test="${requestScope.messageEditFalse != null}">
-    <%
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println("<script type=\"text/javascript\">");
-        printWriter.println("alert('sửa bài viết thất bại');");
-        printWriter.println("</script>");
-    %>
-</c:if>
 <div class="form-edit" id="edit">
     <div class="editFormDiv" id="divEditForm">
         <%--        <form class="editForm" method="post" action="/user?actionPost=editStatus" id="editForm">--%>
@@ -281,153 +251,51 @@
         </div>
 
     </div>
-    <div class="container" style="justify-content: space-between;display: flex">
+    <div class="container">
 
         <!-- main-content------- -->
-        <div style="float: left;height: 100%;width: 300px;">
-            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
-                <p>
-                <div style="justify-content: space-between;display: flex">
-                <h3 style="float: left">Giới thiệu</h3></p>
-                <a href="user?actionGet=moreInformation&id=${requestScope.userFind.id}" style="text-decoration: none;float: right">More information</a>
-               </div>
-
-
-                <br>
-                <div style="text-align: center">${requestScope.userFind.hobby}</div>
-                <p><h4>Quê quán</h4></p>
-                <div style="text-align: center">${requestScope.userFind.address}</div>
-                <br>
-                <p><h4>Sinh nhật</h4></p>
-                <div style="text-align: center">${requestScope.userFind.birth}</div>
-            </div>
-            <br>
-            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
-                <p>
-                <h3>Picture library</h3></p>
-                <br>
-                <c:forEach var="media" items="${requestScope.listStatus}">
-                    <div style="padding-top: 20px;padding-left: 10px">
-                        <div><img src="${media.media}" style="width: 100px"></div>
-                    </div>
-                </c:forEach>
-            </div>
-            <br>
-            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">3</div>
-        </div>
         <div class="content-area" style="float: right">
-            <div class="write-post-container">
-                <div class="user-profile">
-                    <img src="${requestScope.user.getAvatar()}" style="height: 50px;width: 50px" alt="">
-                    <div>
-                        <p>${requestScope.user.name}</p>
-                        <small>Public <i class="fas fa-caret-down"></i></small>
-                    </div>
-                </div>
-
-                <div class="post-upload-textarea">
-                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3"
-                              onclick="post()"></textarea>
-                    <div class="add-post-links">
-                        <a href="#"><img src="../display-home/images/live-video.png" alt="">Live Video</a>
-                        <a href="#"><img src="../display-home/images/photo.png" alt="">Photo/Video</a>
-                        <a href="#"><img src="../display-home/images/feeling.png" alt="">Feeling Activity</a>
-                    </div>
-                </div>
-            </div>
-
-            <c:forEach var="post" items="${requestScope.listStatus}" varStatus="status">
-                <c:set var="user" value="${requestScope.listUser[status.index]}" />
-                <c:set var="status" value="${sessionScope.status[status.index]}"/>
                 <div class="status-field-container write-post-container">
-                    <div class="user-profile-box">
-                        <div class="user-profile">
-                            <img src="${user.avatar}" style="height: 50px;width: 50px" alt="Avatar">
-                            <div>
-                                <p>${user.name}</p>
-                                <small>${post.createTime}</small>
-                                <c:choose>
-                                    <c:when test="${post.permission == 1}">
-                                        <small>public</small>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <small>private</small>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
+                    <div class="user-profile-box" style="display: flex; align-items: flex-start; flex-direction: column;justify-content: space-between">
+                     <div>
+                         <p style="float: left">User name :</p>
+                         <p style="float: right">${requestScope.userFind.username}</p>
+
+                     </div>
+                        <div>
+                            <p style="float: left">Avatar :</p>
+                            <p style="float: right">${requestScope.userFind.avatar}</p>
+
                         </div>
-                        <div class="ellipsis-container">
-                            <p class="choose" onclick="toggleOptions(event)">
-                                ...
-                            </p>
-                            <div class="options" id="option" style="height: 500px">
-                                <ul class="option-ul" style="list-style: none">
-                                    <li onclick="">
-                                        <div class="div-li" onclick="edit()">
-                                            <form action="/user?actionPost=editStatus" method="post">
-                                                <input type="hidden" name="idStatus" value="${post.id}">
-                                                <input type="text" name="description" value="${post.description}">
-                                                <input type="text" name="media" value="${post.media}">
-                                                <select name="option">
-                                                    <option value="1">public</option>
-                                                    <option value="2">private</option>
-                                                </select>
-                                                <input type="submit" value="Edit Status"/>
-                                            </form>
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                                                <style>svg {
-                                                    fill: #2265d8
-                                                }</style>
-                                                <path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
-                                            </svg>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="underline"></div>
-                                    </li>
-                                    <li>
-                                        <div class="div-li">
-                                            <form action="/user?actionPost=deleteStatus" method="post">
-                                                <input type="hidden" name="idStatus" value="${post.id}">
-                                                <input type="submit" value="Delete"/>
-                                            </form>
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
-                                                 class="icon-option">
-                                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                <style>svg {
-                                                    fill: #2265d8
-                                                }</style>
-                                                <path d="M576 128c0-35.3-28.7-64-64-64H205.3c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7H512c35.3 0 64-28.7 64-64V128zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
-                                            </svg>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div>
+                            <p style="float: left">Họ và tên :</p>
+                            <p style="float: right">${requestScope.userFind.name}</p>
+
                         </div>
+                        <div>
+                            <p style="float: left">Địa chỉ :</p>
+                            <p style="float: right">${requestScope.userFind.address}</p>
+
+                        </div>
+                        <div>
+                            <p style="float: left">SĐT :</p>
+                            <p style="float: right">${requestScope.userFind.phone}</p>
+
+                        </div>
+                        <div>
+                            <p style="float: left">Sở thích :</p>
+                            <p style="float: right">${requestScope.userFind.hobby}</p>
+
+                        </div>
+                        <div>
+                            <p style="float: left">Số lượng bạn bè :</p>
+                            <p style="float: right">${requestScope.userFind.username}</p>
+
+                        </div>
+
                     </div>
 
-                                 <div class="status-field">
-                                     <p>${post.description}</p>
-                                     <img src="${post.media}"/>
-                                    </div>
-                                    <div class="post-reaction">
-                                        <div class="activity-icons">
-                                            <c:choose>
-                                                <c:when test="${status == 'like'}">
-                                                    <div><a href="/home?actionGet=dislike&id=${post.id}"><img src="../../../display-home/images/like-blue.png"></a> </div>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <div><a href="/home?actionGet=like&id=${post.id}"><img src="../../../display-home/images/like.png"></a> </div>
-                                                </c:otherwise>
-                                            </c:choose>
-
-
-                                                ${post.likeCount}</div>
-                                            <div><img src="../display-home/images/comments.png" alt="">52</div>
-                                            <div><img src="../display-home/images/share.png" alt="">35</div>
-                                        </div>
-                                    </div>
-                            </c:forEach>
+                </div>
 
                             <script>
                                 let options;
@@ -474,10 +342,10 @@
                                 formPost.classList.toggle("showPost");
                             }
                         </script>
-                            <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
+
                                 </div>
                           </div>
-                </div>
+</div>
 
 
 <footer id="footer">

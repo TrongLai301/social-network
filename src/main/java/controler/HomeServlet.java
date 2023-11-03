@@ -98,6 +98,7 @@ public class HomeServlet extends HttpServlet {
                     break;
             }
         }
+
     public void likeStatus(HttpServletRequest request , HttpServletResponse response){
         try {
             HttpSession session = request.getSession();
