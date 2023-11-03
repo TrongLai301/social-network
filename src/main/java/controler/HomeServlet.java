@@ -37,6 +37,7 @@ public class HomeServlet extends HttpServlet {
             case "search":
                   findStatusByName(req,resp);
                 break;
+
             default:
                 break;
         }
@@ -86,16 +87,46 @@ public class HomeServlet extends HttpServlet {
                 actionGet = "";
             }
             switch (actionGet) {
-                case "like" :
+                case "like":
                     likeStatus(req,resp);
                     break;
-                case "dislike" :
+                case "dislike":
+                    dislikeStatus(req,resp);
                     break;
                 default:
                     showHomePage(req,resp);
                     break;
             }
         }
+    public void likeStatus(HttpServletRequest request , HttpServletResponse response){
+        try {
+            HttpSession session = request.getSession();
+            Integer idUser = (Integer) session.getAttribute("idAccount");
+            User user = userDAO.getUserById(idUser);
+            int idStatus = Integer.parseInt(request.getParameter("id"));
+
+
+
+            String action = "like";
+            session.setAttribute("status",action);
+            response.sendRedirect("/home");
+        } catch (SQLException | ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void dislikeStatus(HttpServletRequest request , HttpServletResponse response){
+        try {
+            HttpSession session = request.getSession();
+            Integer idUser = (Integer) session.getAttribute("idAccount");
+            User user = userDAO.getUserById(idUser);
+            int idStatus = Integer.parseInt(request.getParameter("id"));
+            String action = "dislike";
+            session.setAttribute("status",action);
+            response.sendRedirect("/home");
+        } catch (SQLException | ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
         public void showHomePage(HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException {
             try {
                 List<User> userList = new ArrayList<>();
@@ -124,15 +155,7 @@ public class HomeServlet extends HttpServlet {
             }
 
         }
-        public void likeStatus(HttpServletRequest request , HttpServletResponse response){
-            try {
-            HttpSession session = request.getSession();
-            Integer idUser = (Integer) session.getAttribute("idAccount");
-            User user = userDAO.getUserById(idUser);
-            } catch (SQLException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
+
     }
 
 

@@ -196,7 +196,7 @@
                     <div style="display: inline-flex; justify-content: flex-start;margin-bottom: 30px;width: 100%;">
                         <div><img src="${item.avatar}" style="border: 1px solid;border-radius: 50%;width: 50px;height: 50px" alt="Avatar"></div>
                         <div style="margin-left: 40px" >
-                            <a href="/user?actionGet=showUserProfile&id=${user.id}" style="text-decoration: none;color: black"><p>${item.name}</p></a>
+                            <a href="/user?actionGet=showUserProfile&id=${item.id}" style="text-decoration: none;color: black"><p>${item.name}</p></a>
                             <p>${item.hobby}</p>
                         </div>
                     </div>
@@ -208,6 +208,7 @@
             <div style="text-align: center;padding-top: 40px">Các bài viết liên quan</div>
             <c:forEach var="post" items="${requestScope.listStatusFindBySearch}" varStatus="status">
                 <c:set var="user" value="${requestScope.listUser[status.index]}" />
+                <c:set var="status" value="${sessionScope.status[status.index]}"/>
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
@@ -263,7 +264,17 @@
                     </div>
                     <div class="post-reaction">
                         <div class="activity-icons">
-                            <div><img src="../display-home/images/like-blue.png" alt=""> ${post.likeCount}</div>
+                            <c:choose>
+                                <c:when test="${status == 'like'}">
+                                    <div><a href="/home?actionGet=dislike&id=${post.id}"><img src="../display-home/images/like-blue.png"></a> </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div><a href="/home?actionGet=like&id=${post.id}"><img src="../display-home/images/like.png"></a> </div>
+                                </c:otherwise>
+                            </c:choose>
+
+
+                                ${post.likeCount}</div>
                             <div><img src="../display-home/images/comments.png" alt="">0</div>
                             <div><img src="../display-home/images/share.png" alt="">0</div>
                         </div>

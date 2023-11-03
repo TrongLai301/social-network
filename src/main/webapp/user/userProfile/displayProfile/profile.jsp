@@ -239,7 +239,7 @@
        <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
            <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
            <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
-                                                                                                    <p style="padding-left: 20px;">Bạn bè : </p></div>
+               <p style="padding-left: 20px;">Bạn bè : </p></div>
        </div>
         <div style="float: right;
     display: inline-flex;
@@ -306,6 +306,7 @@
 
             <c:forEach var="post" items="${requestScope.listStatus}" varStatus="status">
                 <c:set var="user" value="${requestScope.listUser[status.index]}" />
+                <c:set var="status" value="${sessionScope.status[status.index]}"/>
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
@@ -378,7 +379,17 @@
                                     </div>
                                     <div class="post-reaction">
                                         <div class="activity-icons">
-                                            <div><img src="../display-home/images/like-blue.png" alt=""> ${post.likeCount}</div>
+                                            <c:choose>
+                                                <c:when test="${status == 'like'}">
+                                                    <div><a href="/home?actionGet=dislike&id=${post.id}"><img src="../../../display-home/images/like-blue.png"></a> </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div><a href="/home?actionGet=like&id=${post.id}"><img src="../../../display-home/images/like.png"></a> </div>
+                                                </c:otherwise>
+                                            </c:choose>
+
+
+                                                ${post.likeCount}</div>
                                             <div><img src="../display-home/images/comments.png" alt="">52</div>
                                             <div><img src="../display-home/images/share.png" alt="">35</div>
                                         </div>
