@@ -61,6 +61,8 @@
 <%--        </form>--%>
 <%--    </div>--%>
 <%--</div>--%>
+
+
 <%--<div class="form-post" id="post">--%>
 <%--    <div class="editFormDiv" id="divPostForm">--%>
 <%--        <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">--%>
@@ -229,7 +231,7 @@
 
     <!-- content-area------------ -->
 
-    <div class="container">
+    <div class="container" style="justify-content: space-between;">
         <div class="left-sidebar">
             <div class="important-links">
                 <a href="#"><img src="../display-home/images/friends.png" alt="">Friends</a>
@@ -256,7 +258,8 @@
                 </div>
 
                 <div class="post-upload-textarea">
-                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3" onclick="post()"></textarea>
+                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3"
+                              onclick="post()"></textarea>
                     <div class="add-post-links">
                         <a href="#"><img src="../display-home/images/live-video.png" alt="">Live Video</a>
                         <a href="#"><img src="../display-home/images/photo.png" alt="">Photo/Video</a>
@@ -267,21 +270,22 @@
 
             <c:forEach var="post" items="${requestScope.listStatus}" varStatus="status">
                 <c:set var="user" value="${requestScope.listUser[status.index]}"/>
-                <c:set var="status" value="${sessionScope.status[status.index]}"/>
+                <c:set var="status" value="${requestScope.check[status.index]}"/>
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
-                          <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
+                            <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
                             <div>
-                                <a href="/user?actionGet=showUserProfile&id=${user.id}" style="text-decoration: none;color: black">${user.name}</a><br>
+                                <a href="/user?actionGet=showUserProfile&id=${user.id}"
+                                   style="text-decoration: none;color: black">${user.name}</a><br>
                                 <small>${post.createTime}</small>
                                 <c:choose>
-                                <c:when test="${post.permission == 1}">
-                                    <small>public</small>
-                                </c:when>
-                                <c:otherwise>
-                                    <small>private</small>
-                                </c:otherwise>
+                                    <c:when test="${post.permission == 1}">
+                                        <small>public</small>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <small>private</small>
+                                    </c:otherwise>
                                 </c:choose>
                             </div>
                         </div>
@@ -316,25 +320,66 @@
                         <p>${post.description}</p>
                         <img src="${post.media}" alt="">
                     </div>
+                        <%--                    <div class="post-reaction">--%>
+                        <%--                        <div class="activity-icons">--%>
+                        <%--                            <div id="likeAndUnlikeButton">--%>
+                        <%--                                <c:choose>--%>
+                        <%--                                    <c:when test="${status != null}">--%>
+                        <%--                                        <div><a onclick="likePost(${post.id})" ,--%>
+                        <%--                                                href="user?actionGet=likeStatus&idStatus=${post.id}&action=unlike"><img--%>
+                        <%--                                                src="../display-home/images/like-blue.png"></a></div>--%>
+                        <%--                                    </c:when>--%>
+                        <%--                                    <c:otherwise>--%>
+                        <%--                                        <div><a onclick="likePost(${post.id})" ,--%>
+                        <%--                                                href="user?actionGet=likeStatus&idStatus=${post.id}&action=like"><img--%>
+                        <%--                                                src="../display-home/images/like.png"></a></div>--%>
+                        <%--                                    </c:otherwise>--%>
+                        <%--                                </c:choose>--%>
+
+                        <%--                                    ${post.likeCount}--%>
+                        <%--                            </div>--%>
+                        <%--                            <div><img src="../display-home/images/comments.png" alt="">0</div>--%>
+                        <%--                            <div><img src="../display-home/images/share.png" alt="">0</div>--%>
+                        <%--                        </div>--%>
+                        <%--                    </div>--%>
                     <div class="post-reaction">
                         <div class="activity-icons">
                             <div class="likeAndUnlikeButton">
-                                <c:choose>
-                                    <c:when test="${ status != null}">
-                                        <div>
-                                            <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
-                                                <img class="like-button liked" src="../display-home/images/like-blue.png">
-                                            </a>
-                                        </div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div>
-                                            <a onclick="toggleLike(${post.id}, 'like', this)" href="#">
-                                                <img class="like-button" src="../display-home/images/like.png">
-                                            </a>
-                                        </div>
-                                    </c:otherwise>
-                                </c:choose>
+<%--                                <c:choose>--%>
+<%--                                    <c:when test="${ status != null}">--%>
+<%--                                        <div>--%>
+<%--                                            <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">--%>
+<%--                                                <img class="like-button liked" src="../display-home/images/like-blue.png">--%>
+<%--                                            </a>--%>
+<%--                                        </div>--%>
+<%--                                    </c:when>--%>
+<%--                                    <c:otherwise>--%>
+<%--                                        <div>--%>
+<%--                                            <a onclick="toggleLike(${post.id}, 'like', this)" href="#">--%>
+<%--                                                <img class="like-button" src="../display-home/images/like.png">--%>
+<%--                                            </a>--%>
+<%--                                        </div>--%>
+<%--                                    </c:otherwise>--%>
+<%--                                </c:choose>--%>
+<%--                        <a onclick="toggleLike(${post.id}, 'like', this)" href="#">--%>
+<%--                              <img class="like-button" src="../display-home/images/like.png">--%>
+<%--                                        </a>--%>
+    <c:choose>
+        <c:when test="${ status != null}">
+            <div>
+                <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
+                    <img class="like-button liked" src="../display-home/images/like-blue.png">
+                </a>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div>
+                <a onclick="toggleLike(${post.id}, 'like', this)" href="#">
+                    <img class="like-button" src="../display-home/images/like.png">
+                </a>
+            </div>
+        </c:otherwise>
+    </c:choose>
                                 <span class="likeCount">${post.likeCount}</span>
                             </div>
                             <div><img src="../display-home/images/comments.png" alt="">0</div>
@@ -352,12 +397,14 @@
                                     var response = JSON.parse(xhr.responseText);
                                     updateLikeCount(response.likeCount, element);
                                     $(element).toggleClass("liked");
+
+                                    // Reload the page
+                                    location.reload();
                                 }
                             };
                             xhr.open("GET", "user?actionGet=likeStatus&action=" + action + "&idStatus=" + idStatus, true);
                             xhr.send();
                         }
-
                         function updateLikeCount(likeCount, element) {
                             var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
                             likeCountElement.text(likeCount);

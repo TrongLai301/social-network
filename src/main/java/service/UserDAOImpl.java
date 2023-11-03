@@ -179,23 +179,7 @@ public class UserDAOImpl implements IUserDAO {
             throw new RuntimeException(e);
         }
     }
-
-    @Override
-    public void insertStatus(Status status) {
-        try {
-            Connection connection = DataConnector.getConnection();
-            CallableStatement callableStatement = connection.prepareCall("insert into status (description, idUser, createTime, media, idPermission) values (?,?,?,?,?)");
-            callableStatement.setString(1, status.getDescription());
-            callableStatement.setInt(2, status.getIdUser());
-            callableStatement.setDate(3, Date.valueOf(status.getCreateTime()));
-            callableStatement.setString(4, status.getMedia());
-            callableStatement.setInt(5, status.getPermission());
-            callableStatement.executeUpdate();
-            connection.close();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+@Override
     public boolean checkLikedPost(int idStatus, int idUser) {
         boolean hasBeenLiked = false;
         Connection conn = null;
@@ -215,8 +199,7 @@ public class UserDAOImpl implements IUserDAO {
         }
         return hasBeenLiked;
     }
-
-
+    @Override
     public void updatePlusLikeCount(int idStatus, int idUser) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -269,8 +252,7 @@ public class UserDAOImpl implements IUserDAO {
             }
         }
     }
-
-
+    @Override
     public void updateMinusLikeCount(int idStatus, int idUser) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -308,4 +290,38 @@ public class UserDAOImpl implements IUserDAO {
             }
         }
     }
-}
+
+    @Override
+    public void insertStatus(Status status) {
+        try {
+            Connection connection = DataConnector.getConnection();
+            CallableStatement callableStatement = connection.prepareCall("insert into status (description, idUser, createTime, media, idPermission) values (?,?,?,?,?)");
+            callableStatement.setString(1, status.getDescription());
+            callableStatement.setInt(2, status.getIdUser());
+            callableStatement.setDate(3, Date.valueOf(status.getCreateTime()));
+            callableStatement.setString(4, status.getMedia());
+            callableStatement.setInt(5, status.getPermission());
+            callableStatement.executeUpdate();
+            connection.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+        public int getLikeCount ( int idStatus){
+            int likeCount = 0;
+            String query = "select likeCount from status where idStatus = ?";
+            try {
+                Connection connection = DataConnector.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setInt(1, idStatus);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet.getInt("likeCount");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return likeCount;
+        }
+    }
