@@ -259,37 +259,37 @@
                     <div class="user-profile-box" style="display: flex; align-items: flex-start; flex-direction: column;justify-content: space-between">
                      <div>
                          <p style="float: left">User name :</p>
-                         <p style="float: right">${requestScope.userFind.username}</p>
+                         <p style="float: right;padding-left: 40px">${requestScope.userFind.username}</p>
 
                      </div>
                         <div>
                             <p style="float: left">Avatar :</p>
-                            <p style="float: right">${requestScope.userFind.avatar}</p>
+                            <p style="float: right;padding-left: 40px">${requestScope.userFind.avatar}</p>
 
                         </div>
                         <div>
                             <p style="float: left">Họ và tên :</p>
-                            <p style="float: right">${requestScope.userFind.name}</p>
+                            <p style="float: right;padding-left: 40px">${requestScope.userFind.name}</p>
 
                         </div>
                         <div>
                             <p style="float: left">Địa chỉ :</p>
-                            <p style="float: right">${requestScope.userFind.address}</p>
+                            <p style="float: right;padding-left: 40px">${requestScope.userFind.address}</p>
 
                         </div>
                         <div>
                             <p style="float: left">SĐT :</p>
-                            <p style="float: right">${requestScope.userFind.phone}</p>
+                            <p style="float: right;padding-left: 40px">${requestScope.userFind.phone}</p>
 
                         </div>
                         <div>
                             <p style="float: left">Sở thích :</p>
-                            <p style="float: right">${requestScope.userFind.hobby}</p>
+                            <p style="float: right;padding-left: 40px">${requestScope.userFind.hobby}</p>
 
                         </div>
                         <div>
                             <p style="float: left">Số lượng bạn bè :</p>
-                            <p style="float: right">${requestScope.userFind.username}</p>
+                            <p style="float: right;padding-left: 40px">${requestScope.countFriend}</p>
 
                         </div>
 

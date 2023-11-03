@@ -92,6 +92,8 @@ public class UserServlet extends HttpServlet {
             Integer idUser = (Integer) session.getAttribute("idAccount");
             User currentUser = userDAO.getUserById(idUser);
             int id = Integer.parseInt(req.getParameter("id"));
+            int count = relationshipDAO.CountFriend(id);
+            req.setAttribute("countFriend",count);
             User user = userDAO.getUserById(id);
             req.setAttribute("userFind",user);
             req.setAttribute("relationship",getRelationship(idUser,id));
@@ -307,8 +309,8 @@ public class UserServlet extends HttpServlet {
                     }
                 }
             }
-            System.out.println(idUser + "to" +getRelationship(idUser,id));
-
+            int count = relationshipDAO.CountFriend(id);
+            req.setAttribute("countFriend",count);
             req.setAttribute("relationship",getRelationship(idUser,id));
             req.setAttribute("user",currentUser);
             req.setAttribute("listStatus",newPost);
