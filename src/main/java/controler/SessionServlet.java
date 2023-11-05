@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 /*   Xử lý phiên làm việc như login, logout*/
@@ -69,12 +70,11 @@ public class SessionServlet extends HttpServlet {
     private void showLoginForm(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 //        resp.sendRedirect("login-signup/display-signUp-signIn.jsp");
         try {
-            req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp").forward(req,resp);
+            req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp").forward(req, resp);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         }
     }
-
 
     private void logOut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Xóa session
@@ -83,7 +83,7 @@ public class SessionServlet extends HttpServlet {
         // Trở về trang đăng nhập
 //        resp.sendRedirect("login-signup/display-signUp-signIn.jsp");
         try {
-            req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp").forward(req,resp);
+            req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp").forward(req, resp);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         }
@@ -152,7 +152,17 @@ public class SessionServlet extends HttpServlet {
     public boolean checkUser(List<User> users, String username) {
         for (User check : users
         ) {
-            if (check.getUsername().equals(username)) {
+            if (username.equals(check.getUsername())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean checkEmail(List<User> users, String email) {
+        for (User check : users
+        ) {
+            if (email.equals(check.getEmail())) {
                 return false;
             }
         }
@@ -163,18 +173,35 @@ public class SessionServlet extends HttpServlet {
         //Lấy ttin đki từ req.
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String date = request.getParameter("date");
+        if(date.isEmpty()){
+            date = "1000-10-10";
+        }
 
-        User user = new User(username, password);
+        User user = new User(username, password, email, phoneNumber, LocalDate.parse(date));
         List<User> listUser = userDAO.getAllUser();
-        String notify;
+        String notifyUsername = null;
+        String notifyEmail = null;
         JSONObject jsonObject = new JSONObject();
         if (!checkUser(listUser, username)) {
-            notify = "The user is exist";
+            notifyUsername = "The user is exist";
         } else {
-            notify = "success";
+            notifyUsername = "success";
+        }
+
+        if (!checkEmail(listUser, email)) {
+            notifyEmail = "The email is exist";
+        } else {
+            notifyEmail = "success";
+        }
+
+        if (checkUser(listUser, username) && checkEmail(listUser, email)) {
             userDAO.insertUser(user);
         }
-        jsonObject.put("notifyUser",notify);
+        jsonObject.put("notifyUser", notifyUsername);
+        jsonObject.put("notifyEmail", notifyEmail);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().print(jsonObject);
