@@ -539,6 +539,7 @@ public class UserServlet extends HttpServlet {
                 User userFind = userDAO.getUserById(idAccount);
                 User user = userDAO.getUserById(idFriend);
                 req.setAttribute("userFind",user);
+                req.setAttribute("friend", userDAO.getUserById(idFriend));
                 User userPost1;
                 List<User> userList1 = new ArrayList<>();
                 List<Status> defaultPost = statusDAO.getAllStatus();

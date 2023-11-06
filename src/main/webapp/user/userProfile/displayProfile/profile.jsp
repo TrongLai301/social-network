@@ -236,11 +236,20 @@
     <div style="width: 100% ; height: 400px;background: url('https://images5.alphacoders.com/129/1298299.jpg') no-repeat;background-size: 100% 100%">
     </div>
     <div style="width: 100% ; height: 160px;background-color: #ffffff;display: inline-flex;justify-content: space-between;border-radius: 15px">
-        <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
-            <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
-            <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
-                <p style="padding-left: 20px;">Bạn bè : ${requestScope.countFriend} </p></div>
-        </div>
+        <c:set var="friend" scope="session" value="${friend}"/>
+        <c:if test="${friend == null}">
+            <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
+                <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
+                <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
+                    <p style="padding-left: 20px;">Bạn bè : ${requestScope.countFriend} </p></div>
+            </div>
+        </c:if>
+        <c:if test="${friend != null}">
+            <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
+                <div><img src="<c:out value="${friend.getAvatar()}"/>" style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
+                <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;"><c:out value="${friend.getName()}"/><br>
+            </div>
+        </c:if>
         <div style="float: right;
     display: inline-flex;
     justify-content: space-between;
@@ -328,12 +337,12 @@
             <div class="friend-profile">
                 <div class="header-frs">
                     <span>Friends</span>
-                    <c:set var="friend" scope="session" value="${idFriend}"/>
-                    <c:if test="${friend == 0}">
+                    <c:set var="friend1" scope="session" value="${idFriend}"/>
+                    <c:if test="${friend1 == 0}">
                         <a href="/user?actionGet=showListFriendsUser&id=${requestScope.user.id}">View all friend</a>
                     </c:if>
-                    <c:if test="${friend != 0}">
-                        <a href="/user?actionGet=showListFriendsUser&idFriend=${idFriend}&id=${requestScope.user.id}">View all friend</a>
+                    <c:if test="${friend1 != 0}">
+                        <a href="/user?actionGet=showListFriendsUser&idFriend=${idFriend1}&id=${requestScope.user.id}">View all friend</a>
                     </c:if>
                 </div>
                 <div>
