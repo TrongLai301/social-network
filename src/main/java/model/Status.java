@@ -10,26 +10,29 @@ public class Status {
     private String media;
     private int permission;
     private int idUser;
+    private int likeCount;
 
 
-    public Status(int id, LocalDate createTime, String description, String media, int permission, int idUser) {
+    public Status(int id, LocalDate createTime, String description, String media, int permission, int idUser, int likeCount) {
         this.id = id;
         this.createTime = createTime;
         this.description = description;
         this.media = media;
         this.permission = permission;
         this.idUser = idUser;
+        this.likeCount = likeCount;
     }
 
     public Status() {
     }
 
-    public Status(String description, int idUser, LocalDate createTime, String media, int permission) {
+    public Status(String description, int idUser, LocalDate createTime, String media, int permission, int likeCount) {
         this.createTime = createTime;
         this.description = description;
         this.media = media;
         this.idUser = idUser;
-        this.permission=permission;
+        this.permission = permission;
+        this.likeCount = likeCount;
     }
 
     public int getId() {
@@ -78,5 +81,14 @@ public class Status {
 
     public void setIdUser(int idUser) {
         this.idUser = idUser;
+    }
+
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
     }
 }

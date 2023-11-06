@@ -25,6 +25,10 @@ public interface IUserDAO {
     void editPasswordUser(int id, String newPassword) throws SQLException, ClassNotFoundException;
 
     void insertUser(User user);
+    void updatePlusLikeCount(int idStatus, int idUser);
+    void updateMinusLikeCount(int idStatus, int idUser);
 
     void insertStatus(Status status);
+
+    boolean checkLikedPost(int idStatus,int idUser);
 }

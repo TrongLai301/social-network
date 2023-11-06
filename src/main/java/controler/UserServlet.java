@@ -1,8 +1,12 @@
 package controler;
 
 import DBcontext.DataConnector;
+import model.Like;
 import model.Status;
 import model.User;
+import service.RelationshipDAO;
+import org.json.simple.JSONObject;
+
 import service.StatusDAOImpl;
 import service.UserDAOImpl;
 import service.Validate.PasswordValidate;
@@ -34,6 +38,7 @@ public class UserServlet extends HttpServlet {
     PasswordValidate passwordValidate;
     UserDAOImpl userDAO;
     StatusDAOImpl statusDAO;
+    RelationshipDAO relationshipDAO;
     private static final String IMG_DIR = "/WEB-INF/img"; // Đường dẫn đến thư mục lưu trữ ảnh và video đính kèm
 
     @Override
@@ -41,6 +46,7 @@ public class UserServlet extends HttpServlet {
         passwordValidate = new PasswordValidate();
         userDAO = new UserDAOImpl();
         statusDAO = new StatusDAOImpl();
+        relationshipDAO = new RelationshipDAO();
     }
 
     @Override
@@ -54,6 +60,9 @@ public class UserServlet extends HttpServlet {
                 case "showEditPassword":
                     showEditPassword(req, resp);
                     break;
+                case "moreInformation":
+                    moreInformation(req,resp);
+                    break;
                 case "showUserProfile":
                     showUserProfile(req, resp);
                     break;
@@ -62,6 +71,11 @@ public class UserServlet extends HttpServlet {
                     break;
                 case "showListFriendsUser":
                     showListFriends(req, resp);
+                case "likeStatus":
+                    likeStatus(req, resp);
+                    break;
+                case "getLikeCount":
+                    getLikeCount(req, resp);
                     break;
                 default:
                     showHomePageForUser(req, resp);
@@ -189,10 +203,59 @@ public class UserServlet extends HttpServlet {
         req.getRequestDispatcher("/user/userProfile/friend/friend.jsp").forward(req, resp);
     }
 
+    private void getLikeCount(HttpServletRequest req, HttpServletResponse resp) {
+        int idStatus = Integer.parseInt(req.getParameter("idStatus"));
+        userDAO.getLikeCount(idStatus);
+    }
+
+    private void likeStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException,ClassNotFoundException,SQLException {
+        HttpSession session = req.getSession();
+        int idUser = (Integer) session.getAttribute("idAccount");
+        int idStatus = Integer.parseInt(req.getParameter("idStatus"));
+        String action = req.getParameter("action");
+
+        if (action.equals("like")) {
+           userDAO.updatePlusLikeCount(idStatus,idUser);
+        } else if (action.equals("unlike")) {
+            userDAO.updateMinusLikeCount(idStatus, idUser);
+        }
+
+        int likeCount = userDAO.getLikeCount(idStatus); // Lấy số lượng like mới
+        boolean liked = userDAO.checkLikedPost(idStatus, idUser); // Kiểm tra xem người dùng đã like bài viết hay chưa
+
+        // Tạo đối tượng JSON chứa thông tin cập nhật
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("likeCount", likeCount);
+        responseJson.put("liked", liked);
+
+        // Thiết lập kiểu nội dung là JSON
+        resp.setContentType("application/json");
+        // Gửi phản hồi về client
+        resp.getWriter().write(responseJson.toString());
+    }
+
+
 
     private void showEditPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
         dispatcher.forward(req, resp);
+    }
+    public void moreInformation(HttpServletRequest req , HttpServletResponse resp){
+        try {
+            HttpSession session = req.getSession();
+            Integer idUser = (Integer) session.getAttribute("idAccount");
+            User currentUser = userDAO.getUserById(idUser);
+            int id = Integer.parseInt(req.getParameter("id"));
+            int count = relationshipDAO.CountFriend(id);
+            req.setAttribute("countFriend",count);
+            User user = userDAO.getUserById(id);
+            req.setAttribute("userFind",user);
+            req.setAttribute("relationship",getRelationship(idUser,id));
+            req.setAttribute("user",currentUser);
+            req.getRequestDispatcher("/user/userProfile/displayProfile/information.jsp").forward(req, resp);
+        } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void viewUserMain(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -272,15 +335,6 @@ public class UserServlet extends HttpServlet {
                 }
 
             }
-                // Lưu trữ tệp đa phương tiện (hình ảnh, video) vào thư mục trên máy chủ
-//            String fileName = mediaPart.getSubmittedFileName();
-//            InputStream mediaInput = mediaPart.getInputStream();
-//            Path mediaPath = Paths.get("src/main/webapp/images", fileName);
-//            Files.copy(mediaInput, mediaPath, StandardCopyOption.REPLACE_EXISTING);
-
-            // Lưu thông tin bài viết và đường dẫn tệp đa phương tiện vào cơ sở dữ liệu
-
-            // Chuyển hướng người dùng sau khi đăng bài viết thành công
         }
 
     private void deleteStatus(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, ClassNotFoundException {
@@ -494,7 +548,52 @@ public class UserServlet extends HttpServlet {
                 req.setAttribute("listUser",userList1);
             }
 
-            session.setAttribute("idFriend" , idFriend);
+
+            List<User> userList = new ArrayList<>();
+            User userPost;
+            int id = Integer.parseInt(req.getParameter("id"));
+            User user = userDAO.getUserById(id);
+            req.setAttribute("userFind",user);
+            List<Status> defaultPost = statusDAO.getAllStatus();
+            List<Status> newPost = new ArrayList<>();
+            List<Like> listLike = new ArrayList<>();
+            for (Status status : defaultPost){
+                userPost = userDAO.getUserById(status.getIdUser());
+                if (status.getIdUser() == id) {
+                    if (id == userFind.getId()) {
+                        if (userDAO.checkLikedPost(status.getId(), idAccount)){
+                            Like like = new Like();
+                            like.setStatus(1);
+                            listLike.add(like);
+                        }else {
+                            Like like = new Like();
+                            like = null;
+                            listLike.add(like);
+                        }
+                        newPost.add(status);
+                        userList.add(userPost);
+                    }else{
+                        if (status.getPermission() == 2){
+                            continue;
+                        }
+                        if (userDAO.checkLikedPost(status.getId(), idAccount)){
+                            Like like = new Like();
+                            like.setStatus(1);
+                            listLike.add(like);
+                        }else {
+                            Like like = new Like();
+                            like = null;
+                            listLike.add(like);
+                        }
+                        newPost.add(status);
+                        userList.add(userPost);
+                    }
+                }
+
+            }
+            req.setAttribute("countFriend",relationshipDAO.CountFriend(id));
+            req.setAttribute("relationship",getRelationship(idAccount,id));
+            req.setAttribute("check",listLike);
             req.setAttribute("user",userFind);
             req.getRequestDispatcher("/user/userProfile/displayProfile/profile.jsp").forward(req, resp);
         } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
@@ -560,4 +659,21 @@ public class UserServlet extends HttpServlet {
         req.setAttribute("useForCreateStatus", useForCreateStatus);
         req.getRequestDispatcher("/home").forward(req,resp);
     }
+    public String getRelationship(int firstId, int secondID){
+        String relationship = relationshipDAO.getRelationshipBetween(firstId,secondID);
+        if (firstId == secondID){
+            return  "myself";
+        }
+        if (relationship == null){
+            return  "stranger";
+        }
+        if (relationshipDAO.isSender(firstId, secondID)){
+            return  "pending";
+        }
+        if (relationshipDAO.isReceiver(firstId, secondID)){
+            return  "not_received";
+        }
+        return relationship;
+    }
+
 }
