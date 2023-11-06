@@ -248,23 +248,67 @@
     width: 350px;
     padding-right: 30px;
 }">
-            <div><button style="border: 1px solid;
+            <c:choose>
+                <c:when test="${requestScope.relationship.equals('stranger')}">
+                    <div>
+                        <button style="border: 1px solid;
     border-radius: 15px;
     width: 100px;
-    height: 30px;">up status</button></div>
-            <div><button style="border: 1px solid;
+    height: 30px;text-decoration: none;color: black">
+                            <a href="${pageContext.request.contextPath}/friend?actionGet=sendFriendRequest&id=${requestScope.userFind.id}">
+                                + Add Friend </a></button>
+                    </div>
+                </c:when>
+                <c:when test="${requestScope.relationship.equals('pending')}">
+                    <div>
+                        <button style="border: 1px solid;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;text-decoration: none;color: black"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> x Cancel </a></button>
+                    </div>
+                </c:when>
+                <c:when test="${requestScope.relationship.equals('not_received')}">
+                    <div>
+                        <button style="border: 1px solid;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;text-decoration: none;color: black"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> Reject  </a></button>
+                    </div>
+                    <div>
+                        <button style="border: 1px solid;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;text-decoration: none;color: black"><a href="/friend?actionGet=acceptRequest&id=${requestScope.userFind.id}"> Accept  </a></button>
+                    </div>
+                </c:when>
+                <c:when test="${requestScope.relationship.equals('accepted')}">
+                    <div>
+                        <button style="border: 1px solid;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;text-decoration: none;color: black"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> - Unfriend  </a></button>
+                    </div>
+                </c:when>
+            </c:choose>
+            <div>
+                <button style="border: 1px solid;
     border-radius: 15px;
     width: 200px;
-    height: 30px;">Edit profile</button></div>
+    height: 30px;text-decoration: none;color: black">Edit profile
+                </button>
+            </div>
         </div>
 
     </div>
-    <div class="container" style="justify-content: space-around;display: flex" >
+    <div class="container" style="justify-content: space-around;display: flex">
 
         <!-- main-content------- -->
-        <div style="float: left;height: 100%;width: 300px;" >
+        <div style="float: left;height: 100%;width: 400px;" >
             <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
-                <p ><h3 >Giới thiệu</h3></p>
+                <div style="display: inline-flex;justify-content: space-between">
+                    <p ><h3 >Giới thiệu</h3></p>
+                    <p style="padding-left: 60px"><h3><a href="user?actionGet=moreInformation&id=${requestScope.userFind.id}" style="text-decoration: none;color: black">More information</a> </h3></p>
+                </div>
                 <br>
                 <div style="text-align: center">${requestScope.userFind.hobby}</div>
                 <p><h4>Quê quán</h4></p>
@@ -305,182 +349,182 @@
             </div>
 
             <c:forEach var="post" items="${requestScope.listStatus}" varStatus="status">
-            <c:set var="user" value="${requestScope.listUser[status.index]}" />
-            <c:set var="status" value="${requestScope.check[status.index]}"/>
-            <div class="status-field-container write-post-container">
-                <div class="user-profile-box">
-                    <div class="user-profile">
-                        <img src="${user.avatar}" style="height: 50px;width: 50px" alt="Avatar">
-                        <div>
-                            <p>${user.name}</p>
-                            <small>${post.createTime}</small>
+                <c:set var="user" value="${requestScope.listUser[status.index]}" />
+                <c:set var="status" value="${requestScope.check[status.index]}"/>
+                <div class="status-field-container write-post-container">
+                    <div class="user-profile-box">
+                        <div class="user-profile">
+                            <img src="${user.avatar}" style="height: 50px;width: 50px" alt="Avatar">
+                            <div>
+                                <p>${user.name}</p>
+                                <small>${post.createTime}</small>
+                                <c:choose>
+                                    <c:when test="${post.permission == 1}">
+                                        <small>public</small>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <small>private</small>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                        <div class="ellipsis-container">
+                            <p class="choose" onclick="toggleOptions(event)">
+                                ...
+                            </p>
+                            <div class="options" id="option" style="height: 500px">
+                                <ul class="option-ul" style="list-style: none">
+                                    <li onclick="">
+                                        <div class="div-li"  onclick="edit()">
+                                            <form action="/user?actionPost=editStatus" method="post">
+                                                <input type="hidden" name="idStatus" value="${post.id}">
+                                                <input type="text" name="description" value="${post.description}" >
+                                                <input type="text" name="media" value="${post.media}" >
+                                                <select name="option">
+                                                    <option value="1">public</option>
+                                                    <option value="2">private</option>
+                                                </select>
+                                                <input type="submit" value="Edit Status"/>
+                                            </form>
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                                <style>svg {
+                                                    fill: #2265d8
+                                                }</style>
+                                                <path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
+                                            </svg>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="underline"></div>
+                                    </li>
+                                    <li>
+                                        <div class="div-li">
+                                            <form action="/user?actionPost=deleteStatus" method="post">
+                                                <input type="hidden" name="idStatus" value="${post.id}">
+                                                <input type="submit" value="Delete"/>
+                                            </form>
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                                 class="icon-option">
+                                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                <style>svg {
+                                                    fill: #2265d8
+                                                }</style>
+                                                <path d="M576 128c0-35.3-28.7-64-64-64H205.3c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7H512c35.3 0 64-28.7 64-64V128zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
+                                            </svg>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="status-field">
+                        <p>${post.description}</p>
+                        <img src="${post.media}"/>
+                    </div>
+                    <div class="post-reaction">
+                        <div class="activity-icons">
                             <c:choose>
-                                <c:when test="${post.permission == 1}">
-                                    <small>public</small>
+                                <c:when test="${ status != null}">
+                                    <div>
+                                        <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
+                                            <img class="like-button liked" src="../../../display-home/images/like-blue.png">
+                                        </a>
+                                    </div>
                                 </c:when>
                                 <c:otherwise>
-                                    <small>private</small>
+                                    <div>
+                                        <a onclick="toggleLike(${post.id}, 'like', this)" href="#">
+                                            <img class="like-button" src="../../../display-home/images/like.png">
+                                        </a>
+                                    </div>
                                 </c:otherwise>
                             </c:choose>
-                        </div>
+                            <span class="likeCount">${post.likeCount}</span>
+                        <div style="padding-left: 40px"><img src="../../../display-home/images/comments.png" alt="">0</div>
+                        <div><img src="../../../display-home/images/share.png" alt="">0</div>
                     </div>
-                    <div class="ellipsis-container">
-                        <p class="choose" onclick="toggleOptions(event)">
-                            ...
-                        </p>
-                        <div class="options" id="option" style="height: 500px">
-                            <ul class="option-ul" style="list-style: none">
-                                <li onclick="">
-                                    <div class="div-li"  onclick="edit()">
-                                        <form action="/user?actionPost=editStatus" method="post">
-                                            <input type="hidden" name="idStatus" value="${post.id}">
-                                            <input type="text" name="description" value="${post.description}" >
-                                            <input type="text" name="media" value="${post.media}" >
-                                            <select name="option">
-                                                <option value="1">public</option>
-                                                <option value="2">private</option>
-                                            </select>
-                                            <input type="submit" value="Edit Status"/>
-                                        </form>
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                                            <style>svg {
-                                                fill: #2265d8
-                                            }</style>
-                                            <path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
-                                        </svg>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="underline"></div>
-                                </li>
-                                <li>
-                                    <div class="div-li">
-                                        <form action="/user?actionPost=deleteStatus" method="post">
-                                            <input type="hidden" name="idStatus" value="${post.id}">
-                                            <input type="submit" value="Delete"/>
-                                        </form>
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
-                                             class="icon-option">
-                                            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                            <style>svg {
-                                                fill: #2265d8
-                                            }</style>
-                                            <path d="M576 128c0-35.3-28.7-64-64-64H205.3c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7H512c35.3 0 64-28.7 64-64V128zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
-                                        </svg>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
-                <div class="status-field">
-                    <p>${post.description}</p>
-                    <img src="${post.media}"/>
-                </div>
-                <div class="post-reaction">
-                    <div class="activity-icons">
-                        <c:choose>
-                            <c:when test="${ status != null}">
-                                <div>
-                                    <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
-                                        <img class="like-button liked" src="../../../display-home/images/like-blue.png">
-                                    </a>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div>
-                                    <a onclick="toggleLike(${post.id}, 'like', this)" href="#">
-                                        <img class="like-button" src="../../../display-home/images/like.png">
-                                    </a>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-                        <span class="likeCount">${post.likeCount}</span>
-                    </div>
-                    <div><img src="../../../display-home/images/comments.png" alt="">0</div>
-                    <div><img src="../../../display-home/images/share.png" alt="">0</div>
-                </div>
-            </div>
 
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>
+                    function toggleLike(idStatus, action, element) {
+                        event.preventDefault();
+                        var xhr = new XMLHttpRequest();
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                updateLikeCount(response.likeCount, element);
+                                $(element).toggleClass("liked");
+
+                                // Reload the page
+                                location.reload();
+                            }
+                        };
+                        xhr.open("GET", "user?actionGet=likeStatus&action=" + action + "&idStatus=" + idStatus, true);
+                        xhr.send();
+                    }
+                    function updateLikeCount(likeCount, element) {
+                        var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
+                        likeCountElement.text(likeCount);
+                    }
+
+                    function updateLikeCount(likeCount, element) {
+                        var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
+                        likeCountElement.text(likeCount);
+                    }
+                </script>
+            </c:forEach>
+
             <script>
-                function toggleLike(idStatus, action, element) {
-                    event.preventDefault();
-                    var xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            var response = JSON.parse(xhr.responseText);
-                            updateLikeCount(response.likeCount, element);
-                            $(element).toggleClass("liked");
+                let options;
+                let formEdit;
+                let hideOption = document.getElementsByClassName("options")
+                let body = document.querySelector("body");
 
-                            // Reload the page
-                            location.reload();
-                        }
-                    };
-                    xhr.open("GET", "user?actionGet=likeStatus&action=" + action + "&idStatus=" + idStatus, true);
-                    xhr.send();
-                }
-                function updateLikeCount(likeCount, element) {
-                    var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
-                    likeCountElement.text(likeCount);
-                }
-
-                function updateLikeCount(likeCount, element) {
-                    var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
-                    likeCountElement.text(likeCount);
+                function edit() {
+                    body.style.overflow = "hidden"
                 }
             </script>
-        </c:forEach>
 
-        <script>
-            let options;
-            let formEdit;
-            let hideOption = document.getElementsByClassName("options")
-            let body = document.querySelector("body");
+            <script>
+                function toggleOptions(event) {
+                    let options = event.target.nextElementSibling;
+                    options.classList.toggle("show");
+                }
 
-            function edit() {
-                body.style.overflow = "hidden"
-            }
-        </script>
+                function toggleOptions(event) {
+                    options = event.target.nextElementSibling;
+                    options.classList.toggle("show");
+                }
 
-        <script>
-            function toggleOptions(event) {
-                let options = event.target.nextElementSibling;
-                options.classList.toggle("show");
-            }
+                function optionEdit() {
+                    formEdit = document.querySelector(".form-edit");
+                    options = document.querySelector(".options")
+                    options.classList.toggle("show");
+                    formEdit.classList.toggle("showEdit");
+                }
 
-            function toggleOptions(event) {
-                options = event.target.nextElementSibling;
-                options.classList.toggle("show");
-            }
+                function hideEdit() {
+                    formEdit = document.querySelector(".form-edit");
+                    formEdit.classList.toggle("showEdit");
+                    body.style.overflow = "auto";
+                }
 
-            function optionEdit() {
-                formEdit = document.querySelector(".form-edit");
-                options = document.querySelector(".options")
-                options.classList.toggle("show");
-                formEdit.classList.toggle("showEdit");
-            }
+                function post() {
+                    formPost = document.querySelector(".form-post");
+                    formPost.classList.toggle("showPost");
+                }
 
-            function hideEdit() {
-                formEdit = document.querySelector(".form-edit");
-                formEdit.classList.toggle("showEdit");
-                body.style.overflow = "auto";
-            }
+                function hidePost() {
+                    formPost = document.querySelector(".form-post");
+                    formPost.classList.toggle("showPost");
+                }
+            </script>
+            <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
+        </div>
 
-            function post() {
-                formPost = document.querySelector(".form-post");
-                formPost.classList.toggle("showPost");
-            }
-
-            function hidePost() {
-                formPost = document.querySelector(".form-post");
-                formPost.classList.toggle("showPost");
-            }
-        </script>
-        <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
     </div>
-
-</div>
 </div>
 
 <footer id="footer">
