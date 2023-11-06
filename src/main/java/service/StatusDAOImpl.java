@@ -15,7 +15,7 @@ public class StatusDAOImpl implements IStatusDAO {
     public List<Status> getAllStatus() throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media, status.idPermission , idUser from status");
+        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media, status.idPermission , idUser , likeCount from status");
         List<Status> statusList = new ArrayList<>();
         while (resultSet.next()) {
             Status status = new Status();
@@ -25,15 +25,18 @@ public class StatusDAOImpl implements IStatusDAO {
             status.setMedia(resultSet.getString("media"));
             status.setPermission(resultSet.getInt("idPermission"));
             status.setIdUser(resultSet.getInt("idUser"));
+            status.setLikeCount(resultSet.getInt("likeCount"));
             statusList.add(status);
         }
         return statusList;
     }
+
+    @Override
     public List<User> getAllUserToSearch(String searchContent) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
         Statement statement = connection.createStatement();
         List<User> list = new ArrayList<>();
-        ResultSet resultSet = statement.executeQuery(" select * from user where username  like '%" + searchContent +"%' or fullname like '%"+searchContent+"%'");
+        ResultSet resultSet = statement.executeQuery(" select * from user where username  like '%" + searchContent + "%' or fullname like '%" + searchContent + "%'");
         while (resultSet.next()) {
             User user = new User();
             user.setId(resultSet.getInt("id"));
@@ -46,6 +49,8 @@ public class StatusDAOImpl implements IStatusDAO {
         }
         return list;
     }
+
+    @Override
     public Status getStatusById(int id) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
         Statement statement = connection.createStatement();
@@ -60,6 +65,7 @@ public class StatusDAOImpl implements IStatusDAO {
             status.setMedia(resultSet.getString("media"));
             status.setPermission(resultSet.getInt("idPermission"));
             status.setIdUser(resultSet.getInt("idUser"));
+            status.setLikeCount(resultSet.getInt("likeCount"));
             list.add(status);
         }
         return status;
@@ -70,17 +76,18 @@ public class StatusDAOImpl implements IStatusDAO {
         Connection connection = DataConnector.getConnection();
         Statement statement = connection.createStatement();
         List<Status> list = new ArrayList<>();
-        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media ,status.idPermission ,idUser , username , namePermission from status inner join permissionStatus on status.idPermission = permissionStatus.idPermission left join user on status.idUser = user.id where description like '%" + searchContent + "%' or fullname like '%" + searchContent +"%' ");
-                while (resultSet.next()) {
-                    Status status = new Status();
-                    status.setId(resultSet.getInt("idStatus"));
-                    status.setCreateTime(LocalDate.parse(resultSet.getString("createTime")));
-                    status.setDescription(resultSet.getString("description"));
-                    status.setMedia(resultSet.getString("media"));
-                    status.setPermission(resultSet.getInt("idPermission"));
-                    status.setIdUser(resultSet.getInt("idUser"));
-                    list.add(status);
-                }
+        ResultSet resultSet = statement.executeQuery("select idStatus , createTime , description ,media ,status.idPermission ,idUser , username , namePermission ,likeCount from status inner join permissionStatus on status.idPermission = permissionStatus.idPermission left join user on status.idUser = user.id where description like '%" + searchContent + "%' or fullname like '%" + searchContent + "%' ");
+        while (resultSet.next()) {
+            Status status = new Status();
+            status.setId(resultSet.getInt("idStatus"));
+            status.setCreateTime(LocalDate.parse(resultSet.getString("createTime")));
+            status.setDescription(resultSet.getString("description"));
+            status.setMedia(resultSet.getString("media"));
+            status.setPermission(resultSet.getInt("idPermission"));
+            status.setIdUser(resultSet.getInt("idUser"));
+            status.setLikeCount(resultSet.getInt("likeCount"));
+            list.add(status);
+        }
         return list;
     }
 }

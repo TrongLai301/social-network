@@ -2,28 +2,28 @@ drop database socialnetwork;
 create database socialnetwork;
 use socialnetwork;
 --  tao bang user lam viec voi profile
-create table permission(
-                           idPermission int auto_increment primary key,
-                           namePermission varchar(30)
+create table permission
+(
+    idPermission   int auto_increment primary key,
+    namePermission varchar(30)
 );
-create table user(
-                     id int auto_increment primary key,
-                     username varchar(50) not null,
-                     password varchar(32) not null,
-                     fullname nvarchar(100),
-                     email varchar(100),
-                     birth date,
-                     phone varchar(20),
-                     gender boolean,
-                     hobby nvarchar(200),
-                     avatar nvarchar(00),
-                     address nvarchar(200),
-                     status enum('working','block') default 'working',
-                     CONSTRAINT CHK_PasswordLength CHECK (length(password) >= 6 AND length(password)<= 32),
-                     idPermission int,
-                     foreign key(idPermission) references permission(idPermission)
-
-);
+create table user
+(
+    id           int auto_increment primary key,
+    username     varchar(50) not null,
+    password     varchar(32) not null,
+    fullname     nvarchar(100),
+    email        varchar(100),
+    birth        date,
+    phone        varchar(20),
+    gender       boolean,
+    hobby        nvarchar(200),
+    avatar       nvarchar(500),
+    address      nvarchar(200),
+    status       enum ('working','block') default 'working',
+    CONSTRAINT CHK_PasswordLength CHECK (length(password) >= 6 AND length(password) <= 32),
+    idPermission int,
+    foreign key (idPermission) references permission (idPermission));
 -- tao bang permision lam viec voi quyen thuc thi
 
 
@@ -31,40 +31,120 @@ create table user(
 DELIMITER $$
 create procedure showUserWithStatus()
 begin
-    select user.id,username,password,email,namePermission,status,phone from user inner join permission on user.idPermission = permission.idPermission;
+    select user.id, username, password, email, namePermission, status, phone
+    from user
+             inner join permission on user.idPermission = permission.idPermission;
 end $$
 call showUserWithStatus();
 -- tao thu tuc them du lieu nguoi dung
 DELIMITER $$
-create procedure insertUser(in usernameWeb varchar(45),in passwordWeb varchar(32),in emailWeb varchar(100),in birthWeb date,in phoneNumberWeb varchar(20),in PermissionWeb int)
+create procedure insertUser(in usernameWeb varchar(45), in passwordWeb varchar(32), in emailWeb varchar(100),
+                            in birthWeb date, in phoneNumberWeb varchar(20), in PermissionWeb int)
 begin
-    insert into user (username,password,email,birth,phone,idPermission) values (usernameWeb,passwordWeb,emailWeb,birthWeb,phoneNumberWeb,PermissionWeb);
+    insert into user (username, password, email, birth, phone, idPermission)
+    values (usernameWeb, passwordWeb, emailWeb, birthWeb, phoneNumberWeb, PermissionWeb);
 end $$
 -- *  du leu tham so dau vao
 -- du lieu bang permission
-insert into permission(namePermission) values ('admin'),('user');
+insert into permission(namePermission)
+values ('admin'),
+       ('user');
 -- du lieu bang account
-insert into user(username , password,idPermission) values('admin','123456',1);
-insert into user(username , password,idPermission) values('user','123456',2);
-insert into user(username , password,idPermission) values('user2','123456',2);
-select user.id, user.username, user.password, user.fullname, user.avatar, user.email, user.birth, user.address, user.phone, user.hobby, status, namePermission from user inner join permission on user.idPermission = permission.idPermission where user.id = 1;
+insert into user(username, password, idPermission)
+values ('admin', '123456', 1);
+insert into user(username, password, idPermission)
+values ('user', '123456', 2);
+insert into user(username, password, idPermission)
+values ('user2', '123456', 2);
+select user.id,
+       user.username,
+       user.password,
+       user.fullname,
+       user.avatar,
+       user.email,
+       user.birth,
+       user.address,
+       user.phone,
+       user.hobby,
+       status,
+       namePermission
+from user
+         inner join permission on user.idPermission = permission.idPermission
+where user.id = 1;
 -- bang quyen status
-create table permissionStatus(
-                                 idPermission int primary key auto_increment ,
-                                 namePermission enum('public','private')
+create table permissionStatus
+(
+    idPermission   int primary key auto_increment,
+    namePermission enum ('public','private','friend')
 );
-select idStatus , createTime , description ,media, namePermission , idUser from status inner join permissionStatus on status.idPermission = permissionStatus.idPermission;
+
 -- bang status
-create table status(
-                       idStatus int auto_increment primary key,
-                       createTime date,
-                       description nvarchar(600),
-                       media text(65530),
-                       idUser int,
-                       idPermission int,
-                       foreign key(idUser) references user(id),
-                       foreign key(idPermission) references permissionStatus(idPermission)
+create table status
+(
+    idStatus     int auto_increment primary key,
+    createTime   date,
+    description  nvarchar(600),
+    media        text(65530),
+    idUser       int,
+    idPermission int,
+    likeCount int default 0,
+    foreign key (idUser) references user (id),
+    foreign key (idPermission) references permissionStatus (idPermission)
 );
+insert into permissionStatus(namePermission)
+values ('public'),
+       ('private'),
+       ('friend');
+
+
+
+
+
+# Database friendship
+
+CREATE table Friendships
+(
+    requestId  int primary key auto_increment,
+    senderId   int,
+    receiverId int,
+    status     varchar(10) default 'pending',
+    FOREIGN KEY (senderId) references user (id),
+    FOREIGN KEY (receiverId) references user (id)
+);
+
+insert into Friendships (senderId, receiverId, status)
+values (10, 11, 'accepted'),
+       (10, 12, 'accepted'),
+       (10, 13, 'accepted'),
+       (13, 14, 'accepted'),
+       (14, 13, 'accepted'),
+       (15, 16, 'pending'),
+       (15, 17, 'pending'),
+       (18, 15, 'pending'),
+       (13, 14, 'accepted');
+# Lay danh sach id ban be
+SELECT DISTINCT CASE
+                    WHEN senderId = 13 THEN receiverId
+                    ELSE senderId
+                    END friend
+FROM Friendships
+WHERE (senderId = 13
+    OR receiverId = 13)
+  and status = 'accepted';
+
+# Lay danh sach nguoi duoc gui loi moi tu mot nguoi cu the
+SELECT receiverId
+from Friendships
+WHERE senderId = 15
+  and status = 'pending';
+
+SELECT senderId
+from Friendships
+where receiverId = 16
+  and status = 'pending';
+
+select * from Friendships;
+
 insert into permissionStatus(namePermission) values ('public'),('private');
 INSERT INTO user (username, password, fullname, email, birth, phone, gender, hobby, avatar, address, status, idPermission)
 VALUES ('admin','123456','Kamito','Kamito0620042gmail.com',NULL,'0777280105',0,'Loli','https://images6.alphacoders.com/130/1300662.png','VN','working',1),
@@ -182,4 +262,17 @@ INSERT INTO status (createTime, description, media, idUser, idPermission)
 VALUES (date(now()), 'New event ariver', 'https://fastcdn.hoyoverse.com/content-v2/bh3/113389/fe26b6ed796f996ef25a00e84c143db3_7064957493634494323.png', 29, 1);
 select idStatus , createTime , description ,media, status.idPermission , idUser from status;
 
-select * from user where username  like '%J%' or fullname like '%J%';
+create table likes (
+                       idLike int primary key auto_increment,
+                       idStatus int,
+                       idUser int,
+                       foreign key (idStatus) references status (idStatus),
+                       foreign key (idUser) references user (id)
+);
+
+INSERT INTO likes (idStatus, idUser) VALUES (1, 2);
+INSERT INTO likes (idStatus, idUser) VALUES (2, 3);
+INSERT INTO likes (idStatus, idUser) VALUES (3, 4);
+INSERT INTO likes (idStatus, idUser) VALUES (4, 5);
+INSERT INTO likes (idStatus, idUser) VALUES (5, 6);
+
