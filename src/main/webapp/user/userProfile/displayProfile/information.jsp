@@ -212,7 +212,7 @@
        <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
            <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
            <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
-               <p style="padding-left: 20px;">Bạn bè : </p></div>
+               <p style="padding-left: 20px;">Bạn bè : ${requestScope.countFriend} </p></div>
        </div>
         <div style="float: right;
     display: inline-flex;

@@ -239,7 +239,7 @@
         <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
             <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
             <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
-                <p style="padding-left: 20px;">Bạn bè : </p></div>
+                <p style="padding-left: 20px;">Bạn bè : ${requestScope.countFriend} </p></div>
         </div>
         <div style="float: right;
     display: inline-flex;
@@ -290,13 +290,6 @@
                     </div>
                 </c:when>
             </c:choose>
-            <div>
-                <button style="border: 1px solid;
-    border-radius: 15px;
-    width: 200px;
-    height: 30px;text-decoration: none;color: black">Edit profile
-                </button>
-            </div>
         </div>
 
     </div>
@@ -304,7 +297,7 @@
 
         <!-- main-content------- -->
         <div style="float: left;height: 100%;width: 400px;" >
-            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
+            <div style="background-color: #ffffff;width: 100%; height: 200px;border-radius: 10px;">
                 <div style="display: inline-flex;justify-content: space-between">
                     <p ><h3 >Giới thiệu</h3></p>
                     <p style="padding-left: 60px"><h3><a href="user?actionGet=moreInformation&id=${requestScope.userFind.id}" style="text-decoration: none;color: black">More information</a> </h3></p>
