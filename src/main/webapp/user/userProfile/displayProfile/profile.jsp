@@ -12,7 +12,7 @@
     <title>Facebook</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
-    <%--    <link rel="stylesheet" href="../../../display-home/style.css">--%>
+    <link rel="stylesheet" href="../../../display-home/style.css">
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../../public/css/user/profile.css">
     <%--    <script src="../display-home/function.js"></script>--%>
@@ -48,56 +48,37 @@
         printWriter.println("</script>");
     %>
 </c:if>
-<c:forEach var="post" items="${requestScope.listStatus}" varStatus="status">
-    <c:set var="user" value="${requestScope.listUser[status.index]}"/>
-    <div class="form-edit" id="edit">
-        <div class="editFormDiv" id="divEditForm">
-            <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">
-                <div class="header-edit">
-                    <p>Edit status</p>
-                    <input type="button" id="close" onclick="hideEdit()" value="x">
-                </div>
+<div class="form-edit" id="edit">
+    <div class="editFormDiv" id="divEditForm">
+        <%--        <form class="editForm" method="post" action="/user?actionPost=editStatus" id="editForm">--%>
+        <%--            <div class="header-edit">--%>
+        <%--                <p>Chỉnh sửa bài viết</p>--%>
+        <%--                <input type="button" id="close" onclick="hideEdit()" value="x">--%>
+        <%--            </div>--%>
 
-                <div class="underline-edit"></div>
-                <div class="infoHost">
-                    <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">
-                    <div class="displayName">
-                        <p class="p">${requestScope.user.name}</p>
-                        <select class="select1" name="option">
-                            <option value="1">public</option>
-                            <option value="2">private</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="imgTextEdit">
-                    <div class="contentWrapper">
-                        <div class="textarea">
-                            <input type="hidden" name="descriptionInput" id="descriptionInput-${status.index}">
-                            <textarea placeholder="What do you think?" oninput="descriptions(this)" name="description"
-                                      class="textareaDescription"
-                                      id="description-${status.index}">${post.description}</textarea>
-                        </div>
-                        <div class="textarea">
-                            <textarea placeholder="your picture?" name="media" class="textareaDescription"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="submit-edit">
-                    <input type="submit" value="upload">
-                </div>
-            </form>
-        </div>
+        <%--            <div class="underline-edit"></div>--%>
+        <%--            <div class="infoHost">--%>
+        <%--                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px" alt="">--%>
+        <%--                <p>${requestScope.user.name}</p>--%>
+        <%--            </div>--%>
+        <%--            <div class="imgTextEdit">--%>
+        <%--                <div class="contentWrapper"></div>--%>
+        <%--                            <option value="1">public</option>--%>
+        <%--                            <option value="2">private</option>--%>
+        <%--                        </select>--%>
+        <%--                    </div>--%>
+        <%--&lt;%&ndash;                    <div class="divImgEdit" id="imgStatus">&ndash;%&gt;--%>
+        <%--&lt;%&ndash;                        <input type="button" onclick="deleteImg()" value="x">&ndash;%&gt;--%>
+        <%--&lt;%&ndash;                        <img src="${requestScope.user}" alt="">&ndash;%&gt;--%>
+        <%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
+        <%--                </div>--%>
+        <%--            </div>--%>
+        <%--            <div class="submit-edit">--%>
+        <%--                <input type="submit" value="Edit">--%>
+        <%--            </div>--%>
+        <%--        </form>--%>
     </div>
-</c:forEach>
-<script>
-    function descriptions(textarea) {
-        var index = textarea.id.split("-")[1]; // Lấy chỉ số từ id của textarea
-        var description = textarea.value; // Lấy giá trị của textarea
-        var descriptionInput = document.getElementById("descriptionInput-" + index); // Tìm input hidden tương ứng với chỉ số
-        descriptionInput.value = description; // Gán giá trị description cho input hidden
-    }
-</script>
-
+</div>
 <div class="form-post" id="post">
     <div class="editFormDiv" id="divPostForm">
         <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">
@@ -223,8 +204,7 @@
             <hr>
             <div class="settings-links">
                 <img src="../display-home/images/setting.png" alt="" class="settings-icon">
-                <a href="/user?actionGet=showEditPassword">Settings password <img src="../display-home/images/arrow.png"
-                                                                                  alt=""></a>
+                <a href="/user?actionGet=showEditPassword">Settings password <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -234,8 +214,7 @@
 
             <div class="settings-links">
                 <img src="../display-home/images/display.png" alt="" class="settings-icon">
-                <a href="user?actionGet=updateUserProfile">Edit Profile <img src="../display-home/images/arrow.png"
-                                                                             alt=""></a>
+                <a href="user?actionGet=updateUserProfile">Edit Profile <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -247,7 +226,6 @@
     </nav>
     <script>
         const logo = document.getElementById("logoFB");
-
         function loadWeb() {
             setTimeout(function () {
                 location.reload()
@@ -257,14 +235,21 @@
     </script>
     <div style="width: 100% ; height: 400px;background: url('https://images5.alphacoders.com/129/1298299.jpg') no-repeat;background-size: 100% 100%">
     </div>
-    <div style="padding: 0 100px; width: 100% ; height: 160px;background-color: #ffffff;display: inline-flex;justify-content: space-between;border-radius: 15px">
-        <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
-            <div><img src="${requestScope.userFind.avatar}"
-                      style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
-            <div>
-                <p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
-                <p style="padding-left: 20px;">Bạn bè : </p></div>
-        </div>
+    <div style="width: 100% ; height: 160px;background-color: #ffffff;display: inline-flex;justify-content: space-between;border-radius: 15px">
+        <c:set var="friend" scope="session" value="${friend}"/>
+        <c:if test="${friend == null}">
+            <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
+                <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
+                <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
+                    <p style="padding-left: 20px;">Bạn bè : ${requestScope.countFriend} </p></div>
+            </div>
+        </c:if>
+        <c:if test="${friend != null}">
+            <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
+                <div><img src="<c:out value="${friend.getAvatar()}"/>" style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
+                <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;"><c:out value="${friend.getName()}"/><br>
+            </div>
+        </c:if>
         <div style="float: right;
     display: inline-flex;
     justify-content: space-between;
@@ -272,30 +257,60 @@
     width: 350px;
     padding-right: 30px;
 }">
-            <div>
-                <button style="border: 1px solid;
+            <c:choose>
+                <c:when test="${requestScope.relationship.equals('stranger')}">
+                    <div>
+                        <button style="border: 1px solid;
     border-radius: 15px;
     width: 100px;
-    height: 30px;">up status
-                </button>
-            </div>
-            <div>
-                <button style="border: 1px solid;
+    height: 30px;text-decoration: none;color: black">
+                            <a href="${pageContext.request.contextPath}/friend?actionGet=sendFriendRequest&id=${requestScope.userFind.id}">
+                                + Add Friend </a></button>
+                    </div>
+                </c:when>
+                <c:when test="${requestScope.relationship.equals('pending')}">
+                    <div>
+                        <button style="border: 1px solid;
     border-radius: 15px;
-    width: 200px;
-    height: 30px;">Edit profile
-                </button>
-            </div>
+    width: 100px;
+    height: 30px;text-decoration: none;color: black"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> x Cancel </a></button>
+                    </div>
+                </c:when>
+                <c:when test="${requestScope.relationship.equals('not_received')}">
+                    <div>
+                        <button style="border: 1px solid;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;text-decoration: none;color: black"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> Reject  </a></button>
+                    </div>
+                    <div>
+                        <button style="border: 1px solid;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;text-decoration: none;color: black"><a href="/friend?actionGet=acceptRequest&id=${requestScope.userFind.id}"> Accept  </a></button>
+                    </div>
+                </c:when>
+                <c:when test="${requestScope.relationship.equals('accepted')}">
+                    <div>
+                        <button style="border: 1px solid;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;text-decoration: none;color: black"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> - Unfriend  </a></button>
+                    </div>
+                </c:when>
+            </c:choose>
         </div>
 
     </div>
-    <div class="container">
+    <div class="container" style="justify-content: space-around;display: flex">
 
         <!-- main-content------- -->
-        <div style="float: left;height: 100%;width: 500px;">
-            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
-                <p>
-                <h3>Giới thiệu</h3></p>
+        <div style="float: left;height: 100%;width: 400px;" >
+            <div style="background-color: #ffffff;width: 100%; height: 200px;border-radius: 10px;">
+                <div style="display: inline-flex;justify-content: space-between">
+                    <p ><h3 >Giới thiệu</h3></p>
+                    <p style="padding-left: 60px"><h3><a href="user?actionGet=moreInformation&id=${requestScope.userFind.id}" style="text-decoration: none;color: black">More information</a> </h3></p>
+                </div>
                 <br>
                 <div style="text-align: center">${requestScope.userFind.hobby}</div>
                 <p><h4>Quê quán</h4></p>
@@ -305,13 +320,16 @@
                 <div style="text-align: center">${requestScope.userFind.birth}</div>
             </div>
             <br>
-            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
+            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px; display: flex">
                 <p>
                 <h3>Picture library</h3></p>
+            </div><br>
+            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
+                <p ><h3 >Picture library</h3></p>
                 <br>
                 <c:forEach var="media" items="${requestScope.listStatus}">
                     <div style="padding-top: 20px;padding-left: 10px">
-                        <div><img src="${media.media}" style="width: 100px"></div>
+                        <div ><img src="${media.media}" style="width: 100px"></div>
                     </div>
                 </c:forEach>
             </div>
@@ -319,81 +337,33 @@
             <div class="friend-profile">
                 <div class="header-frs">
                     <span>Friends</span>
-                    <a href="">View all friend</a>
+                    <c:set var="friend1" scope="session" value="${idFriend}"/>
+                    <c:if test="${friend1 == 0}">
+                        <a href="/user?actionGet=showListFriendsUser&id=${requestScope.user.id}">View all friend</a>
+                    </c:if>
+                    <c:if test="${friend1 != 0}">
+                        <a href="/user?actionGet=showListFriendsUser&idFriend=${idFriend1}&id=${requestScope.user.id}">View all friend</a>
+                    </c:if>
                 </div>
                 <div>
-                    <p>24 <span>mutual friends</span></p>
+                    <p><c:out value="${numberFriends}"/> <span>Number friends</span></p>
                 </div>
                 <div class="showFrs">
-<%--                    <c:forEach var="" items="" end="7">--%>
-<%--                        <div class="frsManual">--%>
-<%--                            <a href="">--%>
-<%--                                <div class="imgFrs">--%>
-<%--                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"--%>
-<%--                                         alt="avatar">--%>
-<%--                                </div>--%>
-<%--                                <div class="nameFrs"><span>chuyền tên vào đây</span></div>--%>
-<%--                            </a>--%>
-<%--                        </div>--%>
-<%--                    </c:forEach>--%>
-
-
-                                        ĐÂY LÀ MẪU HÌNH DUNG
-                                        <div class="frsManual">
-                                            <a href="https://poe.com/chat/2p27wsfs0urhtnw99ts">
-                                                <div class="imgFrs">
-                                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
-                                                </div>
-                                                <div class="nameFrs"><span>heheheh</span></div>
-                                            </a>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
-
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
-
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
+                    <c:forEach  var="friend" items="${listFriends}" end="8">
+                        <div class="frsManual">
+                            <a href="/user?actionGet=showUserProfile&id=${requestScope.user.id}&idFriend=${friend.getId()}">
+                                <div class="imgFrs">
+                                    <img src="${friend.getAvatar()}"
+                                         alt="avatar">
+                                </div>
+                                <div class="nameFrs"><span>${friend.getName()}</span></div>
+                            </a>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
+            </div><br>
+            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">3</div>
         </div>
         <div class="content-area" style="float: right">
             <div class="write-post-container">
@@ -406,8 +376,7 @@
                 </div>
 
                 <div class="post-upload-textarea">
-                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3"
-                              onclick="post()"></textarea>
+                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3" onclick="post()"></textarea>
                     <div class="add-post-links">
                         <a href="#"><img src="../display-home/images/live-video.png" alt="">Live Video</a>
                         <a href="#"><img src="../display-home/images/photo.png" alt="">Photo/Video</a>
@@ -417,7 +386,8 @@
             </div>
 
             <c:forEach var="post" items="${requestScope.listStatus}" varStatus="status">
-                <c:set var="user" value="${requestScope.listUser[status.index]}"/>
+                <c:set var="user" value="${requestScope.listUser[status.index]}" />
+                <c:set var="status" value="${requestScope.check[status.index]}"/>
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
@@ -442,7 +412,17 @@
                             <div class="options" id="option" style="height: 500px">
                                 <ul class="option-ul" style="list-style: none">
                                     <li onclick="">
-                                        <div class="div-li" onclick="edit()">
+                                        <div class="div-li"  onclick="edit()">
+                                            <form action="/user?actionPost=editStatus" method="post">
+                                                <input type="hidden" name="idStatus" value="${post.id}">
+                                                <input type="text" name="description" value="${post.description}" >
+                                                <input type="text" name="media" value="${post.media}" >
+                                                <select name="option">
+                                                    <option value="1">public</option>
+                                                    <option value="2">private</option>
+                                                </select>
+                                                <input type="submit" value="Edit Status"/>
+                                            </form>
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                                                 <style>svg {
                                                     fill: #2265d8
@@ -480,12 +460,57 @@
                     </div>
                     <div class="post-reaction">
                         <div class="activity-icons">
-                            <div><img src="../display-home/images/like-blue.png" alt="">120</div>
-                            <div><img src="../display-home/images/comments.png" alt="">52</div>
-                            <div><img src="../display-home/images/share.png" alt="">35</div>
-                        </div>
+                            <c:choose>
+                                <c:when test="${ status != null}">
+                                    <div>
+                                        <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
+                                            <img class="like-button liked" src="../../../display-home/images/like-blue.png">
+                                        </a>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div>
+                                        <a onclick="toggleLike(${post.id}, 'like', this)" href="#">
+                                            <img class="like-button" src="../../../display-home/images/like.png">
+                                        </a>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                            <span class="likeCount">${post.likeCount}</span>
+                        <div style="padding-left: 40px"><img src="../../../display-home/images/comments.png" alt="">0</div>
+                        <div><img src="../../../display-home/images/share.png" alt="">0</div>
+                    </div>
                     </div>
                 </div>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>
+                    function toggleLike(idStatus, action, element) {
+                        event.preventDefault();
+                        var xhr = new XMLHttpRequest();
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                updateLikeCount(response.likeCount, element);
+                                $(element).toggleClass("liked");
+
+                                // Reload the page
+                                location.reload();
+                            }
+                        };
+                        xhr.open("GET", "user?actionGet=likeStatus&action=" + action + "&idStatus=" + idStatus, true);
+                        xhr.send();
+                    }
+                    function updateLikeCount(likeCount, element) {
+                        var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
+                        likeCountElement.text(likeCount);
+                    }
+
+                    function updateLikeCount(likeCount, element) {
+                        var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
+                        likeCountElement.text(likeCount);
+                    }
+                </script>
             </c:forEach>
 
             <script>
@@ -510,7 +535,7 @@
                     options.classList.toggle("show");
                 }
 
-                function edit() {
+                function optionEdit() {
                     formEdit = document.querySelector(".form-edit");
                     options = document.querySelector(".options")
                     options.classList.toggle("show");

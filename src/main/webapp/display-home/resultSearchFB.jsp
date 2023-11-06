@@ -196,7 +196,7 @@
                     <div style="display: inline-flex; justify-content: flex-start;margin-bottom: 30px;width: 100%;">
                         <div><img src="${item.avatar}" style="border: 1px solid;border-radius: 50%;width: 50px;height: 50px" alt="Avatar"></div>
                         <div style="margin-left: 40px" >
-                            <p>${item.name}</p>
+                            <p><a href="/user?actionGet=showUserProfile&id=${item.id}" style="text-decoration: none;color: black">${item.name}</a> </p>
                             <p>${item.hobby}</p>
                         </div>
                     </div>
@@ -208,6 +208,7 @@
             <div style="text-align: center;padding-top: 40px">Các bài viết liên quan</div>
             <c:forEach var="post" items="${requestScope.listStatusFindBySearch}" varStatus="status">
                 <c:set var="user" value="${requestScope.listUser[status.index]}" />
+                <c:set var="status" value="${requestScope.check[status.index]}"/>
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
@@ -261,13 +262,77 @@
                         <p>${post.description}</p>
                         <img src="${post.media}" alt="">
                     </div>
+<%--                    <div class="post-reaction">--%>
+<%--                        <div class="activity-icons">--%>
+<%--                            <div id="likeAndUnlikeButton">--%>
+<%--                                <c:choose>--%>
+<%--                                    <c:when test="${status != null}">--%>
+<%--                                        <div><a href="user?actionGet=likeStatus&idStatus=${post.id}&action=unlike"><img src="../display-home/images/like-blue.png"></a> </div>--%>
+<%--                                    </c:when>--%>
+<%--                                    <c:otherwise>--%>
+<%--                                        <div><a href="user?actionGet=likeStatus&idStatus=${post.id}&action=like"><img src="../display-home/images/like.png"></a> </div>--%>
+<%--                                    </c:otherwise>--%>
+<%--                                </c:choose>--%>
+<%--                                    ${post.likeCount}--%>
+<%--                            </div>--%>
+<%--                            <div><img src="../display-home/images/comments.png" alt="">0</div>--%>
+<%--                            <div><img src="../display-home/images/share.png" alt="">0</div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
                     <div class="post-reaction">
                         <div class="activity-icons">
-                            <div><img src="../display-home/images/like-blue.png" alt="">0</div>
+                            <div id="likeAndUnlikeButton">
+                                <c:choose>
+                                    <c:when test="${ status != null}">
+                                        <div>
+                                            <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
+                                                <img class="like-button liked" src="../display-home/images/like-blue.png">
+                                            </a>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div>
+                                            <a onclick="toggleLike(${post.id}, 'like', this)" href="#">
+                                                <img class="like-button" src="../display-home/images/like.png">
+                                            </a>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                                <span class="likeCount">${post.likeCount}</span>
+                            </div>
                             <div><img src="../display-home/images/comments.png" alt="">0</div>
                             <div><img src="../display-home/images/share.png" alt="">0</div>
                         </div>
                     </div>
+
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                    <script>
+                        function toggleLike(idStatus, action, element) {
+                            event.preventDefault();
+                            var xhr = new XMLHttpRequest();
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState === 4 && xhr.status === 200) {
+                                    var response = JSON.parse(xhr.responseText);
+                                    updateLikeCount(response.likeCount, element);
+                                    $(element).toggleClass("liked");
+
+                                    // Reload the page
+                                    location.reload();
+                                }
+                            };
+                            xhr.open("GET", "user?actionGet=likeStatus&action=" + action + "&idStatus=" + idStatus, true);
+                            xhr.send();
+                        }
+                        function updateLikeCount(likeCount, element) {
+                            var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
+                            likeCountElement.text(likeCount);
+                        }
+
+                        function updateLikeCount(likeCount, element) {
+                            var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
+                            likeCountElement.text(likeCount);
+                        }
+                    </script>
                 </div>
             </c:forEach>
 

@@ -16,8 +16,3 @@ function darkModeON(){
 function LoadMoreToggle(){
     LoadMoreBackground.classList.toggle("loadMoreToggle");
 };
-
-// function loadWEB(){
-//     window.location.reload();
-//     alert("Asdasd")
-// }
