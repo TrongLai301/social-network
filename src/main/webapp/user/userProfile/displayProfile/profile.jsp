@@ -259,7 +259,7 @@
         </div>
 
     </div>
-    <div class="container" style="justify-content: space-between;display: flex" >
+    <div class="container" style="justify-content: space-around;display: flex" >
 
         <!-- main-content------- -->
         <div style="float: left;height: 100%;width: 300px;" >
@@ -430,7 +430,6 @@
                     likeCountElement.text(likeCount);
                 }
             </script>
-        </div>
         </c:forEach>
 
         <script>

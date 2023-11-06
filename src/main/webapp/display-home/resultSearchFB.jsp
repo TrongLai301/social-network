@@ -273,7 +273,6 @@
 <%--                                        <div><a href="user?actionGet=likeStatus&idStatus=${post.id}&action=like"><img src="../display-home/images/like.png"></a> </div>--%>
 <%--                                    </c:otherwise>--%>
 <%--                                </c:choose>--%>
-
 <%--                                    ${post.likeCount}--%>
 <%--                            </div>--%>
 <%--                            <div><img src="../display-home/images/comments.png" alt="">0</div>--%>
@@ -284,29 +283,29 @@
                         <div class="activity-icons">
                             <div id="likeAndUnlikeButton">
                                 <c:choose>
-                                    <c:when test="${status != null}">
+                                    <c:when test="${ status != null}">
                                         <div>
-                                            <a onclick="likePost(${post.id}, 'unlike')"
-                                               href="javascript:void(0);">
-                                                <img src="../display-home/images/like-blue.png">
+                                            <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
+                                                <img class="like-button liked" src="../display-home/images/like-blue.png">
                                             </a>
                                         </div>
                                     </c:when>
                                     <c:otherwise>
                                         <div>
-                                            <a onclick="likePost(${post.id}, 'like')"
-                                               href="javascript:void(0);">
-                                                <img src="../display-home/images/like.png">
+                                            <a onclick="toggleLike(${post.id}, 'like', this)" href="#">
+                                                <img class="like-button" src="../display-home/images/like.png">
                                             </a>
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
-                                <span id="likeCount">${post.likeCount}</span>
+                                <span class="likeCount">${post.likeCount}</span>
                             </div>
                             <div><img src="../display-home/images/comments.png" alt="">0</div>
                             <div><img src="../display-home/images/share.png" alt="">0</div>
                         </div>
                     </div>
+
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                     <script>
                         function toggleLike(idStatus, action, element) {
                             event.preventDefault();
