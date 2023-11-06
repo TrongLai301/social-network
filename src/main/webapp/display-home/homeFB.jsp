@@ -12,9 +12,8 @@
     <title>Facebook</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
-    <link rel="stylesheet" href="../display-home/style.css">
+    <link rel="stylesheet" href="../user/userProfile/friend/style.css">
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
-    <%--    <script src="../display-home/function.js"></script>--%>
 </head>
 <body>
 <%--<c:if test="${sessionScope.messageDelete != null}">--%>
@@ -117,7 +116,7 @@
     <nav class="navbar">
         <div class="nav-left">
             <%--        <img class="logo" src="images/logo.png" alt="">--%>
-            <img class="logo" id="logoFB" onclick="loadWeb()" src="../display-home/images/logoFB.webp" alt="">
+            <img class="logo" id="logoFB" onclick="loadWeb()" src="../user/userProfile/images/logoFB.webp" alt="">
             <div class="search-box">
                 <img src="../display-home/images/search.png" alt="">
                 <form action="home?action=search" method="post">
@@ -150,13 +149,15 @@
                 </li>
                 <%--            <li><img src="images/video.png" alt=""></li>--%>
                 <li>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512">
-                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <style>svg {
-                            fill: #ffffff
-                        }</style>
-                        <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM609.3 512H471.4c5.4-9.4 8.6-20.3 8.6-32v-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2h61.4C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z"/>
-                    </svg>
+                    <a href="/user?actionGet=showListFriendsUser&id=${requestScope.user.id}">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512">
+                            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            <style>svg {
+                                fill: #ffffff
+                            }</style>
+                            <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM609.3 512H471.4c5.4-9.4 8.6-20.3 8.6-32v-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2h61.4C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z"/>
+                        </svg>
+                    </a>
                 </li>
             </ul>
         </div>

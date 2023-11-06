@@ -305,7 +305,7 @@
                 <div style="text-align: center">${requestScope.userFind.birth}</div>
             </div>
             <br>
-            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
+            <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px; display: flex">
                 <p>
                 <h3>Picture library</h3></p>
                 <br>
@@ -319,79 +319,29 @@
             <div class="friend-profile">
                 <div class="header-frs">
                     <span>Friends</span>
-                    <a href="">View all friend</a>
+                    <c:set var="friend" scope="session" value="${idFriend}"/>
+                    <c:if test="${friend == 0}">
+                        <a href="/user?actionGet=showListFriendsUser&id=${requestScope.user.id}">View all friend</a>
+                    </c:if>
+                    <c:if test="${friend != 0}">
+                        <a href="/user?actionGet=showListFriendsUser&idFriend=${idFriend}&id=${requestScope.user.id}">View all friend</a>
+                    </c:if>
                 </div>
                 <div>
-                    <p>24 <span>mutual friends</span></p>
+                    <p><c:out value="${numberFriends}"/> <span>Number friends</span></p>
                 </div>
                 <div class="showFrs">
-<%--                    <c:forEach var="" items="" end="7">--%>
-<%--                        <div class="frsManual">--%>
-<%--                            <a href="">--%>
-<%--                                <div class="imgFrs">--%>
-<%--                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"--%>
-<%--                                         alt="avatar">--%>
-<%--                                </div>--%>
-<%--                                <div class="nameFrs"><span>chuyền tên vào đây</span></div>--%>
-<%--                            </a>--%>
-<%--                        </div>--%>
-<%--                    </c:forEach>--%>
-
-
-                                        ĐÂY LÀ MẪU HÌNH DUNG
-                                        <div class="frsManual">
-                                            <a href="https://poe.com/chat/2p27wsfs0urhtnw99ts">
-                                                <div class="imgFrs">
-                                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
-                                                </div>
-                                                <div class="nameFrs"><span>heheheh</span></div>
-                                            </a>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
-
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="avatar">
-
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
-                                        <div class="frsManual">
-                                            <div class="imgFrs">
-                                            </div>
-                                            <div class="nameFrs"><span>heheheh</span></div>
-                                        </div>
+                    <c:forEach  var="friend" items="${listFriends}" end="8">
+                        <div class="frsManual">
+                            <a href="/user?actionGet=showUserProfile&id=${requestScope.user.id}&idFriend=${friend.getId()}">
+                                <div class="imgFrs">
+                                    <img src="${friend.getAvatar()}"
+                                         alt="avatar">
+                                </div>
+                                <div class="nameFrs"><span>${friend.getName()}</span></div>
+                            </a>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
