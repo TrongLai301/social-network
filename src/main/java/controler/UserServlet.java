@@ -81,6 +81,7 @@ public class UserServlet extends HttpServlet {
         }
 
         if (idFriend == 0){
+            req.setAttribute("user", userDAO.getUserById(idAccount));
             List<User> listFriendsAccount = new ArrayList<>();
             List<Integer> listAllIdFriendsAccount = new ArrayList<>();
             List<Integer> listIdFriendsAccount = new ArrayList<>();
@@ -127,13 +128,14 @@ public class UserServlet extends HttpServlet {
                         listIdFromFriendsAccount.add(idFriendAccount);
                     }
                 }
+                System.out.println(listIdFromFriendsAccount);
                 listAllIdFromFriends.add(listIdFromFriendsAccount.size());
                 req.setAttribute("numberFriendsBoth", listAllIdFromFriends);
                 req.setAttribute("numberFriends", listFriendsAccount.size());
                 req.setAttribute("listFriends", listFriendsAccount);
-                req.setAttribute("user", userDAO.getUserById(idAccount));
             }
         }else if (idFriend != 0){
+            req.setAttribute("user", userDAO.getUserById(idFriend));
             List<User> listFriends = new ArrayList<>();
             List<Integer> listAllIdFriends = new ArrayList<>();
             List<Integer> listAllIdFromFriends = new ArrayList<>();
@@ -179,11 +181,11 @@ public class UserServlet extends HttpServlet {
                         listIdFromFriends.add(idFriends);
                     }
                 }
+                System.out.println(listIdFromFriends);
                 listAllIdFromFriends.add(listIdFromFriends.size());
                 req.setAttribute("numberFriendsBoth", listAllIdFromFriends);
                 req.setAttribute("numberFriends", listFriends.size());
                 req.setAttribute("listFriends", listFriends);
-                req.setAttribute("user", userDAO.getUserById(idFriend));
             }
         }
         req.getRequestDispatcher("/user/userProfile/friend/friend.jsp").forward(req, resp);
