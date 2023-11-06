@@ -361,6 +361,7 @@ public class UserServlet extends HttpServlet {
                 }
 
             }
+            req.setAttribute("countFriend",relationshipDAO.CountFriend(id));
             req.setAttribute("relationship",getRelationship(idUser,id));
             req.setAttribute("check",listLike);
             req.setAttribute("user",userFind);
