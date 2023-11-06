@@ -111,6 +111,7 @@ public class UserServlet extends HttpServlet {
             for (int i=0; i< listFriendsAccount.size(); i++){
                 List<Integer> listIdFromFriendsAccount = new ArrayList<>();
                 List<Integer> listAllIdFromFriendsAccount = new ArrayList<>();
+                List<Integer> listIdFriendsFromBoth = new ArrayList<>();
                 ResultSet rs1 = pstm.executeQuery();
                 while (rs1.next()){
                     int sendId = rs1.getInt("senderId");
@@ -128,14 +129,24 @@ public class UserServlet extends HttpServlet {
                         listIdFromFriendsAccount.add(idFriendAccount);
                     }
                 }
-                System.out.println(listIdFromFriendsAccount);
-                listAllIdFromFriends.add(listIdFromFriendsAccount.size());
+                for (int j=0; j<listIdFriendsAccount.size(); j++){
+                    for (int k=0; k<listAllIdFromFriendsAccount.size(); k++){
+                        if (listIdFriendsAccount.get(j) == listAllIdFromFriendsAccount.get(k)){
+                            if (!listIdFriendsFromBoth.contains(listIdFriendsAccount.get(j))){
+                                listIdFriendsFromBoth.add(listIdFriendsAccount.get(j));
+
+                            }
+                        }
+                    }
+                }
+                listAllIdFromFriends.add(listIdFriendsFromBoth.size());
                 req.setAttribute("numberFriendsBoth", listAllIdFromFriends);
                 req.setAttribute("numberFriends", listFriendsAccount.size());
                 req.setAttribute("listFriends", listFriendsAccount);
             }
         }else if (idFriend != 0){
-            req.setAttribute("user", userDAO.getUserById(idFriend));
+            req.setAttribute("user", userDAO.getUserById(idAccount));
+            req.setAttribute("friend", userDAO.getUserById(idFriend));
             List<User> listFriends = new ArrayList<>();
             List<Integer> listAllIdFriends = new ArrayList<>();
             List<Integer> listAllIdFromFriends = new ArrayList<>();
@@ -164,6 +175,7 @@ public class UserServlet extends HttpServlet {
             for (int i=0; i< listFriends.size(); i++){
                 List<Integer> listIdFromFriends = new ArrayList<>();
                 List<Integer> listAllIdFromFriend = new ArrayList<>();
+                List<Integer> listIdFriendsFromBoth = new ArrayList<>();
                 ResultSet rs1 = pstm.executeQuery();
                 while (rs1.next()){
                     int sendId = rs1.getInt("senderId");
@@ -181,8 +193,18 @@ public class UserServlet extends HttpServlet {
                         listIdFromFriends.add(idFriends);
                     }
                 }
-                System.out.println(listIdFromFriends);
-                listAllIdFromFriends.add(listIdFromFriends.size());
+                System.out.println(listIdFriends);
+                System.out.println(listAllIdFromFriend + ".");
+                for (int j=0; j<listIdFriends.size(); j++){
+                    for (int k=0;k<listAllIdFromFriend.size(); k++){
+                        if (listIdFriends.get(j) == listAllIdFromFriend.get(k) || idFriend == listAllIdFromFriend.get(k)){
+                            if (!listIdFriendsFromBoth.contains(listAllIdFromFriend.get(k))){
+                                listIdFriendsFromBoth.add(listAllIdFromFriend.get(k));
+                            }
+                        }
+                    }
+                }
+                listAllIdFromFriends.add(listIdFriendsFromBoth.size());
                 req.setAttribute("numberFriendsBoth", listAllIdFromFriends);
                 req.setAttribute("numberFriends", listFriends.size());
                 req.setAttribute("listFriends", listFriends);

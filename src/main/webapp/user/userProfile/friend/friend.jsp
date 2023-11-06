@@ -180,7 +180,7 @@
                         <img src="${friend.getAvatar()}"
                                  alt="avatar">
                     </a>
-                    <a href="/user?actionGet=showListFriendsUser&id=${user.getId()}&idFriend=<c:out value="${friend.getId()}"/>">
+                    <a href="/user?actionGet=showListFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">
                         <div style="float: right; margin-top: 27px; font-size: 18px; margin-left: 5px; color: black">
                             <p class="nameFrsInList">${friend.getName()}</p>
                             <p><c:out value="${numberFriendsBoth.get(loopCounter.count-1)}"/> mutual friends</p>
