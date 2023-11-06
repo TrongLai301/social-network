@@ -151,14 +151,35 @@ public class UserServlet extends HttpServlet {
             List<Integer> listAllIdFriends = new ArrayList<>();
             List<Integer> listAllIdFromFriends = new ArrayList<>();
             List<Integer> listIdFriends = new ArrayList<>();
+            List<Integer> listAllIdFriendsAccount = new ArrayList<>();
+            List<Integer> listIdFriendsAccount = new ArrayList<>();
             User user1 = new User();
             Connection connection = DataConnector.getConnection();
             PreparedStatement pstm = connection.prepareStatement("SELECT * from Friendships");
+
             ResultSet rs = pstm.executeQuery();
             while (rs.next()){
                 int sendId = rs.getInt("senderId");
                 int receiveId = rs.getInt("receiverId");
                 String statusAccepted = rs.getString("status");
+
+                if (idAccount == sendId && statusAccepted.equals("accepted")){
+                    listAllIdFriendsAccount.add(receiveId);
+                } else if (idAccount == receiveId && statusAccepted.equals("accepted")) {
+                    listAllIdFriendsAccount.add(sendId);
+                }
+            }
+            for (Integer idFriendsAccount : listAllIdFriendsAccount){
+                if (!listIdFriendsAccount.contains(idFriendsAccount)){
+                    listIdFriendsAccount.add(idFriendsAccount);
+                }
+            }
+
+            ResultSet rs1 = pstm.executeQuery();
+            while (rs1.next()){
+                int sendId = rs1.getInt("senderId");
+                int receiveId = rs1.getInt("receiverId");
+                String statusAccepted = rs1.getString("status");
 
                 if (idFriend == sendId && statusAccepted.equals("accepted") && receiveId != idAccount){
                     listAllIdFriends.add(receiveId);
@@ -176,11 +197,11 @@ public class UserServlet extends HttpServlet {
                 List<Integer> listIdFromFriends = new ArrayList<>();
                 List<Integer> listAllIdFromFriend = new ArrayList<>();
                 List<Integer> listIdFriendsFromBoth = new ArrayList<>();
-                ResultSet rs1 = pstm.executeQuery();
-                while (rs1.next()){
-                    int sendId = rs1.getInt("senderId");
-                    int receiveId = rs1.getInt("receiverId");
-                    String statusAccepted = rs1.getString("status");
+                ResultSet rs2 = pstm.executeQuery();
+                while (rs2.next()){
+                    int sendId = rs2.getInt("senderId");
+                    int receiveId = rs2.getInt("receiverId");
+                    String statusAccepted = rs2.getString("status");
 
                     if (listIdFriends.get(i) == sendId && statusAccepted.equals("accepted") && receiveId != idAccount){
                         listAllIdFromFriend.add(receiveId);
@@ -193,13 +214,14 @@ public class UserServlet extends HttpServlet {
                         listIdFromFriends.add(idFriends);
                     }
                 }
+//                System.out.println(listIdFriendsAccount);
                 System.out.println(listIdFriends);
-                System.out.println(listAllIdFromFriend + ".");
-                for (int j=0; j<listIdFriends.size(); j++){
-                    for (int k=0;k<listAllIdFromFriend.size(); k++){
-                        if (listIdFriends.get(j) == listAllIdFromFriend.get(k) || idFriend == listAllIdFromFriend.get(k)){
-                            if (!listIdFriendsFromBoth.contains(listAllIdFromFriend.get(k))){
-                                listIdFriendsFromBoth.add(listAllIdFromFriend.get(k));
+                System.out.println(listIdFromFriends + ".");
+                for (int j=0; j<listIdFromFriends.size(); j++){
+                    for (int k=0;k<listIdFriendsAccount.size(); k++){
+                        if (listIdFromFriends.get(j) == listIdFriendsAccount.get(k) || idFriend == listIdFriendsAccount.get(k)){
+                            if (!listIdFriendsFromBoth.contains(listIdFriendsAccount.get(k))){
+                                listIdFriendsFromBoth.add(listIdFriendsAccount.get(k));
                             }
                         }
                     }
