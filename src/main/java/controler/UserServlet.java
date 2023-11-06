@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -59,6 +60,9 @@ public class UserServlet extends HttpServlet {
                 case "updateUserProfile":
                     EditUserProfile(req,resp);
                     break;
+                case "showListFriendsUser":
+                    showListFriends(req, resp);
+                    break;
                 default:
                     showHomePageForUser(req, resp);
                     break;
@@ -68,19 +72,127 @@ public class UserServlet extends HttpServlet {
         }
     }
 
+    private void showListFriends(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ClassNotFoundException, ServletException, IOException {
+        HttpSession session = req.getSession();
+        int idAccount = (int) session.getAttribute("idAccount");
+        int idFriend = 0;
+        if (req.getParameter("idFriend") != null){
+            idFriend = Integer.parseInt(req.getParameter("idFriend"));
+        }
+
+        if (idFriend == 0){
+            List<User> listFriendsAccount = new ArrayList<>();
+            List<Integer> listAllIdFriendsAccount = new ArrayList<>();
+            List<Integer> listIdFriendsAccount = new ArrayList<>();
+            List<Integer> listAllIdFromFriends = new ArrayList<>();
+            User user = new User();
+
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement pstm = connection.prepareStatement("SELECT * from Friendships");
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()){
+                int sendId = rs.getInt("senderId");
+                int receiveId = rs.getInt("receiverId");
+                String statusAccepted = rs.getString("status");
+
+                if (idAccount == sendId && statusAccepted.equals("accepted")){
+                    listAllIdFriendsAccount.add(receiveId);
+                } else if (idAccount == receiveId && statusAccepted.equals("accepted")) {
+                    listAllIdFriendsAccount.add(sendId);
+                }
+            }
+            for (Integer idFriendsAccount : listAllIdFriendsAccount){
+                if (!listIdFriendsAccount.contains(idFriendsAccount)){
+                    listIdFriendsAccount.add(idFriendsAccount);
+                    listFriendsAccount.add(userDAO.getUserById(idFriendsAccount));
+                }
+            }
+            for (int i=0; i< listFriendsAccount.size(); i++){
+                List<Integer> listIdFromFriendsAccount = new ArrayList<>();
+                List<Integer> listAllIdFromFriendsAccount = new ArrayList<>();
+                ResultSet rs1 = pstm.executeQuery();
+                while (rs1.next()){
+                    int sendId = rs1.getInt("senderId");
+                    int receiveId = rs1.getInt("receiverId");
+                    String statusAccepted = rs1.getString("status");
+
+                    if (listIdFriendsAccount.get(i) == sendId && statusAccepted.equals("accepted") && idAccount != receiveId){
+                        listAllIdFromFriendsAccount.add(receiveId);
+                    } else if (listIdFriendsAccount.get(i) == receiveId && statusAccepted.equals("accepted")&& idAccount != sendId){
+                        listAllIdFromFriendsAccount.add(sendId);
+                    }
+                }
+                for (Integer idFriendAccount : listAllIdFromFriendsAccount){
+                    if (!listIdFromFriendsAccount.contains(idFriendAccount)){
+                        listIdFromFriendsAccount.add(idFriendAccount);
+                    }
+                }
+                listAllIdFromFriends.add(listIdFromFriendsAccount.size());
+                req.setAttribute("numberFriendsBoth", listAllIdFromFriends);
+                req.setAttribute("numberFriends", listFriendsAccount.size());
+                req.setAttribute("listFriends", listFriendsAccount);
+                req.setAttribute("user", userDAO.getUserById(idAccount));
+            }
+        }else if (idFriend != 0){
+            List<User> listFriends = new ArrayList<>();
+            List<Integer> listAllIdFriends = new ArrayList<>();
+            List<Integer> listAllIdFromFriends = new ArrayList<>();
+            List<Integer> listIdFriends = new ArrayList<>();
+            User user1 = new User();
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement pstm = connection.prepareStatement("SELECT * from Friendships");
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()){
+                int sendId = rs.getInt("senderId");
+                int receiveId = rs.getInt("receiverId");
+                String statusAccepted = rs.getString("status");
+
+                if (idFriend == sendId && statusAccepted.equals("accepted") && receiveId != idAccount){
+                    listAllIdFriends.add(receiveId);
+                } else if (idFriend == receiveId && statusAccepted.equals("accepted") && sendId != idAccount) {
+                    listAllIdFriends.add(sendId);
+                }
+            }
+            for (Integer idFriendAccount : listAllIdFriends){
+                if (!listIdFriends.contains(idFriendAccount)){
+                    listIdFriends.add(idFriendAccount);
+                    listFriends.add(userDAO.getUserById(idFriendAccount));
+                }
+            }
+            for (int i=0; i< listFriends.size(); i++){
+                List<Integer> listIdFromFriends = new ArrayList<>();
+                List<Integer> listAllIdFromFriend = new ArrayList<>();
+                ResultSet rs1 = pstm.executeQuery();
+                while (rs1.next()){
+                    int sendId = rs1.getInt("senderId");
+                    int receiveId = rs1.getInt("receiverId");
+                    String statusAccepted = rs1.getString("status");
+
+                    if (listIdFriends.get(i) == sendId && statusAccepted.equals("accepted") && receiveId != idAccount){
+                        listAllIdFromFriend.add(receiveId);
+                    } else if (listIdFriends.get(i) == receiveId && statusAccepted.equals("accepted")  && sendId != idAccount){
+                        listAllIdFromFriend.add(sendId);
+                    }
+                }
+                for (Integer idFriends : listAllIdFromFriend){
+                    if (!listIdFromFriends.contains(idFriends)){
+                        listIdFromFriends.add(idFriends);
+                    }
+                }
+                listAllIdFromFriends.add(listIdFromFriends.size());
+                req.setAttribute("numberFriendsBoth", listAllIdFromFriends);
+                req.setAttribute("numberFriends", listFriends.size());
+                req.setAttribute("listFriends", listFriends);
+                req.setAttribute("user", userDAO.getUserById(idFriend));
+            }
+        }
+        req.getRequestDispatcher("/user/userProfile/friend/friend.jsp").forward(req, resp);
+    }
+
 
     private void showEditPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String actionGet = req.getParameter("actionGet");
         RequestDispatcher dispatcher = req.getRequestDispatcher("user/editPassword/editPassword.jsp");
         dispatcher.forward(req, resp);
-        switch (actionGet) {
-            case "":
-                break;
-            default:
-                viewUserMain(req, resp);
-                break;
-
-        }
     }
 
     public void viewUserMain(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -264,34 +376,126 @@ public class UserServlet extends HttpServlet {
     private void showUserProfile (HttpServletRequest req, HttpServletResponse resp){
         try {
             HttpSession session = req.getSession();
-            Integer idUser = (Integer) session.getAttribute("idAccount");
-            User userFind = userDAO.getUserById(idUser);
-            List<User> userList = new ArrayList<>();
-            User userPost;
-            int id = Integer.parseInt(req.getParameter("id"));
-            User user = userDAO.getUserById(id);
-            req.setAttribute("userFind",user);
-            List<Status> defaultPost = statusDAO.getAllStatus();
-            List<Status> newPost = new ArrayList<>();
-            for (Status status : defaultPost){
-                userPost = userDAO.getUserById(status.getIdUser());
-                if (status.getIdUser() == id) {
-                    if (id == userFind.getId()) {
-                        newPost.add(status);
-                        userList.add(userPost);
-                    }else{
-                        if (status.getPermission() == 2){
-                            continue;
+            Integer idAccount = (Integer) session.getAttribute("idAccount");
+            User userFind = userDAO.getUserById(idAccount);
+            int idFriend = 0;
+            if (req.getParameter("idFriend") != null){
+                idFriend = Integer.parseInt(req.getParameter("idFriend"));
+            }
+            if (idFriend == 0){
+                List<Status> newPost = new ArrayList<>();
+                req.setAttribute("userFind", userDAO.getUserById(idAccount));
+                User userPost;
+                List<User> userList = new ArrayList<>();
+                List<Status> defaultPost = statusDAO.getAllStatus();
+                for (Status status : defaultPost){
+                    userPost = userDAO.getUserById(status.getIdUser());
+                    if (status.getIdUser() == idAccount) {
+                        if (idAccount == userFind.getId()) {
+                            newPost.add(status);
+                            userList.add(userPost);
+                        }else{
+                            if (status.getPermission() == 2){
+                                continue;
+                            }
+                            newPost.add(status);
+                            userList.add(userPost);
                         }
-                        newPost.add(status);
-                        userList.add(userPost);
                     }
                 }
+                List<Integer> listAllIdFriends = new ArrayList<>();
+                User user1 = new User();
+                Connection connection = DataConnector.getConnection();
+                PreparedStatement pstm = connection.prepareStatement("SELECT * from Friendships");
+                ResultSet rs = pstm.executeQuery();
+                while (rs.next()){
+                    int sendId = rs.getInt("senderId");
+                    int receiveId = rs.getInt("receiverId");
+                    String statusAccepted = rs.getString("status");
+
+                    if (idAccount == sendId && statusAccepted.equals("accepted")){
+                        user1 = userDAO.getUserById(receiveId);
+                        listAllIdFriends.add(user1.getId());
+                    } else if (idAccount == receiveId && statusAccepted.equals("accepted")) {
+                        user1 = userDAO.getUserById(sendId);
+                        listAllIdFriends.add(user1.getId());
+                    }
+                }
+                List<Integer> listIdFriends = new ArrayList<>();
+                List<User> listFriends = new ArrayList<>();
+                for (Integer idFriend1 : listAllIdFriends){
+                    if (!listIdFriends.contains(idFriend1)){
+                        listIdFriends.add(idFriend1);
+                    }
+                }
+                for (Integer idFriend1 : listIdFriends){
+                    User user2 = userDAO.getUserById(idFriend1);
+                    listFriends.add(user2);
+                }
+                req.setAttribute("numberFriends", listFriends.size());
+                req.setAttribute("listFriends", listFriends);
+                req.setAttribute("listStatus",newPost);
+                req.setAttribute("listUser",userList);
+            }else {
+                List<Status> newPost1 = new ArrayList<>();
+                User user = userDAO.getUserById(idFriend);
+                req.setAttribute("userFind",user);
+                User userPost1;
+                List<User> userList1 = new ArrayList<>();
+                List<Status> defaultPost = statusDAO.getAllStatus();
+                for (Status status : defaultPost){
+                    userPost1 = userDAO.getUserById(status.getIdUser());
+                    if (status.getIdUser() == idFriend) {
+                        if (idFriend == userFind.getId()) {
+                            newPost1.add(status);
+                            userList1.add(userPost1);
+                        }else{
+                            if (status.getPermission() == 2){
+                                continue;
+                            }
+                            newPost1.add(status);
+                            userList1.add(userPost1);
+                        }
+                    }
+                }
+                List<Integer> listAllIdFriends = new ArrayList<>();
+                User user1 = new User();
+                Connection connection = DataConnector.getConnection();
+                PreparedStatement pstm = connection.prepareStatement("SELECT * from Friendships");
+                ResultSet rs = pstm.executeQuery();
+                while (rs.next()){
+                    int sendId = rs.getInt("senderId");
+                    int receiveId = rs.getInt("receiverId");
+                    String statusAccepted = rs.getString("status");
+
+                    if (idFriend == sendId && statusAccepted.equals("accepted") && receiveId != idAccount){
+                        user1 = userDAO.getUserById(receiveId);
+                        listAllIdFriends.add(user1.getId());
+                    } else if (idFriend == receiveId && statusAccepted.equals("accepted") && sendId != idAccount) {
+                        user1 = userDAO.getUserById(sendId);
+                        listAllIdFriends.add(user1.getId());
+                    }
+                }
+                List<Integer> listIdFriends = new ArrayList<>();
+                List<User> listFriends = new ArrayList<>();
+                for (Integer idFriend1 : listAllIdFriends){
+                    if (!listIdFriends.contains(idFriend1)){
+                        listIdFriends.add(idFriend1);
+                    }
+                }
+                for (Integer idFriend1 : listIdFriends){
+                    User user2 = userDAO.getUserById(idFriend1);
+                    listFriends.add(user2);
+                }
+
+                req.setAttribute("numberFriends", listFriends.size());
+                req.setAttribute("listFriends", listFriends);
+                req.setAttribute("listStatus",newPost1);
+                req.setAttribute("listUser",userList1);
             }
 
+            session.setAttribute("idFriend" , idFriend);
             req.setAttribute("user",userFind);
-            req.setAttribute("listStatus",newPost);
-            req.setAttribute("listUser",userList);
             req.getRequestDispatcher("/user/userProfile/displayProfile/profile.jsp").forward(req, resp);
         } catch (ServletException | IOException | SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -356,5 +560,4 @@ public class UserServlet extends HttpServlet {
         req.setAttribute("useForCreateStatus", useForCreateStatus);
         req.getRequestDispatcher("/home").forward(req,resp);
     }
-
 }
