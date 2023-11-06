@@ -204,8 +204,7 @@
             <hr>
             <div class="settings-links">
                 <img src="../display-home/images/setting.png" alt="" class="settings-icon">
-                <a href="/user?actionGet=showEditPassword">Settings password <img src="../display-home/images/arrow.png"
-                                                                                  alt=""></a>
+                <a href="/user?actionGet=showEditPassword">Settings password <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -215,8 +214,7 @@
 
             <div class="settings-links">
                 <img src="../display-home/images/display.png" alt="" class="settings-icon">
-                <a href="user?actionGet=updateUserProfile">Edit Profile <img src="../display-home/images/arrow.png"
-                                                                             alt=""></a>
+                <a href="user?actionGet=updateUserProfile">Edit Profile <img src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
             <div class="settings-links">
@@ -228,7 +226,6 @@
     </nav>
     <script>
         const logo = document.getElementById("logoFB");
-
         function loadWeb() {
             setTimeout(function () {
                 location.reload()
@@ -240,10 +237,8 @@
     </div>
     <div style="width: 100% ; height: 160px;background-color: #ffffff;display: inline-flex;justify-content: space-between;border-radius: 15px">
         <div style=" float: left;   display: inline-flex; justify-content: space-between;align-items: center; padding-bottom: 100px;  padding-left: 30px;">
-            <div><img src="${requestScope.userFind.avatar}"
-                      style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
-            <div>
-                <p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
+            <div><img src="${requestScope.userFind.avatar}" style="border: 1px solid; border-radius: 50%;  height: 150px;width: 150px"></div>
+            <div><p style="padding-left: 20px; font-size: 1.7em;padding-top: 10px;font-weight: 500;">${requestScope.userFind.name}<br>
                 <p style="padding-left: 20px;">Bạn bè : </p></div>
         </div>
         <div style="float: right;
@@ -259,9 +254,9 @@
                         <button style="border: 1px solid;
     border-radius: 15px;
     width: 100px;
-    height: 30px;">
+    height: 30px;text-decoration: none;color: black">
                             <a href="${pageContext.request.contextPath}/friend?actionGet=sendFriendRequest&id=${requestScope.userFind.id}">
-                               + Add Friend </a></button>
+                                + Add Friend </a></button>
                     </div>
                 </c:when>
                 <c:when test="${requestScope.relationship.equals('pending')}">
@@ -269,7 +264,7 @@
                         <button style="border: 1px solid;
     border-radius: 15px;
     width: 100px;
-    height: 30px;"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> x Cancel </a></button>
+    height: 30px;text-decoration: none;color: black"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> x Cancel </a></button>
                     </div>
                 </c:when>
                 <c:when test="${requestScope.relationship.equals('not_received')}">
@@ -277,13 +272,13 @@
                         <button style="border: 1px solid;
     border-radius: 15px;
     width: 100px;
-    height: 30px;"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> Reject  </a></button>
+    height: 30px;text-decoration: none;color: black"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> Reject  </a></button>
                     </div>
                     <div>
                         <button style="border: 1px solid;
     border-radius: 15px;
     width: 100px;
-    height: 30px;"><a href="/friend?actionGet=acceptRequest&id=${requestScope.userFind.id}"> Accept  </a></button>
+    height: 30px;text-decoration: none;color: black"><a href="/friend?actionGet=acceptRequest&id=${requestScope.userFind.id}"> Accept  </a></button>
                     </div>
                 </c:when>
                 <c:when test="${requestScope.relationship.equals('accepted')}">
@@ -291,7 +286,7 @@
                         <button style="border: 1px solid;
     border-radius: 15px;
     width: 100px;
-    height: 30px;"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> - Unfriend  </a></button>
+    height: 30px;text-decoration: none;color: black"><a href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> - Unfriend  </a></button>
                     </div>
                 </c:when>
             </c:choose>
@@ -299,19 +294,21 @@
                 <button style="border: 1px solid;
     border-radius: 15px;
     width: 200px;
-    height: 30px;">Edit profile
+    height: 30px;text-decoration: none;color: black">Edit profile
                 </button>
             </div>
         </div>
 
     </div>
-    <div class="container" style="justify-content: space-between;display: flex">
+    <div class="container" style="justify-content: space-around;display: flex">
 
         <!-- main-content------- -->
-        <div style="float: left;height: 100%;width: 300px;">
+        <div style="float: left;height: 100%;width: 400px;" >
             <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
-                <p>
-                <h3>Giới thiệu</h3></p>
+                <div style="display: inline-flex;justify-content: space-between">
+                    <p ><h3 >Giới thiệu</h3></p>
+                    <p style="padding-left: 60px"><h3><a href="user?actionGet=moreInformation&id=${requestScope.userFind.id}" style="text-decoration: none;color: black">More information</a> </h3></p>
+                </div>
                 <br>
                 <div style="text-align: center">${requestScope.userFind.hobby}</div>
                 <p><h4>Quê quán</h4></p>
@@ -319,19 +316,16 @@
                 <br>
                 <p><h4>Sinh nhật</h4></p>
                 <div style="text-align: center">${requestScope.userFind.birth}</div>
-            </div>
-            <br>
+            </div><br>
             <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">
-                <p>
-                <h3>Picture library</h3></p>
+                <p ><h3 >Picture library</h3></p>
                 <br>
                 <c:forEach var="media" items="${requestScope.listStatus}">
                     <div style="padding-top: 20px;padding-left: 10px">
-                        <div><img src="${media.media}" style="width: 100px"></div>
+                        <div ><img src="${media.media}" style="width: 100px"></div>
                     </div>
                 </c:forEach>
-            </div>
-            <br>
+            </div><br>
             <div style="background-color: #ffffff;width: 100%; height: 400px;border-radius: 10px;">3</div>
         </div>
         <div class="content-area" style="float: right">
@@ -345,8 +339,7 @@
                 </div>
 
                 <div class="post-upload-textarea">
-                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3"
-                              onclick="post()"></textarea>
+                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3" onclick="post()"></textarea>
                     <div class="add-post-links">
                         <a href="#"><img src="../display-home/images/live-video.png" alt="">Live Video</a>
                         <a href="#"><img src="../display-home/images/photo.png" alt="">Photo/Video</a>
@@ -356,7 +349,8 @@
             </div>
 
             <c:forEach var="post" items="${requestScope.listStatus}" varStatus="status">
-                <c:set var="user" value="${requestScope.listUser[status.index]}"/>
+                <c:set var="user" value="${requestScope.listUser[status.index]}" />
+                <c:set var="status" value="${requestScope.check[status.index]}"/>
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
@@ -381,11 +375,11 @@
                             <div class="options" id="option" style="height: 500px">
                                 <ul class="option-ul" style="list-style: none">
                                     <li onclick="">
-                                        <div class="div-li" onclick="edit()">
+                                        <div class="div-li"  onclick="edit()">
                                             <form action="/user?actionPost=editStatus" method="post">
                                                 <input type="hidden" name="idStatus" value="${post.id}">
-                                                <input type="text" name="description" value="${post.description}">
-                                                <input type="text" name="media" value="${post.media}">
+                                                <input type="text" name="description" value="${post.description}" >
+                                                <input type="text" name="media" value="${post.media}" >
                                                 <select name="option">
                                                     <option value="1">public</option>
                                                     <option value="2">private</option>
@@ -429,12 +423,57 @@
                     </div>
                     <div class="post-reaction">
                         <div class="activity-icons">
-                            <div><img src="../display-home/images/like-blue.png" alt="">120</div>
-                            <div><img src="../display-home/images/comments.png" alt="">52</div>
-                            <div><img src="../display-home/images/share.png" alt="">35</div>
-                        </div>
+                            <c:choose>
+                                <c:when test="${ status != null}">
+                                    <div>
+                                        <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
+                                            <img class="like-button liked" src="../../../display-home/images/like-blue.png">
+                                        </a>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div>
+                                        <a onclick="toggleLike(${post.id}, 'like', this)" href="#">
+                                            <img class="like-button" src="../../../display-home/images/like.png">
+                                        </a>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                            <span class="likeCount">${post.likeCount}</span>
+                        <div style="padding-left: 40px"><img src="../../../display-home/images/comments.png" alt="">0</div>
+                        <div><img src="../../../display-home/images/share.png" alt="">0</div>
+                    </div>
                     </div>
                 </div>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>
+                    function toggleLike(idStatus, action, element) {
+                        event.preventDefault();
+                        var xhr = new XMLHttpRequest();
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                updateLikeCount(response.likeCount, element);
+                                $(element).toggleClass("liked");
+
+                                // Reload the page
+                                location.reload();
+                            }
+                        };
+                        xhr.open("GET", "user?actionGet=likeStatus&action=" + action + "&idStatus=" + idStatus, true);
+                        xhr.send();
+                    }
+                    function updateLikeCount(likeCount, element) {
+                        var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
+                        likeCountElement.text(likeCount);
+                    }
+
+                    function updateLikeCount(likeCount, element) {
+                        var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
+                        likeCountElement.text(likeCount);
+                    }
+                </script>
             </c:forEach>
 
             <script>

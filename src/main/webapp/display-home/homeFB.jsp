@@ -12,9 +12,8 @@
     <title>Facebook</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
-    <link rel="stylesheet" href="../display-home/style.css">
+    <link rel="stylesheet" href="../user/userProfile/friend/style.css">
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
-    <%--    <script src="../display-home/function.js"></script>--%>
 </head>
 <body>
 <%--<c:if test="${sessionScope.messageDelete != null}">--%>
@@ -33,35 +32,37 @@
 <%--        printWriter.println("</script>");--%>
 <%--    %>--%>
 <%--</c:if>--%>
-<div class="form-edit" id="edit">
-    <div class="editFormDiv" id="divEditForm">
-        <form class="editForm" id="editForm">
-            <div class="header-edit">
-                <p>Edit status</p>
-                <input type="button" id="close" onclick="hideEdit()" value="x">
-            </div>
+<%--<div class="form-edit" id="edit">--%>
+<%--    <div class="editFormDiv" id="divEditForm">--%>
+<%--        <form class="editForm" id="editForm">--%>
+<%--            <div class="header-edit">--%>
+<%--                <p>Edit status</p>--%>
+<%--                <input type="button" id="close" onclick="hideEdit()" value="x">--%>
+<%--            </div>--%>
 
-            <div class="underline-edit"></div>
-            <div class="infoHost">
-                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">
-                <p>${requestScope.user.name}</p>
-            </div>
-            <div class="imgTextEdit">
-                <div class="contentWrapper">
-                    <div class="textarea">
-                        <textarea placeholder="What do you think?" oninput="description(this)"
-                                name="description" class="textareaDescription"></textarea>
-                    </div>
-                    <div>
-                    </div>
-                </div>
-            </div>
-            <div class="submit-edit">
-                <button id="saveImg" value="submit">Submit</button>
-            </div>
-        </form>
-    </div>
-</div>
+<%--            <div class="underline-edit"></div>--%>
+<%--            <div class="infoHost">--%>
+<%--                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">--%>
+<%--                <p>${requestScope.user.name}</p>--%>
+<%--            </div>--%>
+<%--            <div class="imgTextEdit">--%>
+<%--                <div class="contentWrapper">--%>
+<%--                    <div class="textarea">--%>
+<%--                        <textarea placeholder="What do you think?" oninput="description(this)"--%>
+<%--                                name="description" class="textareaDescription"></textarea>--%>
+<%--                    </div>--%>
+<%--                    <div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div class="submit-edit">--%>
+<%--                <button id="saveImg" value="submit">Submit</button>--%>
+<%--            </div>--%>
+<%--        </form>--%>
+<%--    </div>--%>
+<%--</div>--%>
+
+
 <%--<div class="form-post" id="post">--%>
 <%--    <div class="editFormDiv" id="divPostForm">--%>
 <%--        <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">--%>
@@ -70,47 +71,7 @@
 <%--                <input type="button" id="closePost" onclick="hidePost()" value="x">--%>
 <%--            </div>--%>
 
-<%--            <div class="underline-edit"></div>--%>
-<%--            <div class="infoHost">--%>
-<%--                <img class="imgHost" src="${requestScope.user.avatar}" alt="">--%>
-<%--                <p>${requestScope.user.name}</p>--%>
-<%--            </div>--%>
-<%--            <div class="imgTextEdit">--%>
-<%--                <div class="contentWrapper">--%>
-<%--                    <div class="textarea">--%>
-<%--                        <textarea placeholder="What do you think?" oninput="description(this)"--%>
-<%--                                 name="description" class="textareaDescription"></textarea>--%>
-<%--                    </div>--%>
-<%--                    <div class="textarea">--%>
-<%--                        <textarea placeholder="your picture?" oninput="description(this)"--%>
-<%--                                  name="media" class="textareaDescription"></textarea>--%>
-<%--                    </div>--%>
-<%--                    <c:if test="${sessionScope.error != null}">--%>
-<%--                        <span style="color: red">${sessionScope.error}</span>--%>
-<%--                    </c:if>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--            <div>--%>
-<%--                <input type="file" accept="image/*,video/*" id="media" value="" name="fileImage">--%>
-<%--            </div>--%>
-<%--            <div>--%>
-<%--                <select name="option">--%>
-<%--                    <option value="1">public</option>--%>
-<%--                    <option value="2">private</option>--%>
-<%--                </select>--%>
-<%--            </div>--%>
-<%--            <div class="submit-edit">--%>
-<%--                <input type="submit" value="upload">--%>
-<%--            </div>--%>
-<%--        </form>--%>
-<%--    </div>--%>
-<%--</div>--%>
-<%--<script>--%>
-<%--    function description(textarea) {--%>
-<%--        textarea.style.height = "auto";--%>
-<%--        textarea.style.height = textarea.scrollHeight + "px";--%>
-<%--    }--%>
-<%--</script>--%>
+
 <div class="form-post" id="post">
     <div class="editFormDiv" id="divPostForm">
         <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">
@@ -157,7 +118,7 @@
     <nav class="navbar">
         <div class="nav-left">
             <%--        <img class="logo" src="images/logo.png" alt="">--%>
-            <img class="logo" id="logoFB" onclick="loadWeb()" src="../display-home/images/logoFB.webp" alt="">
+            <img class="logo" id="logoFB" onclick="loadWeb()" src="../user/userProfile/images/logoFB.webp" alt="">
             <div class="search-box">
                 <img src="../display-home/images/search.png" alt="">
                 <form action="home?action=search" method="post">
@@ -190,13 +151,15 @@
                 </li>
                 <%--            <li><img src="images/video.png" alt=""></li>--%>
                 <li>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512">
-                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <style>svg {
-                            fill: #ffffff
-                        }</style>
-                        <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM609.3 512H471.4c5.4-9.4 8.6-20.3 8.6-32v-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2h61.4C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z"/>
-                    </svg>
+                    <a href="../user/userProfile/friend/friend.jsp">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512">
+                            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            <style>svg {
+                                fill: #ffffff
+                            }</style>
+                            <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM609.3 512H471.4c5.4-9.4 8.6-20.3 8.6-32v-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2h61.4C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z"/>
+                        </svg>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -268,7 +231,7 @@
 
     <!-- content-area------------ -->
 
-    <div class="container">
+    <div class="container" style="justify-content: space-between;">
         <div class="left-sidebar">
             <div class="important-links">
                 <a href="#"><img src="../display-home/images/friends.png" alt="">Friends</a>
@@ -295,7 +258,8 @@
                 </div>
 
                 <div class="post-upload-textarea">
-                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3" onclick="post()"></textarea>
+                    <textarea name="" placeholder="What's on your mind ?" id="" cols="30" rows="3"
+                              onclick="post()"></textarea>
                     <div class="add-post-links">
                         <a href="#"><img src="../display-home/images/live-video.png" alt="">Live Video</a>
                         <a href="#"><img src="../display-home/images/photo.png" alt="">Photo/Video</a>
@@ -306,21 +270,22 @@
 
             <c:forEach var="post" items="${requestScope.listStatus}" varStatus="status">
                 <c:set var="user" value="${requestScope.listUser[status.index]}"/>
+                <c:set var="status" value="${requestScope.check[status.index]}"/>
                 <div class="status-field-container write-post-container">
                     <div class="user-profile-box">
                         <div class="user-profile">
-                            <img src="${user.avatar}" style="height: 50px;width: 50px" alt="Avatar">
+                            <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
                             <div>
                                 <a href="/user?actionGet=showUserProfile&id=${user.id}"
                                    style="text-decoration: none;color: black">${user.name}</a><br>
                                 <small>${post.createTime}</small>
                                 <c:choose>
-                                <c:when test="${post.permission == 1}">
-                                    <small>public</small>
-                                </c:when>
-                                <c:otherwise>
-                                    <small>private</small>
-                                </c:otherwise>
+                                    <c:when test="${post.permission == 1}">
+                                        <small>public</small>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <small>private</small>
+                                    </c:otherwise>
                                 </c:choose>
                             </div>
                         </div>
@@ -355,13 +320,101 @@
                         <p>${post.description}</p>
                         <img src="${post.media}" alt="">
                     </div>
+                        <%--                    <div class="post-reaction">--%>
+                        <%--                        <div class="activity-icons">--%>
+                        <%--                            <div id="likeAndUnlikeButton">--%>
+                        <%--                                <c:choose>--%>
+                        <%--                                    <c:when test="${status != null}">--%>
+                        <%--                                        <div><a onclick="likePost(${post.id})" ,--%>
+                        <%--                                                href="user?actionGet=likeStatus&idStatus=${post.id}&action=unlike"><img--%>
+                        <%--                                                src="../display-home/images/like-blue.png"></a></div>--%>
+                        <%--                                    </c:when>--%>
+                        <%--                                    <c:otherwise>--%>
+                        <%--                                        <div><a onclick="likePost(${post.id})" ,--%>
+                        <%--                                                href="user?actionGet=likeStatus&idStatus=${post.id}&action=like"><img--%>
+                        <%--                                                src="../display-home/images/like.png"></a></div>--%>
+                        <%--                                    </c:otherwise>--%>
+                        <%--                                </c:choose>--%>
+
+                        <%--                                    ${post.likeCount}--%>
+                        <%--                            </div>--%>
+                        <%--                            <div><img src="../display-home/images/comments.png" alt="">0</div>--%>
+                        <%--                            <div><img src="../display-home/images/share.png" alt="">0</div>--%>
+                        <%--                        </div>--%>
+                        <%--                    </div>--%>
                     <div class="post-reaction">
                         <div class="activity-icons">
-                            <div><img src="../display-home/images/like-blue.png" alt="">0</div>
+                            <div class="likeAndUnlikeButton">
+<%--                                <c:choose>--%>
+<%--                                    <c:when test="${ status != null}">--%>
+<%--                                        <div>--%>
+<%--                                            <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">--%>
+<%--                                                <img class="like-button liked" src="../display-home/images/like-blue.png">--%>
+<%--                                            </a>--%>
+<%--                                        </div>--%>
+<%--                                    </c:when>--%>
+<%--                                    <c:otherwise>--%>
+<%--                                        <div>--%>
+<%--                                            <a onclick="toggleLike(${post.id}, 'like', this)" href="#">--%>
+<%--                                                <img class="like-button" src="../display-home/images/like.png">--%>
+<%--                                            </a>--%>
+<%--                                        </div>--%>
+<%--                                    </c:otherwise>--%>
+<%--                                </c:choose>--%>
+<%--                        <a onclick="toggleLike(${post.id}, 'like', this)" href="#">--%>
+<%--                              <img class="like-button" src="../display-home/images/like.png">--%>
+<%--                                        </a>--%>
+    <c:choose>
+        <c:when test="${ status != null}">
+            <div>
+                <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
+                    <img class="like-button liked" src="../display-home/images/like-blue.png">
+                </a>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div>
+                <a onclick="toggleLike(${post.id}, 'like', this)" href="#">
+                    <img class="like-button" src="../display-home/images/like.png">
+                </a>
+            </div>
+        </c:otherwise>
+    </c:choose>
+                                <span class="likeCount">${post.likeCount}</span>
+                            </div>
                             <div><img src="../display-home/images/comments.png" alt="">0</div>
                             <div><img src="../display-home/images/share.png" alt="">0</div>
                         </div>
                     </div>
+
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                    <script>
+                        function toggleLike(idStatus, action, element) {
+                            event.preventDefault();
+                            var xhr = new XMLHttpRequest();
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState === 4 && xhr.status === 200) {
+                                    var response = JSON.parse(xhr.responseText);
+                                    updateLikeCount(response.likeCount, element);
+                                    $(element).toggleClass("liked");
+
+                                    // Reload the page
+                                    location.reload();
+                                }
+                            };
+                            xhr.open("GET", "user?actionGet=likeStatus&action=" + action + "&idStatus=" + idStatus, true);
+                            xhr.send();
+                        }
+                        function updateLikeCount(likeCount, element) {
+                            var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
+                            likeCountElement.text(likeCount);
+                        }
+
+                        function updateLikeCount(likeCount, element) {
+                            var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
+                            likeCountElement.text(likeCount);
+                        }
+                    </script>
                 </div>
             </c:forEach>
 

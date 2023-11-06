@@ -2,10 +2,7 @@ package service;
 
 import DBcontext.DataConnector;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class RelationshipDAO implements iRelationshipDAO{
     @Override
@@ -124,5 +121,14 @@ public class RelationshipDAO implements iRelationshipDAO{
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    public int CountFriend(int id) throws SQLException, ClassNotFoundException {
+        Statement statement = DataConnector.getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery("  SELECT COUNT(*) AS friendCount FROM friendships WHERE (senderId  = '" + id +"' or receiverId = '" + id +"') AND status LIKE '%accepted%';");
+        int count = 0;
+        while (resultSet.next()){
+            count = resultSet.getInt("friendCount");
+        }
+        return count;
     }
 }

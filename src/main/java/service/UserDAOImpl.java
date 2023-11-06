@@ -179,6 +179,117 @@ public class UserDAOImpl implements IUserDAO {
             throw new RuntimeException(e);
         }
     }
+@Override
+    public boolean checkLikedPost(int idStatus, int idUser) {
+        boolean hasBeenLiked = false;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            // Kiểm tra xem người dùng đã thích bài đăng trước đó chưa
+            Statement statement = DataConnector.getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("select * from likes where idStatus = '" + idStatus + "' and idUser ='" + idUser + "'");
+            while (rs.next()) {
+                hasBeenLiked = true;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return hasBeenLiked;
+    }
+    @Override
+    public void updatePlusLikeCount(int idStatus, int idUser) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = DataConnector.getConnection();
+
+            // Kiểm tra xem người dùng đã thích bài đăng trước đó chưa
+            String checkQuery = "SELECT * FROM likes WHERE idStatus = ? and idUser = ?";
+            stmt = conn.prepareStatement(checkQuery);
+            stmt.setInt(1, idStatus);
+            stmt.setInt(2, idUser);
+            ResultSet rs = stmt.executeQuery();
+
+            if (!rs.next()) {
+                // Nếu chưa thích, thêm một bản ghi mới vào bảng likes
+                String insertQuery = "INSERT INTO likes (idStatus, idUser) VALUES (?, ?)";
+                stmt = conn.prepareStatement(insertQuery);
+                stmt.setInt(1, idStatus);
+                stmt.setInt(2, idUser);
+                stmt.executeUpdate();
+
+                // Cập nhật số lượng "like" trong bảng posts
+                String updateQuery = "UPDATE status inner join likes on status.idStatus = likes.idStatus SET likeCount = likeCount + 1 WHERE status.idStatus = ? and likes.idUser = ?";
+                stmt = conn.prepareStatement(updateQuery);
+                stmt.setInt(1, idStatus);
+                stmt.setInt(2, idUser);
+                stmt.executeUpdate();
+            } else {
+                String updateQuery = "UPDATE status inner join likes on status.idStatus = likes.idStatus SET likeCount = likeCount + 1 WHERE status.idStatus = ? and likes.idUser = ?";
+                stmt = conn.prepareStatement(updateQuery);
+                stmt.setInt(1, idStatus);
+                stmt.setInt(2, idUser);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    @Override
+    public void updateMinusLikeCount(int idStatus, int idUser) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = DataConnector.getConnection();
+            // Giảm số lượng "like" trong bảng posts
+            String updateQuery = "UPDATE status inner join likes on status.idStatus = likes.idStatus SET likeCount = likeCount - 1 WHERE status.idStatus = ? and likes.idUser = ?";
+            stmt = conn.prepareStatement(updateQuery);
+            stmt.setInt(1, idStatus);
+            stmt.setInt(2, idUser);
+            stmt.executeUpdate();
+            // Xóa bản ghi khỏi bảng likes
+            String deleteQuery = "DELETE FROM likes WHERE idStatus = ? AND idUser = ?";
+            stmt = conn.prepareStatement(deleteQuery);
+            stmt.setInt(1, idStatus);
+            stmt.setInt(2, idUser);
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public void insertStatus(Status status) {
@@ -197,4 +308,20 @@ public class UserDAOImpl implements IUserDAO {
         }
     }
 
-}
+        public int getLikeCount ( int idStatus){
+            int likeCount = 0;
+            String query = "select likeCount from status where idStatus = ?";
+            try {
+                Connection connection = DataConnector.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setInt(1, idStatus);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet.getInt("likeCount");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return likeCount;
+        }
+    }
