@@ -412,12 +412,14 @@ public class UserServlet extends HttpServlet {
 
             Part filePart = request.getPart("file");
             String fileName = extractFileName(filePart);
-            filePart.write(this.getFolderUpload().getAbsolutePath() + File.separator + fileName);
             String mediaPart = "/fileImage/" + fileName;
-            session.setAttribute("pathImage", mediaPart);
 
-
-            if (mediaPart != null){
+            if (fileName.isEmpty() && description.isEmpty()){
+                session.setAttribute("errorUpload", "error");
+                session.setAttribute("pathImage", mediaPart);
+                response.sendRedirect("/home");
+            } else if(mediaPart != null){
+                filePart.write(this.getFolderUpload().getAbsolutePath() + File.separator + fileName);
                 try (Connection connection = DataConnector.getConnection()) {
                     // Insert bài viết vào bảng status
                     String insertStatusQuery = "INSERT INTO status (createTime, description, media, idUser, idPermission) VALUES (?, ?, ?, ?, ?)";
@@ -456,8 +458,7 @@ public class UserServlet extends HttpServlet {
         }
 
     public File getFolderUpload() {
-        File folderUpload = new File("C:\\Users\\trong\\IdeaProjects\\HotFix\\social-network\\src\\main\\webapp\\fileImage");
-//        System.out.println(System.getenv("USERPROFILE")+ "\\IdeaProject\\HotFix\\social-network\\src\\main\\webapp\\fileImage");
+        File folderUpload = new File(System.getProperty("user.home") + "/social-network/src/main/webapp/fileImage");
         if (!folderUpload.exists()) {
             folderUpload.mkdirs();
         }

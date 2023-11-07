@@ -23,8 +23,12 @@
     <div class="editFormDiv" id="divPostForm">
         <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus"  enctype="multipart/form-data">
             <div class="header-edit">
-                <p>Post status</p>
-                <input type="button" id="closePost" onclick="hidePost()" value="x">
+                <p>Create status</p>
+                <div role="button" id="closePost" onclick="hidePost()">
+                    <i>
+                        <img style="width: 30px"  src="../display-home/images/cross.png">
+                    </i>
+                </div>
             </div>
 
             <div class="underline-edit"></div>
@@ -41,7 +45,7 @@
             <div class="imgTextEdit">
                 <div class="contentWrapper">
                     <div class="textarea">
-                        <textarea placeholder="What do you think?" oninput="descriptions(this)"
+                        <textarea id="desciption" placeholder="What do you think?" oninput="descriptions(this)"
                                   name="description" class="textareaDescription"></textarea>
                     </div>
                     <div style="text-align: center">
@@ -60,8 +64,24 @@
                     </div>
                 </div>
             </div>
-            <div class="submit-edit">
+            <div id="submit" class="submit-edit" style="margin-bottom: 20px">
                 <input type="submit" value="upload">
+            </div>
+            <div>
+<%--                <script>--%>
+<%--                    const description = document.getElementById("desciption")--%>
+<%--                    const submit = document.getElementById("submit")--%>
+<%--                    description.addEventListener("input", checkError)--%>
+
+<%--                    function checkError(){--%>
+<%--                        const descrip = description.value;--%>
+<%--                        if (description == ""){--%>
+<%--                            submit.hidden--%>
+<%--                        }else {--%>
+<%--                            submit.style.vi--%>
+<%--                        }--%>
+<%--                    }--%>
+<%--                </script>--%>
             </div>
         </form>
     </div>
