@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -33,8 +34,11 @@ import java.util.List;
 import java.util.Objects;
 
 @WebServlet(name = "UserServlet", value = "/user")
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 20, // 2MB
+        maxFileSize = 1024 * 1024 * 50, // 50MB
+        maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class UserServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     PasswordValidate passwordValidate;
     UserDAOImpl userDAO;
     StatusDAOImpl statusDAO;
@@ -343,8 +347,14 @@ public class UserServlet extends HttpServlet {
             HttpSession session = request.getSession();
             int userID = (int) session.getAttribute("idAccount");
             String description = request.getParameter("description");
-            String mediaPart = request.getParameter("media");
             int permission = Integer.parseInt(request.getParameter("option"));
+
+            Part filePart = request.getPart("file");
+            String fileName = extractFileName(filePart);
+            filePart.write(this.getFolderUpload().getAbsolutePath() + File.separator + fileName);
+            String mediaPart = "/fileImage/" + fileName;
+            session.setAttribute("pathImage", mediaPart);
+
             if (mediaPart != null){
                 try (Connection connection = DataConnector.getConnection()) {
                     // Insert bài viết vào bảng status
@@ -382,6 +392,24 @@ public class UserServlet extends HttpServlet {
 
             }
         }
+
+    public File getFolderUpload() {
+        File folderUpload = new File(System.getProperty("user.home") + "/social-network/src/main/webapp/fileImage");
+        if (!folderUpload.exists()) {
+            folderUpload.mkdirs();
+        }
+        return folderUpload;
+    }
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            }
+        }
+        return "";
+    }
 
     private void deleteStatus(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, ClassNotFoundException {
         int idStatus = Integer.parseInt(request.getParameter("idStatus"));
