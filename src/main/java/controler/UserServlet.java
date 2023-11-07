@@ -159,6 +159,7 @@ public class UserServlet extends HttpServlet {
                 req.setAttribute("listFriends", listFriendsAccount);
             }
         }else if (idFriend != 0){
+            req.setAttribute("idFriend", idFriend);
             req.setAttribute("user", userDAO.getUserById(idAccount));
             req.setAttribute("friend", userDAO.getUserById(idFriend));
             List<User> listFriends = new ArrayList<>();

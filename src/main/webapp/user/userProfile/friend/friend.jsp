@@ -135,7 +135,13 @@
                 <div class="avatarProfile"><img src="<c:out value="${user.getAvatar()}"/>"></div>
                 <div class="introduction">
                     <div class="left-introduce">
-                        <p class="user"><c:out value="${user.getName()}"/></p>
+                        <c:set var="friend1" scope="session" value="${idFriend}"/>
+                        <c:if test="${friend1 == 0}">
+                            <p class="user"><c:out value="${user.getName()}"/></p>
+                        </c:if>
+                        <c:if test="${friend1 != 0}">
+                            <p class="user">${friend.getName()}</p>
+                        </c:if>
                         <p>
                             <c:out value="${numberFriends}"/>
                             <span>Number friends</span>
