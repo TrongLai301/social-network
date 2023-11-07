@@ -21,6 +21,7 @@ create table user
     avatar       nvarchar(500),
     address      nvarchar(200),
     status       enum ('working','block') default 'working',
+    countAccsess int not null,
     CONSTRAINT CHK_PasswordLength CHECK (length(password) >= 6 AND length(password) <= 32),
     idPermission int,
     foreign key (idPermission) references permission (idPermission));
@@ -276,3 +277,10 @@ INSERT INTO likes (idStatus, idUser) VALUES (3, 4);
 INSERT INTO likes (idStatus, idUser) VALUES (4, 5);
 INSERT INTO likes (idStatus, idUser) VALUES (5, 6);
 
+create table admin (
+    id int primary key  auto_increment,
+    idUser int not null,
+    timesAccess DATETIME not null,
+    quantityAccess int not null,
+    foreign key (idUser) references user (id),
+)
