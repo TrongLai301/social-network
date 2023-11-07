@@ -276,7 +276,7 @@
                         <div class="user-profile">
                             <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
                             <div>
-                                <a href="/user?actionGet=showUserProfile&id=${user.id}"
+                                <a href="/user?actionGet=showUserProfile&id=${requestScope.user.id}&idFriend=${user.id}"
                                    style="text-decoration: none;color: black">${user.name}</a><br>
                                 <small>${post.createTime}</small>
                                 <c:choose>

@@ -176,7 +176,7 @@
         <div class="listFrs">
             <c:forEach  var="friend" items="${listFriends}" begin="0" varStatus="loopCounter">
                 <div class="frs">
-                    <a href="/user?actionGet=showUserProfile&idFriend=${friend.getId()}">
+                    <a href="/user?actionGet=showUserProfile&id=<c:out value="${user.getId()}"/>&idFriend=${friend.getId()}">
                         <img src="${friend.getAvatar()}"
                                  alt="avatar">
                     </a>

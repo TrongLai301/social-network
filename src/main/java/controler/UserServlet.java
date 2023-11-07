@@ -207,6 +207,7 @@ public class UserServlet extends HttpServlet {
                     listFriends.add(userDAO.getUserById(idFriendAccount));
                 }
             }
+            req.setAttribute("numberFriends", listFriends.size()+1);
             for (int i=0; i< listFriends.size(); i++){
                 List<Integer> listIdFromFriends = new ArrayList<>();
                 List<Integer> listAllIdFromFriend = new ArrayList<>();
@@ -241,7 +242,6 @@ public class UserServlet extends HttpServlet {
                 }
                 listAllIdFromFriends.add(listIdFriendsFromBoth.size());
                 req.setAttribute("numberFriendsBoth", listAllIdFromFriends);
-                req.setAttribute("numberFriends", listFriends.size());
                 req.setAttribute("listFriends", listFriends);
             }
         }
@@ -587,8 +587,7 @@ public class UserServlet extends HttpServlet {
                     User user2 = userDAO.getUserById(idFriend1);
                     listFriends.add(user2);
                 }
-
-                req.setAttribute("numberFriends", listFriends.size());
+                req.setAttribute("numberFriends", listFriends.size() + 1);
                 req.setAttribute("listFriends", listFriends);
                 req.setAttribute("listStatus",newPost1);
                 req.setAttribute("listUser",userList1);

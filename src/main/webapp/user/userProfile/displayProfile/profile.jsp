@@ -186,7 +186,7 @@
                     <img src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">
                     <div>
                         <p>${requestScope.user.name}</p>
-                        <a href="/user?actionGet=showUserProfile">See your profile</a>
+                        <a href="/user?actionGet=showUserProfile&id=${requestScope.user.id}">See your profile</a>
                     </div>
                 </div>
                 <div id="dark-button" onclick="darkModeON()">
@@ -342,7 +342,7 @@
                         <a href="/user?actionGet=showListFriendsUser&id=${requestScope.user.id}">View all friend</a>
                     </c:if>
                     <c:if test="${friend1 != 0}">
-                        <a href="/user?actionGet=showListFriendsUser&idFriend=${idFriend1}&id=${requestScope.user.id}">View all friend</a>
+                        <a href="/user?actionGet=showListFriendsUser&idFriend=${friend1}&id=${requestScope.user.id}">View all friend</a>
                     </c:if>
                 </div>
                 <div>
