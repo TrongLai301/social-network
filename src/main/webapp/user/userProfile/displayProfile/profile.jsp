@@ -50,33 +50,33 @@
 </c:if>
 <div class="form-edit" id="edit">
     <div class="editFormDiv" id="divEditForm">
-        <%--        <form class="editForm" method="post" action="/user?actionPost=editStatus" id="editForm">--%>
-        <%--            <div class="header-edit">--%>
-        <%--                <p>Chỉnh sửa bài viết</p>--%>
-        <%--                <input type="button" id="close" onclick="hideEdit()" value="x">--%>
-        <%--            </div>--%>
+                <form class="editForm" method="post" action="/user?actionPost=editStatus" id="editForm">
+                    <div class="header-edit">
+                        <p>Chỉnh sửa bài viết</p>
+                        <input type="button" id="close" onclick="hideEdit()" value="x">
+                    </div>
 
-        <%--            <div class="underline-edit"></div>--%>
-        <%--            <div class="infoHost">--%>
-        <%--                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px" alt="">--%>
-        <%--                <p>${requestScope.user.name}</p>--%>
-        <%--            </div>--%>
-        <%--            <div class="imgTextEdit">--%>
-        <%--                <div class="contentWrapper"></div>--%>
-        <%--                            <option value="1">public</option>--%>
-        <%--                            <option value="2">private</option>--%>
-        <%--                        </select>--%>
-        <%--                    </div>--%>
-        <%--&lt;%&ndash;                    <div class="divImgEdit" id="imgStatus">&ndash;%&gt;--%>
-        <%--&lt;%&ndash;                        <input type="button" onclick="deleteImg()" value="x">&ndash;%&gt;--%>
-        <%--&lt;%&ndash;                        <img src="${requestScope.user}" alt="">&ndash;%&gt;--%>
-        <%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
-        <%--                </div>--%>
-        <%--            </div>--%>
-        <%--            <div class="submit-edit">--%>
-        <%--                <input type="submit" value="Edit">--%>
-        <%--            </div>--%>
-        <%--        </form>--%>
+                    <div class="underline-edit"></div>
+                    <div class="infoHost">
+                        <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px" alt="">
+                        <p>${requestScope.user.name}</p>
+                    </div>
+                    <div class="imgTextEdit">
+                        <div class="contentWrapper"></div>
+                                    <option value="1">public</option>
+                                    <option value="2">private</option>
+                                </select>
+                            </div>
+<%--                            <div class="divImgEdit" id="imgStatus">--%>
+<%--                                <input type="button" onclick="deleteImg()" value="x">--%>
+<%--                                <img src="${requestScope.user}" alt="">--%>
+<%--                            </div>--%>
+                        </div>
+                    </div>
+                    <div class="submit-edit">
+                        <input type="submit" value="Edit">
+                    </div>
+                </form>
     </div>
 </div>
 <div class="form-post" id="post">

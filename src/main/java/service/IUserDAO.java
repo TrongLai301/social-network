@@ -11,6 +11,7 @@ public interface IUserDAO {
 
     User getUserById(int id) throws SQLException, ClassNotFoundException;
 
+    Integer getPermissionFriendsUserById(int id) throws SQLException, ClassNotFoundException;
     User getUserByName(String name) throws SQLException, ClassNotFoundException;
 
     // Tìm user theo email hoặc sdt để kiểm tra email hoặc phone đã tồn tại trong update profile

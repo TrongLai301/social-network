@@ -173,22 +173,30 @@
             </div>
         </div>
         <div class="optionFrs"></div>
-        <div class="listFrs">
-            <c:forEach  var="friend" items="${listFriends}" begin="0" varStatus="loopCounter">
-                <div class="frs">
-                    <a href="/user?actionGet=showUserProfile&idFriend=${friend.getId()}">
-                        <img src="${friend.getAvatar()}"
+        <c:set var="idPermission" scope="session" value="${permission}"/>
+        <c:if test="${idPermission == 1}">
+            <div class="listFrs">
+                <c:forEach  var="friend" items="${listFriends}" begin="0" varStatus="loopCounter">
+                    <div class="frs">
+                        <a href="/user?actionGet=showUserProfile&idFriend=${friend.getId()}">
+                            <img src="${friend.getAvatar()}"
                                  alt="avatar">
-                    </a>
-                    <a href="/user?actionGet=showListFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">
-                        <div style="float: right; margin-top: 27px; font-size: 18px; margin-left: 5px; color: black">
-                            <p class="nameFrsInList">${friend.getName()}</p>
-                            <p><c:out value="${numberFriendsBoth.get(loopCounter.count-1)}"/> mutual friends</p>
-                        </div>
-                    </a>
-                </div>
-            </c:forEach>
-        </div>
+                        </a>
+                        <a href="/user?actionGet=showListFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">
+                            <div style="float: right; margin-top: 27px; font-size: 18px; margin-left: 5px; color: black">
+                                <p class="nameFrsInList">${friend.getName()}</p>
+                                <p><c:out value="${numberFriendsBoth.get(loopCounter.count-1)}"/> mutual friends</p>
+                            </div>
+                        </a>
+                    </div>
+                </c:forEach>
+            </div>
+        </c:if>
+        <c:if test="${idPermission == 2}">
+            <div style="width: 100%; height: 600px; background-color: #d3d3d3">
+
+            </div>
+        </c:if>
     </div>
 </div>
 <footer id="footer">

@@ -95,12 +95,13 @@ public class UserServlet extends HttpServlet {
         }
 
         if (idFriend == 0){
-            req.setAttribute("user", userDAO.getUserById(idAccount));
+            User user = userDAO.getUserById(idAccount);
+            req.setAttribute("permission", userDAO.getPermissionFriendsUserById(idAccount));
+            req.setAttribute("user", user);
             List<User> listFriendsAccount = new ArrayList<>();
             List<Integer> listAllIdFriendsAccount = new ArrayList<>();
             List<Integer> listIdFriendsAccount = new ArrayList<>();
             List<Integer> listAllIdFromFriends = new ArrayList<>();
-            User user = new User();
 
             Connection connection = DataConnector.getConnection();
             PreparedStatement pstm = connection.prepareStatement("SELECT * from Friendships");
@@ -159,6 +160,7 @@ public class UserServlet extends HttpServlet {
                 req.setAttribute("listFriends", listFriendsAccount);
             }
         }else if (idFriend != 0){
+            req.setAttribute("permission", userDAO.getPermissionFriendsUserById(idFriend));
             req.setAttribute("user", userDAO.getUserById(idAccount));
             req.setAttribute("friend", userDAO.getUserById(idFriend));
             List<User> listFriends = new ArrayList<>();
@@ -660,6 +662,7 @@ public class UserServlet extends HttpServlet {
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
         String date = req.getParameter("birth");
+        String permissionShowFriends = req.getParameter("showFriends");
         System.out.println(date);
         System.out.println("".compareTo(date));
         if (date != null && !date.isEmpty()){
@@ -684,6 +687,7 @@ public class UserServlet extends HttpServlet {
         userAfterEdit.setName(name);
         userAfterEdit.setAddress(address);
         userAfterEdit.setHobby(hobby);
+        userAfterEdit.setPermissionFriends(permissionShowFriends);
 
         User userToCheckEmailExit = userDAO.findUserWithEmailOrPhone(email,phone);
         if (userToCheckEmailExit.getId() != userAfterEdit.getId()) {
