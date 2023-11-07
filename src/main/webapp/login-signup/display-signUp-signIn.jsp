@@ -264,13 +264,7 @@
             </form>
         </div>
         <footer>
-            <div class="footer" style=" position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    height: 90px;
-    background: #c5c5bc;">
+            <div class="footer">
                 <p class="p-footer">
                     <svg class="logo-footer" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
