@@ -290,6 +290,7 @@ create table Comment (
     idStatus int not null,
     content varchar(255) not null ,
     likeCount int default 0,
+    ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (idUser) references  user(id),
     FOREIGN KEY  (idStatus) references  status(idStatus)
 );

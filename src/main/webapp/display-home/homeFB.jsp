@@ -10,6 +10,7 @@
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
     <link rel="stylesheet" href="../user/userProfile/friend/style.css">
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/39e48099af.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </head>
@@ -227,7 +228,7 @@
                     <img src="${requestScope.user.getAvatar()}" style="height: 50px;width: 50px" alt="">
                     <div>
                         <p>${requestScope.user.name}</p>
-                        <small>Public <i class="fas fa-caret-down"></i></small>
+                        <small><i class="fa-solid fa-earth-asia"></i> <i class="fas fa-caret-down"></i></small>
                     </div>
                 </div>
 
@@ -255,10 +256,10 @@
                                 <small>${post.createTime}</small>
                                 <c:choose>
                                     <c:when test="${post.permission == 1}">
-                                        <small>public</small>
+                                        <small><i class="fa-solid fa-earth-asia"></i></small>
                                     </c:when>
                                     <c:otherwise>
-                                        <small>private</small>
+                                        <small> <i class="fa-solid fa-lock"></i></small>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
@@ -295,10 +296,15 @@
                         <img src="${post.media}" alt="">
                     </div>
                     <div class="post-reaction">
+                        <div class="post__react__information">
+                            <div class="react__like">
+                                <span class="likeCount">${post.likeCount} likes</span>
+                            </div>
+                            <div class="react__cmt__share"></div>
+                        </div>
                         <div class="activity-icons">
                             <div class="likeAndUnlikeButton">
-
-    <c:choose>
+                                  <c:choose>
         <c:when test="${ status != null}">
             <div>
                 <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
@@ -314,10 +320,9 @@
             </div>
         </c:otherwise>
     </c:choose>
-                                <span class="likeCount">${post.likeCount}</span>
                             </div>
-                            <div><img src="../display-home/images/comments.png" alt="">0</div>
-                            <div><img src="../display-home/images/share.png" alt="">0</div>
+                            <div><img src="../display-home/images/comments.png" alt=""></div>
+                            <div><img src="../display-home/images/share.png" alt=""></div>
                         </div>
                     </div>
 
@@ -437,6 +442,30 @@
         </div>
     </div>
 </div>
+<%--    Modal--%>
+<div class="modal">
+    <div class="modal__comment">
+            <div class="comment__header">
+                <h2>Comments</h2>
+                <i class="fa-solid fa-x"></i>
+            </div>
+            <div class="comment__body">
+                <div class="comment">
+                    <div class="comment__avatar">
+                         <img src="../display-home/images/member-1.png">
+                    </div>
+                    <div class="comment__content">
+
+                    </div>
+                </div>
+            </div>
+            <div class="comment__user">
+
+            </div>
+        </div>
+</div>
+
 <script src="../display-home/function.js"></script>
+
 </body>
 </html>
