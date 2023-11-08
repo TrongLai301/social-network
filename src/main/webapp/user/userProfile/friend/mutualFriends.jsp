@@ -6,7 +6,7 @@
     <title>Facebook</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
-    <link rel="stylesheet" href="/user/userProfile/friend/style.css">
+    <link rel="stylesheet" href="../user/userProfile/friend/style.css">
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
 
 </head>
@@ -38,7 +38,7 @@
                 </li>
 
                 <li>
-<%--                    <a href="/user?actionGet=showListFriendsUser&id=${requestScope.user.id}"/>--%>
+                    <%--                    <a href="/user?actionGet=showListFriendsUser&id=${requestScope.user.id}"/>--%>
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
                         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                         <style>svg {
@@ -179,59 +179,28 @@
             </div>
         </div>
         <div class="optionFrs"></div>
-<%--        <div class="listFrs">--%>
-<%--            <c:forEach  var="friend" items="${listFriends}" begin="0" varStatus="loopCounter">--%>
-<%--                <div class="frs">--%>
-<%--                    <a href="/user?actionGet=showUserProfile&id=<c:out value="${user.getId()}"/>&idFriend=${friend.getId()}">--%>
-<%--                        <img src="${friend.getAvatar()}"--%>
-<%--                                 alt="avatar">--%>
-<%--                    </a>--%>
-<%--                    <a href="/user?actionGet=showListFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">--%>
-<%--                        <div style="float: right; margin-top: 27px; font-size: 18px; margin-left: 5px; color: black">--%>
-<%--                            <p class="nameFrsInList">${friend.getName()}</p>--%>
-<%--                            <p><c:out value="${numberFriendsBoth.get(loopCounter.count-1)}"/> mutual friends</p>--%>
-<%--                        </div>--%>
-<%--                    </a>--%>
-<%--                    <a href="/user?actionGet=showListMutualFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">--%>
-<%--                        <p>Show Mutual Mriends</p>--%>
-<%--                    </a>--%>
-<%--                </div>--%>
-<%--            </c:forEach>--%>
-<%--        </div>--%>
-        <c:set var="idPermission" scope="session" value="${permission}"/>
-        <c:if test="${idPermission == 1}">
-            <div class="listFrs">
-                <div class="listFrs">
-                    <c:forEach  var="friend" items="${listFriends}" begin="0" varStatus="loopCounter">
-                        <div class="frs">
-                            <a href="/user?actionGet=showUserProfile&id=<c:out value="${user.getId()}"/>&idFriend=${friend.getId()}">
-                                <img src="${friend.getAvatar()}"
-                                     alt="avatar">
-                            </a>
-                            <a href="/user?actionGet=showListFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">
-                                <div style="float: right; margin-top: 27px; font-size: 18px; margin-left: 5px; color: black">
-                                    <p class="nameFrsInList">${friend.getName()}</p>
-<%--                                    <p><c:out value="${numberFriendsBoth.get(loopCounter.count-1)}"/> friends</p>--%>
-                                </div>
-                            </a>
-                            <a href="/user?actionGet=showListMutualFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">
-                                <p style="margin-left: 20px; margin-top: 26px">Mutual Mriends</p>
-                            </a>
+        <div class="listFrs">
+            <c:forEach  var="friend" items="${listFriends}" begin="0" varStatus="loopCounter">
+                <div class="frs">
+                    <a href="/user?actionGet=showUserProfile&id=<c:out value="${user.getId()}"/>&idFriend=${friend.getId()}">
+                        <img src="${friend.getAvatar()}"
+                             alt="avatar">
+                    </a>
+                    <a href="/user?actionGet=showListFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">
+                        <div style="float: right; margin-top: 27px; font-size: 18px; margin-left: 5px; color: black">
+                            <p class="nameFrsInList">${friend.getName()}</p>
+                            <p><c:out value="${numberFriendsBoth.get(loopCounter.count-1)}"/> mutual friends</p>
                         </div>
-                    </c:forEach>
+                    </a>
+                    <a href="/user?actionGet=showListFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">
+                        <p>Show Mutual Mriends</p>
+                    </a>
                 </div>
-            </div>
-        </c:if>
-        <c:if test="${idPermission == 2}">
-            <div style="width: 100%; height: 600px; background-color: #d3d3d3">
-
-            </div>
-        </c:if>
+            </c:forEach>
+        </div>
     </div>
 </div>
 <footer id="footer">
     <p></p>
 </footer>
 <script src="../display-home/function.js"></script>
-</body>
-</html>

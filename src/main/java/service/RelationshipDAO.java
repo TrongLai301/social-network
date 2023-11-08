@@ -124,7 +124,7 @@ public class RelationshipDAO implements iRelationshipDAO{
     }
     public int CountFriend(int id) throws SQLException, ClassNotFoundException {
         Statement statement = DataConnector.getConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery("  SELECT COUNT(*) AS friendCount FROM friendships WHERE (senderId  = '" + id +"' or receiverId = '" + id +"') AND status LIKE '%accepted%';");
+        ResultSet resultSet = statement.executeQuery("  SELECT COUNT(*) AS friendCount FROM Friendships WHERE (senderId  = '" + id +"' or receiverId = '" + id +"') AND status LIKE '%accepted%';");
         int count = 0;
         while (resultSet.next()){
             count = resultSet.getInt("friendCount");

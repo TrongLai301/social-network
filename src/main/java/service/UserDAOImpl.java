@@ -63,7 +63,18 @@ public class UserDAOImpl implements IUserDAO {
         connection.close();
         return user;
     }
-
+    @Override
+    public Integer getPermissionFriendsUserById(int id) throws SQLException, ClassNotFoundException {
+        Connection connection = DataConnector.getConnection();
+        CallableStatement callableStatement = connection.prepareCall("select idPermissionFriends from user  where user.id = '" + id + "'");
+        ResultSet resultSet = callableStatement.executeQuery();
+        Integer permissionFriends = 0;
+        while (resultSet.next()) {
+            permissionFriends = resultSet.getInt("idPermissionFriends");
+        }
+        connection.close();
+        return permissionFriends;
+    }
     @Override
     public User getUserByName(String name) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
@@ -131,7 +142,7 @@ public class UserDAOImpl implements IUserDAO {
     public void updateUser(User user) {
         try {
             Connection connection = DataConnector.getConnection();
-            CallableStatement cs = connection.prepareCall("UPDATE user u set u.email = ?, u.phone = ?, u.birth = ?, u.avatar = ?, u.fullname = ?, u.address = ? , u.hobby = ? where id = ?");
+            CallableStatement cs = connection.prepareCall("UPDATE user u set u.email = ?, u.phone = ?, u.birth = ?, u.avatar = ?, u.fullname = ?, u.address = ? , u.hobby = ?, u.idPermissionFriends = ? where id = ?");
             cs.setString(1, user.getEmail());
             cs.setString(2, user.getPhone());
             cs.setString(3, null);
@@ -142,7 +153,12 @@ public class UserDAOImpl implements IUserDAO {
             cs.setString(5, user.getName());
             cs.setString(6, user.getAddress());
             cs.setString(7, user.getHobby());
-            cs.setInt(8, user.getId());
+            if (user.getPermissionFriends().equals("public")){
+                cs.setInt(8, 1);
+            } else if (user.getPermissionFriends().equals("private")) {
+                cs.setInt(8,2);
+            }
+            cs.setInt(9, user.getId());
             cs.executeUpdate();
 
             connection.close();
