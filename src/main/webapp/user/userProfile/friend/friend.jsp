@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
 <html>
@@ -6,7 +6,7 @@
     <title>Facebook</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
-    <link rel="stylesheet" href="../friend/style.css">
+    <link rel="stylesheet" href="/user/userProfile/friend/style.css">
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
 
 </head>
@@ -15,7 +15,7 @@
     <nav class="navbar">
         <div class="nav-left">
 
-            <img class="logo" id="logoFB" onclick="loadWeb()" src="../../userProfile/images/logoFB.webp" alt="">
+            <img class="logo" id="logoFB" onclick="loadWeb()" src="../user/userProfile/images/logoFB.webp" alt="">
             <div class="search-box">
                 <img src="../display-home/images/search.png" alt="">
                 <form action="home?action=search" method="post">
@@ -38,6 +38,7 @@
                 </li>
 
                 <li>
+<%--                    <a href="/user?actionGet=showListFriendsUser&id=${requestScope.user.id}"/>--%>
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
                         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                         <style>svg {
@@ -61,17 +62,17 @@
 
         <div class="nav-right">
             <div class="profile-image online" onclick="UserSettingToggle()">
-                <img src="" style="height: 50px;width: 50px" alt="">
+                <img src="<c:out value="${user.getAvatar()}"/>" style="height: 50px;width: 50px" alt="">
             </div>
 
         </div>
         <div class="user-settings">
             <div class="profile-darkButton">
                 <div class="user-profile">
-                    <img src="" style="height: 50px;width: 50px" alt="">
+                    <img src="<c:out value="${user.getAvatar()}"/>" style="height: 50px;width: 50px" alt="">
                     <div>
                         <p> </p>
-                        <a href="user?actionGet=showUserProfile&id=">See your profile</a>
+                        <a href="user?actionGet=showUserProfile&id=<c:out value="${user.getId()}"/>">See your profile</a>
                     </div>
                 </div>
                 <div id="dark-button" onclick="darkModeON()">
@@ -131,14 +132,23 @@
         </div>
         <div class="nav-Profile">
             <div class="optionHeader">
-                <div class="avatarProfile"></div>
+                <div class="avatarProfile"><img src="<c:out value="${user.getAvatar()}"/>"></div>
                 <div class="introduction">
                     <div class="left-introduce">
-                        <p class="user">Trọng Lại</p>
-                        <p class="numberFrs">348 <span>bạn bè</span></p>
+                        <c:set var="friend1" scope="session" value="${idFriend}"/>
+                        <c:if test="${friend1 == 0}">
+                            <p class="user"><c:out value="${user.getName()}"/></p>
+                        </c:if>
+                        <c:if test="${friend1 != 0}">
+                            <p class="user">${friend.getName()}</p>
+                        </c:if>
+                        <p>
+                            <c:out value="${numberFriends}"/>
+                            <span>Number friends</span>
+                        </p>
                     </div>
                     <div class="right-introduce">
-                        <input type="button" value="Chỉnh sửa trang cá nhân">
+                        <input type="button" value="Edit">
                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#256de9}</style><path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg>
                     </div>
                 </div>
@@ -153,10 +163,10 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container" style="background-color: #d3d3d3">
     <div class="container-profile">
         <div class="header-listFrs">
-            <div><span>Friends</span></div>
+            <div><span style="color: black">Friends</span></div>
             <div class="searchFrs">
                 <input type="text" placeholder="Search">
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
@@ -169,75 +179,58 @@
             </div>
         </div>
         <div class="optionFrs"></div>
-        <div class="listFrs">
-            <div class="frs">
-                <img src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/327321208_676732584188890_5324960171108588053_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=WFd5m3pjQEQAX_-km2s&_nc_ht=scontent.fhan14-3.fna&oh=00_AfAg_U54FuZbaOQC8vnHF1d5-UaneDxB2utVjeN8xgbZ6A&oe=6547A4D6">
-                <div>
-                    <p class="nameFrsInList">Lại Quang Trọng</p>
-                    <p class="manual">24 <span>bạn chung</span></p>
+<%--        <div class="listFrs">--%>
+<%--            <c:forEach  var="friend" items="${listFriends}" begin="0" varStatus="loopCounter">--%>
+<%--                <div class="frs">--%>
+<%--                    <a href="/user?actionGet=showUserProfile&id=<c:out value="${user.getId()}"/>&idFriend=${friend.getId()}">--%>
+<%--                        <img src="${friend.getAvatar()}"--%>
+<%--                                 alt="avatar">--%>
+<%--                    </a>--%>
+<%--                    <a href="/user?actionGet=showListFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">--%>
+<%--                        <div style="float: right; margin-top: 27px; font-size: 18px; margin-left: 5px; color: black">--%>
+<%--                            <p class="nameFrsInList">${friend.getName()}</p>--%>
+<%--                            <p><c:out value="${numberFriendsBoth.get(loopCounter.count-1)}"/> mutual friends</p>--%>
+<%--                        </div>--%>
+<%--                    </a>--%>
+<%--                    <a href="/user?actionGet=showListMutualFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">--%>
+<%--                        <p>Show Mutual Mriends</p>--%>
+<%--                    </a>--%>
+<%--                </div>--%>
+<%--            </c:forEach>--%>
+<%--        </div>--%>
+        <c:set var="idPermission" scope="session" value="${permission}"/>
+        <c:if test="${idPermission == 1}">
+            <div class="listFrs">
+                <div class="listFrs">
+                    <c:forEach  var="friend" items="${listFriends}" begin="0" varStatus="loopCounter">
+                        <div class="frs">
+                            <a href="/user?actionGet=showUserProfile&id=<c:out value="${user.getId()}"/>&idFriend=${friend.getId()}">
+                                <img src="${friend.getAvatar()}"
+                                     alt="avatar">
+                            </a>
+                            <a href="/user?actionGet=showListFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">
+                                <div style="float: right; margin-top: 27px; font-size: 18px; margin-left: 5px; color: black">
+                                    <p class="nameFrsInList">${friend.getName()}</p>
+<%--                                    <p><c:out value="${numberFriendsBoth.get(loopCounter.count-1)}"/> friends</p>--%>
+                                </div>
+                            </a>
+                            <a href="/user?actionGet=showListMutualFriendsUser&id=<c:out value="${user.getId()}"/>&idFriend=<c:out value="${friend.getId()}"/>">
+                                <p style="margin-left: 20px; margin-top: 26px">Mutual Mriends</p>
+                            </a>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
+        </c:if>
+        <c:if test="${idPermission == 2}">
+            <div style="width: 100%; height: 600px; background-color: #d3d3d3">
 
-            <div class="frs">
-                <img src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/327321208_676732584188890_5324960171108588053_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=WFd5m3pjQEQAX_-km2s&_nc_ht=scontent.fhan14-3.fna&oh=00_AfAg_U54FuZbaOQC8vnHF1d5-UaneDxB2utVjeN8xgbZ6A&oe=6547A4D6">
-                <div>
-                    <p class="nameFrsInList">Lại Quang Trọng</p>
-                    <p class="manual">24 <span>bạn chung</span></p>
-                </div>
             </div>
-
-            <div class="frs">
-                <img src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/327321208_676732584188890_5324960171108588053_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=WFd5m3pjQEQAX_-km2s&_nc_ht=scontent.fhan14-3.fna&oh=00_AfAg_U54FuZbaOQC8vnHF1d5-UaneDxB2utVjeN8xgbZ6A&oe=6547A4D6">
-                <div>
-                    <p class="nameFrsInList">Lại Quang Trọng</p>
-                    <p class="manual">24 <span>bạn chung</span></p>
-                </div>
-            </div>
-
-            <div class="frs">
-                <img src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/327321208_676732584188890_5324960171108588053_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=WFd5m3pjQEQAX_-km2s&_nc_ht=scontent.fhan14-3.fna&oh=00_AfAg_U54FuZbaOQC8vnHF1d5-UaneDxB2utVjeN8xgbZ6A&oe=6547A4D6">
-                <div>
-                    <p class="nameFrsInList">Lại Quang Trọng</p>
-                    <p class="manual">24 <span>bạn chung</span></p>
-                </div>
-            </div>
-
-            <div class="frs">
-                <img src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/327321208_676732584188890_5324960171108588053_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=WFd5m3pjQEQAX_-km2s&_nc_ht=scontent.fhan14-3.fna&oh=00_AfAg_U54FuZbaOQC8vnHF1d5-UaneDxB2utVjeN8xgbZ6A&oe=6547A4D6">
-                <div>
-                    <p class="nameFrsInList">Lại Quang Trọng</p>
-                    <p class="manual">24 <span>bạn chung</span></p>
-                </div>
-            </div>
-
-            <div class="frs">
-                <img src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/327321208_676732584188890_5324960171108588053_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=WFd5m3pjQEQAX_-km2s&_nc_ht=scontent.fhan14-3.fna&oh=00_AfAg_U54FuZbaOQC8vnHF1d5-UaneDxB2utVjeN8xgbZ6A&oe=6547A4D6">
-                <div>
-                    <p class="nameFrsInList">Lại Quang Trọng</p>
-                    <p class="manual">24 <span>bạn chung</span></p>
-                </div>
-            </div>
-
-            <div class="frs">
-                <img src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/327321208_676732584188890_5324960171108588053_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=WFd5m3pjQEQAX_-km2s&_nc_ht=scontent.fhan14-3.fna&oh=00_AfAg_U54FuZbaOQC8vnHF1d5-UaneDxB2utVjeN8xgbZ6A&oe=6547A4D6">
-                <div>
-                    <p class="nameFrsInList">Lại Quang Trọng</p>
-                    <p class="manual">24 <span>bạn chung</span></p>
-                </div>
-            </div>
-
-            <div class="frs">
-                <img src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/327321208_676732584188890_5324960171108588053_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=WFd5m3pjQEQAX_-km2s&_nc_ht=scontent.fhan14-3.fna&oh=00_AfAg_U54FuZbaOQC8vnHF1d5-UaneDxB2utVjeN8xgbZ6A&oe=6547A4D6">
-                <div>
-                    <p class="nameFrsInList">Lại Quang Trọng</p>
-                    <p class="manual">24 <span>bạn chung</span></p>
-                </div>
-            </div>
-        </div>
+        </c:if>
     </div>
 </div>
 <footer id="footer">
-    <p>&copy; Sản phẩm nhóm dự án 9</p>
+    <p></p>
 </footer>
 <script src="../display-home/function.js"></script>
 </body>

@@ -1118,15 +1118,15 @@ img.coverImage {
 .imgProfile{
     width: 100%;
     height: 480px;
-    background-color: black;
+    background-color: #F5F5F5;
     display: flex;
     justify-content: center;
 
 }
 .signatureImg{
-    width: 65%;
+    width: 68%;
     height: 480px;
-    background-color: blue;
+    background-color: #d3d3d3;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
@@ -1134,11 +1134,11 @@ img.coverImage {
     display: flex;
     width: 100%;
     height: 120px;
-    background-color: black;
+    background-color: #F5F5F5;
     justify-content: center;
 }
 .optionHeader{
-    background-color: black;
+    background-color: #F5F5F5;
     width: 60%;
     height: 120px;
     position: relative;
@@ -1174,7 +1174,7 @@ img.coverImage {
 .numberFrs{
     font-size: 14px;
 }
-.avatarProfile{
+.avatarProfile img{
     width: 150px;
     height: 150px;
     display: inline-flex;
@@ -1184,13 +1184,13 @@ img.coverImage {
     top: -70px;
     left: 20px;
     border-radius: 50%;
-    border: 4px solid black;
+    border: 4px solid #F5F5F5;
 }
 .nav-feature{
     display: flex;
     width: 100%;
     height: 60px;
-    background-color: black;
+    background-color: #F5F5F5;
     justify-content: center;
     flex-direction: column;
     align-items: center;
@@ -1199,18 +1199,18 @@ img.coverImage {
 .feature{
     width: 60%;
     height: 60px;
-    background-color: black;
+    background-color: #F5F5F5;
 }
 .underline-profile{
     width: 60%;
-    border-bottom: 1px solid chartreuse;
+    border-bottom: 1px solid black;
 
 }
 .container-profile{
     padding: 20px;
     width: 60%;
-    background-color: black;
-    height: 2000px;
+    background-color: #F5F5F5;
+    height: 100%;
     border-radius: 6px;
 }
 .header-listFrs{
@@ -1221,7 +1221,7 @@ img.coverImage {
 
 .header-listFrs span{
     font-size: 24px;
-    color: whitesmoke;
+    color: black;
 }
 .searchFrs{
     display: flex;
@@ -1245,10 +1245,9 @@ img.coverImage {
     padding: 20px 10px;
     display: flex;
     height: 90%;
-    background-color: black;
+    background-color: #F5F5F5;
     margin: 30px 0 10px 0;
     flex-direction: row;
-    justify-content: space-evenly;
     align-items: flex-start;
     flex-wrap: wrap;
     align-content: flex-start;
@@ -1259,7 +1258,7 @@ img.coverImage {
     border-radius: 6px;
     width: 500px;
     height: 110px;
-    background-color: aquamarine;
+    background-color: #F5F5F5;
     margin-bottom: 20px;
     display: flex;
     align-items: center;

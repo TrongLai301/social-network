@@ -14,70 +14,21 @@
     <link rel="shortcut icon" type="image/png" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico">
     <link rel="stylesheet" href="../user/userProfile/friend/style.css">
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 <body>
-<%--<c:if test="${sessionScope.messageDelete != null}">--%>
-<%--    <%--%>
-<%--        PrintWriter printWriter = response.getWriter();--%>
-<%--        printWriter.println("<script type=\"text/javascript\">");--%>
-<%--        printWriter.println("alert('xóa bài viết thành công');");--%>
-<%--        printWriter.println("</script>");--%>
-<%--    %>--%>
-<%--</c:if>--%>
-<%--<c:if test="${sessionScope.messageEditComplete != null}">--%>
-<%--    <%--%>
-<%--        PrintWriter printWriter = response.getWriter();--%>
-<%--        printWriter.println("<script type=\"text/javascript\">");--%>
-<%--        printWriter.println("alert('sửa bài viết thành công');");--%>
-<%--        printWriter.println("</script>");--%>
-<%--    %>--%>
-<%--</c:if>--%>
-<%--<div class="form-edit" id="edit">--%>
-<%--    <div class="editFormDiv" id="divEditForm">--%>
-<%--        <form class="editForm" id="editForm">--%>
-<%--            <div class="header-edit">--%>
-<%--                <p>Edit status</p>--%>
-<%--                <input type="button" id="close" onclick="hideEdit()" value="x">--%>
-<%--            </div>--%>
-
-<%--            <div class="underline-edit"></div>--%>
-<%--            <div class="infoHost">--%>
-<%--                <img class="imgHost" src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">--%>
-<%--                <p>${requestScope.user.name}</p>--%>
-<%--            </div>--%>
-<%--            <div class="imgTextEdit">--%>
-<%--                <div class="contentWrapper">--%>
-<%--                    <div class="textarea">--%>
-<%--                        <textarea placeholder="What do you think?" oninput="description(this)"--%>
-<%--                                name="description" class="textareaDescription"></textarea>--%>
-<%--                    </div>--%>
-<%--                    <div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--            <div class="submit-edit">--%>
-<%--                <button id="saveImg" value="submit">Submit</button>--%>
-<%--            </div>--%>
-<%--        </form>--%>
-<%--    </div>--%>
-<%--</div>--%>
-
-
-<%--<div class="form-post" id="post">--%>
-<%--    <div class="editFormDiv" id="divPostForm">--%>
-<%--        <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">--%>
-<%--            <div class="header-edit">--%>
-<%--                <p>Đăng bài viết</p>--%>
-<%--                <input type="button" id="closePost" onclick="hidePost()" value="x">--%>
-<%--            </div>--%>
-
 
 <div class="form-post" id="post">
     <div class="editFormDiv" id="divPostForm">
-        <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus">
+        <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus"  enctype="multipart/form-data">
             <div class="header-edit">
-                <p>Post status</p>
-                <input type="button" id="closePost" onclick="hidePost()" value="x">
+                <p>Create status</p>
+                <div role="button" id="closePost" onclick="hidePost()">
+                    <i>
+                        <img style="width: 30px"  src="../display-home/images/cross.png">
+                    </i>
+                </div>
             </div>
 
             <div class="underline-edit"></div>
@@ -94,16 +45,43 @@
             <div class="imgTextEdit">
                 <div class="contentWrapper">
                     <div class="textarea">
-                        <textarea placeholder="What do you think?" oninput="descriptions(this)"
+                        <textarea id="desciption" placeholder="What do you think?" oninput="descriptions(this)"
                                   name="description" class="textareaDescription"></textarea>
                     </div>
-                    <div class="textarea">
-                        <textarea placeholder="your picture?" name="media" class="textareaDescription"></textarea>
+                    <div style="text-align: center">
+                        <img src="" alt="" id="image" width="400" height="250" > <br/> <br/>
+                        <input type="file" onchange="chooseFile(this)" id="imageFile" name="file" value="" size="60" />
+                        <script>
+                            function chooseFile(fileInput){
+                                var reader = new FileReader();
+
+                                reader.onload = function (e){
+                                    $('#image').attr('src', e.target.result);
+                                }
+                                reader.readAsDataURL(fileInput.files[0]);
+                            }
+                        </script>
                     </div>
                 </div>
             </div>
-            <div class="submit-edit">
+            <div id="submit" class="submit-edit" style="margin-bottom: 20px">
                 <input type="submit" value="upload">
+            </div>
+            <div>
+<%--                <script>--%>
+<%--                    const description = document.getElementById("desciption")--%>
+<%--                    const submit = document.getElementById("submit")--%>
+<%--                    description.addEventListener("input", checkError)--%>
+
+<%--                    function checkError(){--%>
+<%--                        const descrip = description.value;--%>
+<%--                        if (description == ""){--%>
+<%--                            submit.hidden--%>
+<%--                        }else {--%>
+<%--                            submit.style.vi--%>
+<%--                        }--%>
+<%--                    }--%>
+<%--                </script>--%>
             </div>
         </form>
     </div>
@@ -151,7 +129,7 @@
                 </li>
                 <%--            <li><img src="images/video.png" alt=""></li>--%>
                 <li>
-                    <a href="../user/userProfile/friend/friend.jsp">
+                    <a href="/user?actionGet=showListFriendsUser&id=${requestScope.user.id}">
                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512">
                             <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                             <style>svg {
