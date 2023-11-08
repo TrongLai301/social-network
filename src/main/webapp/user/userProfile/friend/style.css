@@ -139,8 +139,20 @@ ul.navlogo li svg {
 
 .container {
     display: flex;
-    justify-content: center;
-    padding: 13px 0;
+    justify-content: space-evenly;
+    padding: 20px 5% 0 6%;
+}
+
+.container > div:nth-child(1) {
+    flex-basis: 20%;
+}
+
+.container > div:nth-child(2) {
+    flex-basis: 50%;
+}
+
+.container > div:nth-child(3) {
+    flex-basis: 20%;
 }
 
 /* content-area */
@@ -188,6 +200,7 @@ ul.navlogo li svg {
 .important-links a:last-child {
     color: #1876f2;
 }
+
 .important-links {
     border-bottom: 1px solid #ccc;
 }
@@ -351,6 +364,7 @@ img.advertisement-image {
     border: 0;
     width: 35px;
 }
+
 .write-post-container {
     color: #626262;
     background-color: var(--bg-color);
@@ -447,7 +461,7 @@ img.advertisement-image {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0px 10px;
+    margin: 0 10px;
 }
 
 .post-profile-picture img {
@@ -477,14 +491,6 @@ button.btn-LoadMore {
     color: #626262;
     background: transparent;
     border-radius: 4px;
-}
-
-footer#footer {
-    text-align: center;
-    background: var(--nav-color);
-    color: var(--bg-color);
-    padding: 15px 0px;
-    font-size: 13px;
 }
 
 .user-settings {
@@ -799,17 +805,20 @@ img.coverImage {
 .option-ul li {
     margin-bottom: 10px;
 }
-.div-li input{
+
+.div-li input {
     border: none;
     font-size: 16px;
     background-color: #f9f9f9;
     transition: 0.25s;
 }
-.div-li input:hover{
+
+.div-li input:hover {
     background-color: #b2b2b2;
     transition: 0.25s;
     color: whitesmoke;
 }
+
 .div-li {
     align-items: center;
     display: flex;
@@ -838,7 +847,7 @@ img.coverImage {
     fill: #406dff;
 }
 
-.form-edit  {
+.form-edit {
     display: none;
     /*overflow: auto;*/
     position: absolute;
@@ -859,7 +868,7 @@ img.coverImage {
 }
 
 
-.form-post{
+.form-post {
     display: none;
     position: absolute;
     padding: 80px 20px 5px 20px;
@@ -872,12 +881,12 @@ img.coverImage {
     justify-content: center;
 }
 
-.form-post.showPost{
+.form-post.showPost {
     display: block;
     position: fixed;
 }
 
-.editFormDiv{
+.editFormDiv {
     margin: auto;
     width: 514px;
     height: 650px;
@@ -888,7 +897,7 @@ img.coverImage {
     transition: height 0.3s ease;
 }
 
-.editForm{
+.editForm {
     display: flex;
     align-items: center;
     position: relative;
@@ -901,7 +910,7 @@ img.coverImage {
 }
 
 
-.header-edit{
+.header-edit {
     align-items: center;
     display: flex;
     justify-content: space-between;
@@ -967,7 +976,7 @@ img.coverImage {
     background-color: #F5F5F5;
 }
 
-.submit-edit,.submit-post {
+.submit-edit, .submit-post {
     position: absolute;
     bottom: 10px;
 }
@@ -990,7 +999,7 @@ img.coverImage {
     background-color: #808080;
 }
 
-.imgTextEdit,.imgTextPost {
+.imgTextEdit, .imgTextPost {
     max-height: 400px;
     overflow-y: auto;
 }
@@ -1078,12 +1087,12 @@ img.coverImage {
 }
 
 
-.buttonImg{
+.buttonImg {
 
 }
 
 
-#saveImg{
+#saveImg {
     width: 400px;
     height: 40px;
     border-radius: 6px;
@@ -1093,16 +1102,18 @@ img.coverImage {
     color: #000000;
     transition: 0.25s;
 }
-#saveImg:hover{
+
+#saveImg:hover {
     background-color: #d0d0d0;
     transition: 0.25s;
 }
 
 
-.p{
+.p {
     margin-left: 9px;
 }
-.select1{
+
+.select1 {
     border: none;
     margin-left: 5px;
     background-color: #f6f5f5;
@@ -1110,12 +1121,13 @@ img.coverImage {
 }
 
 /*header-listFriend*/
-.header-profile{
+.header-profile {
     width: 100%;
     height: 600px;
     background-color: #c3c3c3;
 }
-.imgProfile{
+
+.imgProfile {
     width: 100%;
     height: 480px;
     background-color: #F5F5F5;
@@ -1123,38 +1135,44 @@ img.coverImage {
     justify-content: center;
 
 }
-.signatureImg{
+
+.signatureImg {
     width: 68%;
     height: 480px;
     background-color: #d3d3d3;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
-.nav-Profile{
+
+.nav-Profile {
     display: flex;
     width: 100%;
     height: 120px;
     background-color: #F5F5F5;
     justify-content: center;
 }
-.optionHeader{
+
+.optionHeader {
     background-color: #F5F5F5;
     width: 60%;
     height: 120px;
     position: relative;
     padding: 5px 5px 5px 20vh;
 }
-.introduction{
+
+.introduction {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.right-introduce{
+
+.right-introduce {
     position: relative;
     display: flex;
     align-items: center;
 }
-.right-introduce input{
+
+.right-introduce input {
     cursor: pointer;
     width: 210px;
     height: 35px;
@@ -1163,18 +1181,22 @@ img.coverImage {
     outline: none;
     border: none;
 }
-.right-introduce svg{
+
+.right-introduce svg {
     position: absolute;
     right: 10px;
     width: 13px;
 }
-.user{
+
+.user {
     font-size: 25px;
 }
-.numberFrs{
+
+.numberFrs {
     font-size: 14px;
 }
-.avatarProfile img{
+
+.avatarProfile img {
     width: 150px;
     height: 150px;
     display: inline-flex;
@@ -1186,7 +1208,8 @@ img.coverImage {
     border-radius: 50%;
     border: 4px solid #F5F5F5;
 }
-.nav-feature{
+
+.nav-feature {
     display: flex;
     width: 100%;
     height: 60px;
@@ -1196,39 +1219,44 @@ img.coverImage {
     align-items: center;
 }
 
-.feature{
+.feature {
     width: 60%;
     height: 60px;
     background-color: #F5F5F5;
 }
-.underline-profile{
+
+.underline-profile {
     width: 60%;
     border-bottom: 1px solid black;
 
 }
-.container-profile{
+
+.container-profile {
     padding: 20px;
     width: 60%;
     background-color: #F5F5F5;
     height: 100%;
     border-radius: 6px;
 }
-.header-listFrs{
+
+.header-listFrs {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.header-listFrs span{
+.header-listFrs span {
     font-size: 24px;
     color: black;
 }
-.searchFrs{
+
+.searchFrs {
     display: flex;
     align-items: center;
     position: relative;
 }
-.searchFrs input{
+
+.searchFrs input {
     height: 30px;
     width: 250px;
     padding: 10px;
@@ -1237,11 +1265,12 @@ img.coverImage {
     border-radius: 20px;
 }
 
-.searchFrs svg{
+.searchFrs svg {
     position: absolute;
     right: 10px;
 }
-.listFrs{
+
+.listFrs {
     padding: 20px 10px;
     display: flex;
     height: 90%;
@@ -1253,7 +1282,7 @@ img.coverImage {
     align-content: flex-start;
 }
 
-.frs{
+.frs {
     cursor: pointer;
     border-radius: 6px;
     width: 500px;
@@ -1265,13 +1294,14 @@ img.coverImage {
     justify-content: flex-start;
     padding: 5px;
 }
-.frs img{
+
+.frs img {
     border-radius: 10px;
     width: 100px;
     height: 100px;
     margin-right: 10px;
 }
 
-.manual{
+.manual {
     font-size: 12px;
 }

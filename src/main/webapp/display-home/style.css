@@ -142,6 +142,15 @@ ul.navlogo li svg {
     justify-content: space-between;
     padding: 13px 5%;
 }
+.container > div:nth-child(1) {
+    flex: 3;
+}
+.container > div:nth-child(2) {
+    flex: 6;
+}
+.container > div:nth-child(3) {
+    flex: 3;
+}
 
 /* content-area */
 

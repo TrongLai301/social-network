@@ -96,55 +96,6 @@ values ('public'),
        ('private'),
        ('friend');
 
-
-
-
-
-# Database friendship
-
-CREATE table Friendships
-(
-    requestId  int primary key auto_increment,
-    senderId   int,
-    receiverId int,
-    status     varchar(10) default 'pending',
-    FOREIGN KEY (senderId) references user (id),
-    FOREIGN KEY (receiverId) references user (id)
-);
-
-insert into Friendships (senderId, receiverId, status)
-values (10, 11, 'accepted'),
-       (10, 12, 'accepted'),
-       (10, 13, 'accepted'),
-       (13, 14, 'accepted'),
-       (14, 13, 'accepted'),
-       (15, 16, 'pending'),
-       (15, 17, 'pending'),
-       (18, 15, 'pending'),
-       (13, 14, 'accepted');
-# Lay danh sach id ban be
-SELECT DISTINCT CASE
-                    WHEN senderId = 13 THEN receiverId
-                    ELSE senderId
-                    END friend
-FROM Friendships
-WHERE (senderId = 13
-    OR receiverId = 13)
-  and status = 'accepted';
-
-# Lay danh sach nguoi duoc gui loi moi tu mot nguoi cu the
-SELECT receiverId
-from Friendships
-WHERE senderId = 15
-  and status = 'pending';
-
-SELECT senderId
-from Friendships
-where receiverId = 16
-  and status = 'pending';
-
-select * from Friendships;
-
 insert into permissionStatus(namePermission) values ('public'),('private');
 INSERT INTO user (username, password, fullname, email, birth, phone, gender, hobby, avatar, address, status, idPermission)
 VALUES ('admin','123456','Kamito','Kamito0620042gmail.com',NULL,'0777280105',0,'Loli','https://images6.alphacoders.com/130/1300662.png','VN','working',1),
@@ -275,4 +226,71 @@ INSERT INTO likes (idStatus, idUser) VALUES (2, 3);
 INSERT INTO likes (idStatus, idUser) VALUES (3, 4);
 INSERT INTO likes (idStatus, idUser) VALUES (4, 5);
 INSERT INTO likes (idStatus, idUser) VALUES (5, 6);
+
+
+
+# Database friendship
+
+CREATE table Friendships
+(
+    requestId  int primary key auto_increment,
+    senderId   int,
+    receiverId int,
+    status     varchar(10) default 'pending',
+    FOREIGN KEY (senderId) references user (id),
+    FOREIGN KEY (receiverId) references user (id)
+);
+
+insert into Friendships (senderId, receiverId, status)
+values (17, 19, 'accepted'),
+       (14, 19, 'accepted'),
+       (16, 19, 'accepted'),
+       (14, 19, 'accepted'),
+       (14, 13, 'accepted'),
+       (13, 14, 'accepted');
+
+select * from user;
+# Lay danh sach id ban be
+SELECT DISTINCT CASE
+                    WHEN senderId = 13 THEN receiverId
+                    ELSE senderId
+                    END friend
+FROM Friendships
+WHERE (senderId = 13
+    OR receiverId = 13)
+  and status = 'accepted';
+
+# Lay danh sach nguoi duoc gui loi moi tu mot nguoi cu the
+SELECT receiverId
+from Friendships
+WHERE senderId = 15
+  and status = 'pending';
+
+SELECT senderId
+from Friendships
+where receiverId = 16
+  and status = 'pending';
+
+select * from Friendships;
+
+
+create table permissionFriends
+(
+    idPermission   int primary key auto_increment,
+    namePermission enum ('public','private')
+);
+insert into permissionFriends(namePermission)
+values ('public'),
+       ('private');
+alter table user add column idPermissionFriends int default 1;
+
+create table Comment (
+    idCmt int auto_increment primary key ,
+    idUser int not null ,
+    idStatus int not null,
+    content varchar(255) not null ,
+    likeCount int default 0,
+    FOREIGN KEY (idUser) references  user(id),
+    FOREIGN KEY  (idStatus) references  status(idStatus)
+);
 
