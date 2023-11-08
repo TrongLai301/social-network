@@ -19,36 +19,36 @@
     <%--    <script src="../display-home/function.js"></script>--%>
 </head>
 <body>
-<c:if test="${requestScope.messageDelete != null}">
-    <%
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println("<script type=\"text/javascript\">");
-        printWriter.println("alert('xóa bài viết thành công');");
-        printWriter.println("</script>");
-    %>
-</c:if><c:if test="${requestScope.messageDeleteFalse != null}">
-    <%
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println("<script type=\"text/javascript\">");
-        printWriter.println("alert('xóa bài viết thất bại');");
-        printWriter.println("</script>");
-    %>
-</c:if>
-<c:if test="${requestScope.messageEditComplete != null}">
-    <%
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println("<script type=\"text/javascript\">");
-        printWriter.println("alert('sửa bài viết thành công');");
-        printWriter.println("</script>");
-    %>
-</c:if><c:if test="${requestScope.messageEditFalse != null}">
-    <%
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println("<script type=\"text/javascript\">");
-        printWriter.println("alert('sửa bài viết thất bại');");
-        printWriter.println("</script>");
-    %>
-</c:if>
+<%--<c:if test="${requestScope.messageDelete != null}">--%>
+<%--    <%--%>
+<%--        PrintWriter printWriter = response.getWriter();--%>
+<%--        printWriter.println("<script type=\"text/javascript\">");--%>
+<%--        printWriter.println("alert('xóa bài viết thành công');");--%>
+<%--        printWriter.println("</script>");--%>
+<%--    %>--%>
+<%--</c:if><c:if test="${requestScope.messageDeleteFalse != null}">--%>
+<%--    <%--%>
+<%--        PrintWriter printWriter = response.getWriter();--%>
+<%--        printWriter.println("<script type=\"text/javascript\">");--%>
+<%--        printWriter.println("alert('xóa bài viết thất bại');");--%>
+<%--        printWriter.println("</script>");--%>
+<%--    %>--%>
+<%--</c:if>--%>
+<%--<c:if test="${requestScope.messageEditComplete != null}">--%>
+<%--    <%--%>
+<%--        PrintWriter printWriter = response.getWriter();--%>
+<%--        printWriter.println("<script type=\"text/javascript\">");--%>
+<%--        printWriter.println("alert('sửa bài viết thành công');");--%>
+<%--        printWriter.println("</script>");--%>
+<%--    %>--%>
+<%--</c:if><c:if test="${requestScope.messageEditFalse != null}">--%>
+<%--    <%--%>
+<%--        PrintWriter printWriter = response.getWriter();--%>
+<%--        printWriter.println("<script type=\"text/javascript\">");--%>
+<%--        printWriter.println("alert('sửa bài viết thất bại');");--%>
+<%--        printWriter.println("</script>");--%>
+<%--    %>--%>
+<%--</c:if>--%>
 
 
 <div class="form-edit" id="edit">
@@ -199,7 +199,7 @@
                     <img src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">
                     <div>
                         <p>${requestScope.user.name}</p>
-                        <a href="/user?actionGet=showUserProfile">See your profile</a>
+                        <a href="user?actionGet=showUserProfile&id=${requestScope.user.id}">See your profile</a>
                     </div>
                 </div>
                 <div id="dark-button" onclick="darkModeON()">
@@ -357,10 +357,10 @@
                     <span>Friends</span>
                     <c:set var="friend" scope="session" value="${idFriend}"/>
                     <c:if test="${friend == 0}">
-                        <a href="/user?actionGet=showListFriendsUser&id=${requestScope.user.id}">View all friend</a>
+                        <a href="user?actionGet=showListFriendsUser&id=${requestScope.user.id}">View all friend</a>
                     </c:if>
                     <c:if test="${friend != 0}">
-                        <a href="/user?actionGet=showListFriendsUser&idFriend=${idFriend}&id=${requestScope.user.id}">View
+                        <a href="user?actionGet=showListFriendsUser&idFriend=${idFriend}&id=${requestScope.user.id}">View
                             all friend</a>
                     </c:if>
                 </div>
@@ -486,7 +486,7 @@
                                 </c:otherwise>
                             </c:choose>
                             <span class="likeCount">${post.likeCount}</span>
-                            <div style="padding-left: 40px"><img src="../../../display-home/images/comments.png" alt="">0
+                            <div style="padding-left: 40px"><img src="../../../display-home/images/comments.png" alt="">${post.commentCount}
                             </div>
                             <div><img src="../../../display-home/images/share.png" alt="">0</div>
                         </div>
@@ -567,10 +567,6 @@
         </div>
     </div>
 </div>
-
-<%--<footer id="footer">--%>
-<%--    <p>&copy; Copyright 2021 - Socialbook All Rights Reserved</p>--%>
-<%--</footer>--%>
 <script src="../display-home/function.js"></script>
 </body>
 </html>

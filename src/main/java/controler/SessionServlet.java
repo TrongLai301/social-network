@@ -31,6 +31,7 @@ public class SessionServlet extends HttpServlet {
         if (actionGet == null) {
             actionGet = "";
         }
+
         try {
             switch (actionGet) {
                 case "logOutToLoginForm":
@@ -81,7 +82,6 @@ public class SessionServlet extends HttpServlet {
         req.getSession().invalidate();
 
         // Trở về trang đăng nhập
-//        resp.sendRedirect("login-signup/display-signUp-signIn.jsp");
         try {
             req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp").forward(req, resp);
         } catch (ServletException e) {

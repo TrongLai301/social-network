@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: trong
-  Date: 10/25/23
-  Time: 9:10 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -119,7 +112,7 @@
                     <img src="../display-home/images/profile-pic.png" alt="">
                     <div>
                         <p>${requestScope.user.name}</p>
-                        <a href="#">See your profile</a>
+                        <a href="user?actionGet=showUserProfile&id=${requestScope.user.id}">See your profile</a>
                     </div>
                 </div>
                 <div id="dark-button" onclick="darkModeON()">
@@ -300,7 +293,7 @@
                                 </c:choose>
                                 <span class="likeCount">${post.likeCount}</span>
                             </div>
-                            <div><img src="../display-home/images/comments.png" alt="">0</div>
+                            <div><img src="../display-home/images/comments.png" alt="">${post.commentCount}</div>
                             <div><img src="../display-home/images/share.png" alt="">0</div>
                         </div>
                     </div>
@@ -563,10 +556,6 @@
 <%--        </div>--%>
     </div>
 </div>
-
-<footer id="footer">
-    <p>&copy; Copyright 2021 - Socialbook All Rights Reserved</p>
-</footer>
 <script src="function.js"></script>
 </body>
 </html>

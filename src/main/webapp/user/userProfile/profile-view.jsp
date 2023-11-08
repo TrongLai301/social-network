@@ -117,6 +117,18 @@
                             </div>
                             <hr>
                             <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Show Friends</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="radio" id="public" name="showFriends" value="public" checked="checked">
+                                    <label for="public" >Public</label><br>
+                                    <input type="radio" id="private" name="showFriends" value="private">
+                                    <label for="private">Private</label><br>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
                                 <div class="d-flex justify-content-center mb-2">
                                     <button id="js.submitButton" type="submit" class="btn btn-primary">Save</button>
                                 </div>

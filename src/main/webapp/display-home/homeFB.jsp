@@ -1,10 +1,6 @@
-<%@ page import="java.io.PrintWriter" %><%--
-  Created by IntelliJ IDEA.
-  User: trong
-  Date: 10/25/23
-  Time: 9:10 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.io.PrintWriter" %>
+<%@ page errorPage="homeFB.jsp" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -23,8 +19,12 @@
     <div class="editFormDiv" id="divPostForm">
         <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus"  enctype="multipart/form-data">
             <div class="header-edit">
-                <p>Post status</p>
-                <input type="button" id="closePost" onclick="hidePost()" value="x">
+                <p>Create status</p>
+                <div role="button" id="closePost" onclick="hidePost()">
+                    <i>
+                        <img style="width: 30px"  src="../display-home/images/cross.png">
+                    </i>
+                </div>
             </div>
 
             <div class="underline-edit"></div>
@@ -41,7 +41,7 @@
             <div class="imgTextEdit">
                 <div class="contentWrapper">
                     <div class="textarea">
-                        <textarea placeholder="What do you think?" oninput="descriptions(this)"
+                        <textarea id="desciption" placeholder="What do you think?" oninput="descriptions(this)"
                                   name="description" class="textareaDescription"></textarea>
                     </div>
                     <div style="text-align: center">
@@ -60,8 +60,24 @@
                     </div>
                 </div>
             </div>
-            <div class="submit-edit">
+            <div id="submit" class="submit-edit" style="margin-bottom: 20px">
                 <input type="submit" value="upload">
+            </div>
+            <div>
+<%--                <script>--%>
+<%--                    const description = document.getElementById("desciption")--%>
+<%--                    const submit = document.getElementById("submit")--%>
+<%--                    description.addEventListener("input", checkError)--%>
+
+<%--                    function checkError(){--%>
+<%--                        const descrip = description.value;--%>
+<%--                        if (description == ""){--%>
+<%--                            submit.hidden--%>
+<%--                        }else {--%>
+<%--                            submit.style.vi--%>
+<%--                        }--%>
+<%--                    }--%>
+<%--                </script>--%>
             </div>
         </form>
     </div>
@@ -80,7 +96,7 @@
             <div class="search-box">
                 <img src="../display-home/images/search.png" alt="">
                 <form action="home?action=search" method="post">
-                    <input type="text" placeholder="Search" name="searchContent">
+                    <input type="text" placeholder="Search example:content,user,..." name="searchContent">
                 </form>
             </div>
         </div>
@@ -278,50 +294,10 @@
                         <p>${post.description}</p>
                         <img src="${post.media}" alt="">
                     </div>
-                        <%--                    <div class="post-reaction">--%>
-                        <%--                        <div class="activity-icons">--%>
-                        <%--                            <div id="likeAndUnlikeButton">--%>
-                        <%--                                <c:choose>--%>
-                        <%--                                    <c:when test="${status != null}">--%>
-                        <%--                                        <div><a onclick="likePost(${post.id})" ,--%>
-                        <%--                                                href="user?actionGet=likeStatus&idStatus=${post.id}&action=unlike"><img--%>
-                        <%--                                                src="../display-home/images/like-blue.png"></a></div>--%>
-                        <%--                                    </c:when>--%>
-                        <%--                                    <c:otherwise>--%>
-                        <%--                                        <div><a onclick="likePost(${post.id})" ,--%>
-                        <%--                                                href="user?actionGet=likeStatus&idStatus=${post.id}&action=like"><img--%>
-                        <%--                                                src="../display-home/images/like.png"></a></div>--%>
-                        <%--                                    </c:otherwise>--%>
-                        <%--                                </c:choose>--%>
-
-                        <%--                                    ${post.likeCount}--%>
-                        <%--                            </div>--%>
-                        <%--                            <div><img src="../display-home/images/comments.png" alt="">0</div>--%>
-                        <%--                            <div><img src="../display-home/images/share.png" alt="">0</div>--%>
-                        <%--                        </div>--%>
-                        <%--                    </div>--%>
                     <div class="post-reaction">
                         <div class="activity-icons">
                             <div class="likeAndUnlikeButton">
-<%--                                <c:choose>--%>
-<%--                                    <c:when test="${ status != null}">--%>
-<%--                                        <div>--%>
-<%--                                            <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">--%>
-<%--                                                <img class="like-button liked" src="../display-home/images/like-blue.png">--%>
-<%--                                            </a>--%>
-<%--                                        </div>--%>
-<%--                                    </c:when>--%>
-<%--                                    <c:otherwise>--%>
-<%--                                        <div>--%>
-<%--                                            <a onclick="toggleLike(${post.id}, 'like', this)" href="#">--%>
-<%--                                                <img class="like-button" src="../display-home/images/like.png">--%>
-<%--                                            </a>--%>
-<%--                                        </div>--%>
-<%--                                    </c:otherwise>--%>
-<%--                                </c:choose>--%>
-<%--                        <a onclick="toggleLike(${post.id}, 'like', this)" href="#">--%>
-<%--                              <img class="like-button" src="../display-home/images/like.png">--%>
-<%--                                        </a>--%>
+
     <c:choose>
         <c:when test="${ status != null}">
             <div>
@@ -340,7 +316,7 @@
     </c:choose>
                                 <span class="likeCount">${post.likeCount}</span>
                             </div>
-                            <div><img src="../display-home/images/comments.png" alt="">0</div>
+                            <div><img src="../display-home/images/comments.png" alt="">${post.commentCount}</div>
                             <div><img src="../display-home/images/share.png" alt="">0</div>
                         </div>
                     </div>
@@ -461,7 +437,6 @@
         </div>
     </div>
 </div>
-
 <script src="../display-home/function.js"></script>
 </body>
 </html>

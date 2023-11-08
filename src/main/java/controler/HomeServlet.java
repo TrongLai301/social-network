@@ -1,8 +1,11 @@
 package controler;
 
+import model.Comment;
 import model.Like;
 import model.Status;
 import model.User;
+import service.CommentDAOImpl;
+import service.RelationshipDAO;
 import service.StatusDAOImpl;
 import service.UserDAOImpl;
 
@@ -21,11 +24,15 @@ import java.util.List;
 public class HomeServlet extends HttpServlet {
     StatusDAOImpl statusDAO;
     UserDAOImpl userDAO;
-
+    CommentDAOImpl commentDAO;
+    RelationshipDAO relationshipDAO;
+    UserServlet userServlet = new UserServlet();
     @Override
     public void init() throws ServletException {
         statusDAO = new StatusDAOImpl();
         userDAO = new UserDAOImpl();
+        commentDAO = new CommentDAOImpl();
+        relationshipDAO = new RelationshipDAO();
     }
 
     @Override
@@ -64,9 +71,13 @@ public class HomeServlet extends HttpServlet {
                     if (status.getPermission() == 2){
                         continue;
                     }
+                    int countComment = commentDAO.countCommentForStatus(status.getId());
+                    session.setAttribute("countComment",countComment);
                     post.add(status);
                     userList.add(userPost);
                 }else{
+                    int countComment = commentDAO.countCommentForStatus(status.getId());
+                    session.setAttribute("countComment",countComment);
                     post.add(status);
                     userList.add(userPost);
                 }
@@ -80,6 +91,7 @@ public class HomeServlet extends HttpServlet {
                     listLike.add(like);
                 }
             }
+
             request.setAttribute("check",listLike);
             request.setAttribute("UserResult",userResult);
             request.setAttribute("user",user);
@@ -99,44 +111,23 @@ public class HomeServlet extends HttpServlet {
                 actionGet = "";
             }
             switch (actionGet) {
-//                case "like":
-//                    likeStatus(req,resp);
-//                    break;
-//                case "dislike":
-//                    dislikeStatus(req,resp);
-//                    break;
                 default:
                     showHomePage(req,resp);
                     break;
             }
         }
+        public void showCommentOnStatus(HttpServletRequest request , HttpServletResponse response) {
 
-//    public void likeStatus(HttpServletRequest request , HttpServletResponse response){
-//        try {
-//            HttpSession session = request.getSession();
-//            Integer idUser = (Integer) session.getAttribute("idAccount");
-//            User user = userDAO.getUserById(idUser);
-//            int idStatus = Integer.parseInt(request.getParameter("id"));
-//            String action = "like";
-//            session.setAttribute("status",action);
-//            response.sendRedirect("/home");
-//        } catch (SQLException | ClassNotFoundException | IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//    public void dislikeStatus(HttpServletRequest request , HttpServletResponse response){
-//        try {
-//            HttpSession session = request.getSession();
-//            Integer idUser = (Integer) session.getAttribute("idAccount");
-//            User user = userDAO.getUserById(idUser);
-//            int idStatus = Integer.parseInt(request.getParameter("id"));
-//            String action = "dislike";
-//            session.setAttribute("status",action);
-//            response.sendRedirect("/home");
-//        } catch (SQLException | ClassNotFoundException | IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+        }
+        public boolean checkPermissionShowCommentStatus(User userCheck , User userNow){
+        boolean status;
+               if (userServlet.getRelationship(userCheck.getId(),userNow.getId()).equals("accepted")){
+                   status = true;
+               }else{
+                   status = false;
+            }
+               return status;
+        }
         public void showHomePage(HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException {
             try {
                 List<User> userList = new ArrayList<>();
@@ -147,7 +138,6 @@ public class HomeServlet extends HttpServlet {
                 List<Status> list = statusDAO.getAllStatus();
                 List<Status> post = new ArrayList<>();
                 List<Like> listLike = new ArrayList<>();
-
                 for (Status status : list) {
 
                     userPost = userDAO.getUserById(status.getIdUser());
@@ -165,7 +155,7 @@ public class HomeServlet extends HttpServlet {
                         like = null;
                         listLike.add(like);
                     }
-
+                    status.setCommentCount(commentDAO.countCommentForStatus(status.getId()));
                     post.add(status);
                     userList.add(userPost);
                 }

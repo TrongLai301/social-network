@@ -156,7 +156,7 @@
                     <img src="${requestScope.user.avatar}" style="height: 50px;width: 50px" alt="">
                     <div>
                         <p>${requestScope.user.name}</p>
-                        <a href="/user?actionGet=showUserProfile">See your profile</a>
+                        <a href="user?actionGet=showUserProfile&id=${requestScope.user.id}">See your profile</a>
                     </div>
                 </div>
                 <div id="dark-button" onclick="darkModeON()">
@@ -346,11 +346,6 @@
                                 </div>
                           </div>
 </div>
-
-
-<footer id="footer">
-    <p>&copy; Copyright 2021 - Socialbook All Rights Reserved</p>
-</footer>
 <script src="../display-home/function.js"></script>
 </body>
 </html>

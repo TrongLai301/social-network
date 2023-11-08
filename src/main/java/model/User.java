@@ -15,9 +15,9 @@ public class User {
     private String hobby;
     private String permission;
     private String status;
+    private String permissionFriends;
 
-
-    public User(int id, String username, String password, String email, String phone, LocalDate birth, String avatar, String name, String address, String hobby) {
+    public User(int id, String username, String password, String email, String phone, LocalDate birth, String avatar, String name, String address, String hobby, String permissionFriends) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -28,6 +28,7 @@ public class User {
         this.address = address;
         this.hobby = hobby;
         this.id = id;
+        this.permissionFriends = permissionFriends;
     }
 
     //form dang ky
@@ -179,5 +180,13 @@ public class User {
                 ", hobby='" + hobby + '\'' +
                 ", permission=" + permission +
                 '}';
+    }
+
+    public String getPermissionFriends() {
+        return permissionFriends;
+    }
+
+    public void setPermissionFriends(String permissionFriends) {
+        this.permissionFriends = permissionFriends;
     }
 }

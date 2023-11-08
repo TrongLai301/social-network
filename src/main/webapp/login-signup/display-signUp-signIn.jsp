@@ -1,10 +1,5 @@
-<%@ page import="java.io.PrintWriter" %><%--
-  Created by IntelliJ IDEA.
-  User: trong
-  Date: 10/18/23
-  Time: 3:20 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.io.PrintWriter" %>
+<%@ page isErrorPage="true" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -236,7 +231,7 @@
                 <div class="divInForm">
                     <div class="input-login ">
                         <div class="loginDiv">
-                            <input type="text" placeholder="Email address or username" id="username"
+                            <input type="text" placeholder="Enter your username" id="username"
                                    name="username" class="input-a-signIn-signUp inputLogin border-login" required>
                         </div>
                         <div class="loginDiv">
