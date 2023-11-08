@@ -1,10 +1,6 @@
-<%@ page import="java.io.PrintWriter" %><%--
-  Created by IntelliJ IDEA.
-  User: trong
-  Date: 10/25/23
-  Time: 9:10 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.io.PrintWriter" %>
+<%@ page errorPage="homeFB.jsp" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -278,50 +274,10 @@
                         <p>${post.description}</p>
                         <img src="${post.media}" alt="">
                     </div>
-                        <%--                    <div class="post-reaction">--%>
-                        <%--                        <div class="activity-icons">--%>
-                        <%--                            <div id="likeAndUnlikeButton">--%>
-                        <%--                                <c:choose>--%>
-                        <%--                                    <c:when test="${status != null}">--%>
-                        <%--                                        <div><a onclick="likePost(${post.id})" ,--%>
-                        <%--                                                href="user?actionGet=likeStatus&idStatus=${post.id}&action=unlike"><img--%>
-                        <%--                                                src="../display-home/images/like-blue.png"></a></div>--%>
-                        <%--                                    </c:when>--%>
-                        <%--                                    <c:otherwise>--%>
-                        <%--                                        <div><a onclick="likePost(${post.id})" ,--%>
-                        <%--                                                href="user?actionGet=likeStatus&idStatus=${post.id}&action=like"><img--%>
-                        <%--                                                src="../display-home/images/like.png"></a></div>--%>
-                        <%--                                    </c:otherwise>--%>
-                        <%--                                </c:choose>--%>
-
-                        <%--                                    ${post.likeCount}--%>
-                        <%--                            </div>--%>
-                        <%--                            <div><img src="../display-home/images/comments.png" alt="">0</div>--%>
-                        <%--                            <div><img src="../display-home/images/share.png" alt="">0</div>--%>
-                        <%--                        </div>--%>
-                        <%--                    </div>--%>
                     <div class="post-reaction">
                         <div class="activity-icons">
                             <div class="likeAndUnlikeButton">
-<%--                                <c:choose>--%>
-<%--                                    <c:when test="${ status != null}">--%>
-<%--                                        <div>--%>
-<%--                                            <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">--%>
-<%--                                                <img class="like-button liked" src="../display-home/images/like-blue.png">--%>
-<%--                                            </a>--%>
-<%--                                        </div>--%>
-<%--                                    </c:when>--%>
-<%--                                    <c:otherwise>--%>
-<%--                                        <div>--%>
-<%--                                            <a onclick="toggleLike(${post.id}, 'like', this)" href="#">--%>
-<%--                                                <img class="like-button" src="../display-home/images/like.png">--%>
-<%--                                            </a>--%>
-<%--                                        </div>--%>
-<%--                                    </c:otherwise>--%>
-<%--                                </c:choose>--%>
-<%--                        <a onclick="toggleLike(${post.id}, 'like', this)" href="#">--%>
-<%--                              <img class="like-button" src="../display-home/images/like.png">--%>
-<%--                                        </a>--%>
+
     <c:choose>
         <c:when test="${ status != null}">
             <div>
@@ -461,10 +417,6 @@
         </div>
     </div>
 </div>
-
-<footer id="footer">
-    <p>&copy; Sản phẩm nhóm dự án 9</p>
-</footer>
 <script src="../display-home/function.js"></script>
 </body>
 </html>

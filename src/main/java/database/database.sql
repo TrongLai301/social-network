@@ -294,5 +294,3 @@ create table Comment (
     FOREIGN KEY  (idStatus) references  status(idStatus)
 );
 
-
-
