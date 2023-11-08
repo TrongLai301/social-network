@@ -302,11 +302,10 @@ public class UserServlet extends HttpServlet {
 
             Part filePart = request.getPart("file");
             String fileName = extractFileName(filePart);
+        if (!fileName.isEmpty()){
             filePart.write(this.getFolderUpload().getAbsolutePath() + File.separator + fileName);
             String mediaPart = "/fileImage/" + fileName;
             session.setAttribute("pathImage", mediaPart);
-
-
             if (mediaPart != null){
                 try (Connection connection = DataConnector.getConnection()) {
                     // Insert bài viết vào bảng status
@@ -325,6 +324,33 @@ public class UserServlet extends HttpServlet {
                 }
 
             }else {
+                if (description == null){
+                    session.setAttribute("error","error");
+                    response.sendRedirect("/home");
+                }else {
+                    try (Connection connection = DataConnector.getConnection()) {
+                        // Insert bài viết vào bảng status
+                        String insertStatusQuery = "INSERT INTO status (createTime, description, idUser, idPermission) VALUES (?, ?, ?, ?)";
+                        PreparedStatement insertStatusStatement = connection.prepareStatement(insertStatusQuery);
+                        insertStatusStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+                        insertStatusStatement.setString(2, description);
+                        insertStatusStatement.setInt(3, userID); // Lấy ID người dùng từ session
+                        insertStatusStatement.setInt(4, permission); // Lấy ID quyền
+                        insertStatusStatement.executeUpdate();
+                        connection.close();
+                        response.sendRedirect("/home");
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }else{
+            if (description.isEmpty()){
+                session.setAttribute("error","error");
+                response.sendRedirect("/home");
+            }else {
                 try (Connection connection = DataConnector.getConnection()) {
                     // Insert bài viết vào bảng status
                     String insertStatusQuery = "INSERT INTO status (createTime, description, idUser, idPermission) VALUES (?, ?, ?, ?)";
@@ -341,9 +367,12 @@ public class UserServlet extends HttpServlet {
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-
             }
         }
+
+
+    }
+
 
     public File getFolderUpload() {
         File folderUpload = new File("C:\\Users\\trong\\IdeaProjects\\HotFix\\social-network\\src\\main\\webapp\\fileImage");

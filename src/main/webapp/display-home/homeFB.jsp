@@ -462,9 +462,6 @@
     </div>
 </div>
 
-<footer id="footer">
-    <p>&copy; Sản phẩm nhóm dự án 9</p>
-</footer>
 <script src="../display-home/function.js"></script>
 </body>
 </html>
