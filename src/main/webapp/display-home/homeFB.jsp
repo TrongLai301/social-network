@@ -13,10 +13,8 @@
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/39e48099af.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
 </head>
-<body>
-
+<body onload="myFunction()">
 <div class="form-post" id="post">
     <div class="editFormDiv" id="divPostForm">
         <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus"  enctype="multipart/form-data">
@@ -253,7 +251,7 @@
                             <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
                             <div>
                                 <a href="/user?actionGet=showUserProfile&id=${user.id}"
-                                   style="text-decoration: none;color: black">${user.name}</a><br>
+                                   style="text-decoration: none;color: black">${user.name} </a><br>
                                 <small>${post.createTime}</small>
                                 <c:choose>
                                     <c:when test="${post.permission == 1}">
@@ -323,7 +321,7 @@
     </c:choose>
                             </div>
                             <div>
-                                <a href="/home?idStatus=${post.id}"><img src="../display-home/images/comments.png" alt=""></a>
+                                <a href="/home?idStatusCmt=${post.id}"><img src="../display-home/images/comments.png" alt=""></a>
                             </div>
                             <div><img src="../display-home/images/share.png" alt=""></div>
                         </div>
@@ -452,16 +450,17 @@
             <i class="fa-solid fa-x js-close-modal" ></i>
         </div>
         <div class="comment__body">
-            <C:forEach items="${requestScope.comments}" var="comment">
+            <c:forEach items="${requestScope.comments}" var="cmt" varStatus="count">
+                <c:set var="userComment" value="${requestScope.userComment[count.index]}"/>
                 <div class="comment">
                     <div class="comment__avatar">
-                        <img src="../display-home/images/member-1.png">
+                        <img src="${userComment.avatar}">
                     </div>
                     <div class="comment__container">
                         <div class="comment__content">
                             <div>
-                                <h5>Name user here</h5>
-                                <p>This is demo comment</p>
+                                <h5>${userComment.name}</h5>
+                                <p>${cmt.content}</p>
                             </div>
                             <div class="comment__more">
                                 <uL><i class="fa-solid fa-ellipsis"></i></uL>
@@ -473,7 +472,7 @@
                         </div>
                     </div>
                 </div>
-            </C:forEach>
+            </c:forEach>
         </div>
         <div class="comment__user">
         </div>
@@ -482,5 +481,14 @@
 
 <script src="../display-home/function.js"></script>
 <script src="../public/js/home/modal.js"></script>
+<script>
+    let url = window.location.href;
+    if (!url.includes("idStatusCmt=")){
+        let modal = document.querySelector(".modal");
+        modal.classList.remove('modal__open');
+    }
+    console.log(url)
+    console.log(!url.includes("idStatusCmt="))
+</script>
 </body>
 </html>

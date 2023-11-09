@@ -149,19 +149,18 @@ public class HomeServlet extends HttpServlet {
                 List<Status> list = statusDAO.getAllStatus();
                 List<Status> post = new ArrayList<>();
                 List<Like> listLike = new ArrayList<>();
-                String idStatus = request.getParameter("idStatus");
+                String idStatus = request.getParameter("idStatusCmt");
 
-                List<Comment> commentList = new ArrayList<>();
+                List<Comment> comments = new ArrayList<>();
                 List<User> userComment = new ArrayList<>();
 
                 if (idStatus != null && !idStatus.isEmpty()){
-                    System.out.println(idStatus);
-                    commentList = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
-                    for (Comment c: commentList
-                         ) {
-                        System.out.println(c);
-                    }
+                    comments = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
                     userComment = userDAO.getAllUserByIdStatus(Integer.parseInt(idStatus));
+                    for (User c: userComment
+                    ) {
+                        System.out.println(c.getId());
+                    }
                 }
 
                 for (Status status : list) {
@@ -186,7 +185,8 @@ public class HomeServlet extends HttpServlet {
                     userList.add(userPost);
                 }
 
-                request.setAttribute("comments",commentList);
+                request.setAttribute("userComment",userComment);
+                request.setAttribute("comments",comments);
                 request.setAttribute("check",listLike);
                 request.setAttribute("user", user);
                 request.setAttribute("listStatus", post);
