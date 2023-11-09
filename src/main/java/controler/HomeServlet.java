@@ -27,6 +27,7 @@ public class HomeServlet extends HttpServlet {
     CommentDAOImpl commentDAO;
     RelationshipDAO relationshipDAO;
     UserServlet userServlet = new UserServlet();
+
     @Override
     public void init() throws ServletException {
         statusDAO = new StatusDAOImpl();
@@ -43,7 +44,7 @@ public class HomeServlet extends HttpServlet {
         }
         switch (action) {
             case "search":
-                  findStatusByName(req,resp);
+                findStatusByName(req, resp);
                 break;
 
             default:
@@ -51,7 +52,7 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
-    public void findStatusByName(HttpServletRequest request ,HttpServletResponse response){
+    public void findStatusByName(HttpServletRequest request, HttpServletResponse response) {
         String searchContent = request.getParameter("searchContent");
         List<User> userList = new ArrayList<>();
 
@@ -65,72 +66,74 @@ public class HomeServlet extends HttpServlet {
             List<User> userResult = statusDAO.getAllUserToSearch(searchContent);
             List<Like> listLike = new ArrayList<>();
             User userPost;
-            for (Status status : list){
+            for (Status status : list) {
                 userPost = userDAO.getUserById(status.getIdUser());
-                if (status.getIdUser() != idUser){
-                    if (status.getPermission() == 2){
+                if (status.getIdUser() != idUser) {
+                    if (status.getPermission() == 2) {
                         continue;
                     }
                     int countComment = commentDAO.countCommentForStatus(status.getId());
-                    session.setAttribute("countComment",countComment);
+                    session.setAttribute("countComment", countComment);
                     post.add(status);
                     userList.add(userPost);
-                }else{
+                } else {
                     int countComment = commentDAO.countCommentForStatus(status.getId());
-                    session.setAttribute("countComment",countComment);
+                    session.setAttribute("countComment", countComment);
                     post.add(status);
                     userList.add(userPost);
                 }
-                if (userDAO.checkLikedPost(status.getId(), idUser)){
+                if (userDAO.checkLikedPost(status.getId(), idUser)) {
                     Like like = new Like();
                     like.setStatus(1);
                     listLike.add(like);
-                }else {
+                } else {
                     Like like = new Like();
                     like = null;
                     listLike.add(like);
                 }
             }
 
-            request.setAttribute("check",listLike);
-            request.setAttribute("UserResult",userResult);
-            request.setAttribute("user",user);
-            request.setAttribute("listStatusFindBySearch",post);
-            request.setAttribute("listUser",userList);
-            request.getRequestDispatcher("display-home/resultSearchFB.jsp").forward(request,response);
+            request.setAttribute("check", listLike);
+            request.setAttribute("UserResult", userResult);
+            request.setAttribute("user", user);
+            request.setAttribute("listStatusFindBySearch", post);
+            request.setAttribute("listUser", userList);
+            request.getRequestDispatcher("display-home/resultSearchFB.jsp").forward(request, response);
         } catch (SQLException | ClassNotFoundException | ServletException | IOException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-        @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            String actionGet = req.getParameter("actionGet");
-            if (actionGet == null) {
-                actionGet = "";
-            }
-            switch (actionGet) {
-                default:
-                    showHomePage(req,resp);
-                    break;
-            }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String actionGet = req.getParameter("actionGet");
+        if (actionGet == null) {
+            actionGet = "";
         }
-
-        public void showCommentStatus(HttpServletRequest request , HttpServletResponse response) {
-
+        switch (actionGet) {
+            default:
+                showHomePage(req, resp);
+                break;
         }
+    }
 
-        public boolean checkPermissionToCommentStatus(User userCheck , User userNow){
+    public void showCommentStatus(HttpServletRequest request, HttpServletResponse response) {
+
+    }
+
+    public boolean checkPermissionToCommentStatus(User userCheck, User userNow) {
         boolean status;
-               if (userServlet.getRelationship(userCheck.getId(),userNow.getId()).equals("accepted")){
-                   status = true;
-               }else{
-                   status = false;
-            }
-               return status;
+        if (userServlet.getRelationship(userCheck.getId(), userNow.getId()).equals("accepted")) {
+            status = true;
+        } else {
+            status = false;
         }
-        public void showHomePage(HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException {
+        return status;
+    }
+
+    public void showHomePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
             try {
                 List<User> userList = new ArrayList<>();
                 HttpSession session = request.getSession();
@@ -140,6 +143,20 @@ public class HomeServlet extends HttpServlet {
                 List<Status> list = statusDAO.getAllStatus();
                 List<Status> post = new ArrayList<>();
                 List<Like> listLike = new ArrayList<>();
+                String idStatus = request.getParameter("idStatus");
+
+                List<Comment> commentList = new ArrayList<>();
+                List<User> userComment = new ArrayList<>();
+
+                if (idStatus != null && !idStatus.isEmpty()) {
+                    System.out.println(idStatus);
+                    commentList = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
+                    for (Comment c : commentList
+                    ) {
+                        System.out.println(c);
+                    }
+                    userComment = userDAO.getAllUserByIdStatus(Integer.parseInt(idStatus));
+                }
                 for (Status status : list) {
 
                     userPost = userDAO.getUserById(status.getIdUser());
@@ -148,11 +165,11 @@ public class HomeServlet extends HttpServlet {
                             continue;
                         }
                     }
-                    if (userDAO.checkLikedPost(status.getId(), idUser)){
+                    if (userDAO.checkLikedPost(status.getId(), idUser)) {
                         Like like = new Like();
                         like.setStatus(1);
                         listLike.add(like);
-                    }else {
+                    } else {
                         Like like = new Like();
                         like = null;
                         listLike.add(like);
@@ -161,7 +178,9 @@ public class HomeServlet extends HttpServlet {
                     post.add(status);
                     userList.add(userPost);
                 }
-                request.setAttribute("check",listLike);
+
+                request.setAttribute("comments", commentList);
+                request.setAttribute("check", listLike);
                 request.setAttribute("user", user);
                 request.setAttribute("listStatus", post);
                 request.setAttribute("listUser", userList);
@@ -170,8 +189,10 @@ public class HomeServlet extends HttpServlet {
             } catch (SQLException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-
         }
+
+        /*--------------Comment-----------------*/
     }
+
 
 

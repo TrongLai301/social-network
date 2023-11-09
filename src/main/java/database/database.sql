@@ -24,7 +24,8 @@ create table user
     timeCreate   DATETIME not null,
     CONSTRAINT CHK_PasswordLength CHECK (length(password) >= 6 AND length(password) <= 32),
     idPermission int,
-    foreign key (idPermission) references permission (idPermission));
+    foreign key (idPermission) references permission (idPermission)
+);
 -- tao bang permision lam viec voi quyen thuc thi
 
 
@@ -66,7 +67,7 @@ create table status
     media        text(65530),
     idUser       int,
     idPermission int,
-    likeCount int default 0,
+    likeCount    int default 0,
     foreign key (idUser) references user (id),
     foreign key (idPermission) references permissionStatus (idPermission)
 );
@@ -86,19 +87,19 @@ CREATE table Friendships
     FOREIGN KEY (senderId) references user (id),
     FOREIGN KEY (receiverId) references user (id)
 );
-INSERT INTO user (username, password, fullname, email, birth, phone, gender, hobby, avatar, address, status, idPermission)
-VALUES ('user1', 'password1', 'John Doe', 'john.doe@example.com', NULL, '1234567890', 1, 'Reading, swimming', 'https://images6.alphacoders.com/130/1300662.png', '123 Main Street, City', 'working', 2),
-       ('user2', 'password2', 'Jane Smith', 'jane.smith@example.com', NULL, '9876543210', 0, 'Gardening, hiking', 'https://scontent.fhan14-4.fna.fbcdn.net/v/t1.6435-9/100052525_2652901648323241_2493762482842107904_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=7f8c78&_nc_ohc=e6fEUiwObE0AX8gOTif&_nc_ht=scontent.fhan14-4.fna&oh=00_AfCtBObtHxt5-NpR1vZLhnvOMXhosh-9Xc8Y-75NyGLA9w&oe=6571C36E', '456 First Avenue, Town', 'working', 2),
-       ('user3', 'password3', 'Alex Johnson', 'alex.johnson@example.com', NULL, '5555555555', 1, 'Painting, cooking', 'https://w0.peakpx.com/wallpaper/216/504/HD-wallpaper-fu-hua-honkai-impact-character-sign-aquarius-girl.jpg', '789 Elm Road, Village', 'working', 2),
-       ('user4', 'password4', 'Emily Wilson', 'emily.wilson@example.com', NULL, '1112223333', 0, 'Photography, dancing', 'https://w0.peakpx.com/wallpaper/861/121/HD-wallpaper-honkai-impact-3.jpg', '321 Oak Lane, County', 'working', 2),
-       ('user5', 'password5', 'Michael Brown', 'michael.brown@example.com', NULL, '9998887777', 1, 'Running, cycling', 'https://s1.zerochan.net/Silver.Wolf.600.3956698.jpg', '567 Pine Court, State', 'working', 2),
-       ('user6', 'password6', 'Sophia Lee', 'sophia.lee@example.com', NULL, '4444444444', 0, 'Singing, shopping', 'https://s1.zerochan.net/Silver.Wolf.600.3969401.jpg', '890 Maple Avenue, Town', 'working', 2),
-       ('user7', 'password7', 'Jacob Wilson', 'jacob.wilson@example.com', NULL, '7777777777', 1, 'Playing guitar, hiking', 'https://s1.zerochan.net/Kafka.%28Honkai.Star.Rail%29.600.3936545.jpg', '123 Oak Street, City', 'working', 2),
-       ('user8', 'password8', 'Olivia Johnson', 'olivia.johnson@example.com', NULL, '5554443333', 0, 'Drawing, photography', 'https://s1.zerochan.net/Kafka.%28Honkai.Star.Rail%29.600.3864455.jpg', '456 Elm Road, Village', 'working', 2),
-       ('user9', 'password9', 'William Smith', 'william.smith@example.com', NULL, '9999999999', 1, 'Cooking, gardening', 'https://s1.zerochan.net/Tingyun.600.3943392.jpg', '789 Pine Lane, County', 'working', 2),
-       ('user10', 'password10', 'Ava Davis', 'ava.davis@example.com', NULL, '8888888888', 0, 'Reading, dancing', 'https://s1.zerochan.net/Jingliu.600.4034519.jpg', '321 Maple Court, State', 'working', 2),
-       ('admin1','123456','admin1','Kamito0620042gmail.com',NULL,'0777280105',0,'Loli','https://images6.alphacoders.com/130/1300662.png','VN','working',1),
-       ('admin2','123456','admin2','Kami0620042gmail.com',NULL,'0777280105',0,'Loli','https://images6.alphacoders.com/130/1300662.png','VN','working',1);
+INSERT INTO user (username, password, fullname, email, birth, phone, gender, hobby, avatar, address, status, idPermission ,timeCreate)
+VALUES ('user1', 'password1', 'John Doe', 'john.doe@example.com', NULL, '1234567890', 1, 'Reading, swimming', 'https://images6.alphacoders.com/130/1300662.png', '123 Main Street, City', 'working', 2,now()),
+       ('user2', 'password2', 'Jane Smith', 'jane.smith@example.com', NULL, '9876543210', 0, 'Gardening, hiking', 'https://scontent.fhan14-4.fna.fbcdn.net/v/t1.6435-9/100052525_2652901648323241_2493762482842107904_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=7f8c78&_nc_ohc=e6fEUiwObE0AX8gOTif&_nc_ht=scontent.fhan14-4.fna&oh=00_AfCtBObtHxt5-NpR1vZLhnvOMXhosh-9Xc8Y-75NyGLA9w&oe=6571C36E', '456 First Avenue, Town', 'working', 2,now()),
+       ('user3', 'password3', 'Alex Johnson', 'alex.johnson@example.com', NULL, '5555555555', 1, 'Painting, cooking', 'https://w0.peakpx.com/wallpaper/216/504/HD-wallpaper-fu-hua-honkai-impact-character-sign-aquarius-girl.jpg', '789 Elm Road, Village', 'working', 2,now()),
+       ('user4', 'password4', 'Emily Wilson', 'emily.wilson@example.com', NULL, '1112223333', 0, 'Photography, dancing', 'https://w0.peakpx.com/wallpaper/861/121/HD-wallpaper-honkai-impact-3.jpg', '321 Oak Lane, County', 'working', 2,now()),
+       ('user5', 'password5', 'Michael Brown', 'michael.brown@example.com', NULL, '9998887777', 1, 'Running, cycling', 'https://s1.zerochan.net/Silver.Wolf.600.3956698.jpg', '567 Pine Court, State', 'working', 2,now()),
+       ('user6', 'password6', 'Sophia Lee', 'sophia.lee@example.com', NULL, '4444444444', 0, 'Singing, shopping', 'https://s1.zerochan.net/Silver.Wolf.600.3969401.jpg', '890 Maple Avenue, Town', 'working', 2,now()),
+       ('user7', 'password7', 'Jacob Wilson', 'jacob.wilson@example.com', NULL, '7777777777', 1, 'Playing guitar, hiking', 'https://s1.zerochan.net/Kafka.%28Honkai.Star.Rail%29.600.3936545.jpg', '123 Oak Street, City', 'working', 2,now()),
+       ('user8', 'password8', 'Olivia Johnson', 'olivia.johnson@example.com', NULL, '5554443333', 0, 'Drawing, photography', 'https://s1.zerochan.net/Kafka.%28Honkai.Star.Rail%29.600.3864455.jpg', '456 Elm Road, Village', 'working', 2,now()),
+       ('user9', 'password9', 'William Smith', 'william.smith@example.com', NULL, '9999999999', 1, 'Cooking, gardening', 'https://s1.zerochan.net/Tingyun.600.3943392.jpg', '789 Pine Lane, County', 'working', 2,now()),
+       ('user10', 'password10', 'Ava Davis', 'ava.davis@example.com', NULL, '8888888888', 0, 'Reading, dancing', 'https://s1.zerochan.net/Jingliu.600.4034519.jpg', '321 Maple Court, State', 'working', 2,now()),
+       ('admin1','123456','admin1','Kamito0620042gmail.com',NULL,'0777280105',0,'Loli','https://images6.alphacoders.com/130/1300662.png','VN','working',1,now()),
+       ('admin2','123456','admin2','Kami0620042gmail.com',NULL,'0777280105',0,'Loli','https://images6.alphacoders.com/130/1300662.png','VN','working',1,now());
 INSERT INTO status (createTime, description, media, idUser, idPermission)
 VALUES (date(now()), 'update new version with best waifu ', 'https://fastcdn.hoyoverse.com/content-v2/bh3/113389/fe26b6ed796f996ef25a00e84c143db3_7064957493634494323.png', 5, 1);
 INSERT INTO status (createTime, description, media, idUser, idPermission)
@@ -123,6 +124,7 @@ create table likes (
                        foreign key (idUser) references user (id)
 );
 
+
 # Database friendship
 
 CREATE table Friendships
@@ -134,11 +136,19 @@ CREATE table Friendships
     FOREIGN KEY (senderId) references user (id),
     FOREIGN KEY (receiverId) references user (id)
 );
+
+
 create table permissionFriends
 (
     idPermission   int primary key auto_increment,
     namePermission enum ('public','private')
 );
+insert into permissionFriends(namePermission)
+values ('public'),
+       ('private');
+alter table user
+    add column idPermissionFriends int default 1;
+
 insert into permissionFriends(namePermission)
 values ('public'),
        ('private');
@@ -154,3 +164,25 @@ create table Comment (
                          FOREIGN KEY (idUser) references  user(id),
                          FOREIGN KEY  (idStatus) references  status(idStatus)
 );
+
+select *
+from user;
+select *
+from status;
+insert into comment (idUser, idStatus, content, likeCount, createTime)
+values (5, 1,
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit.Accusamus alias cupiditate dicta earum! Cumque cupiditate dignissimos !',
+        0, date(now())),
+       (6, 1,
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit.Accusamus alias cupiditate dicta earum! Cumque cupiditate dignissimos fuga ipsum laudantium nam natus repellendus temporibus voluptatem voluptates!',
+        1, date(now())),
+       (7, 1,
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit.Accusamus alias cupiditate dicta earum! Cumque cupiditate dignissimos fuga ipsum laudantium nam natus repellendus temporibus voluptatem voluptates!',
+        2, date(now())),
+       (8, 1,
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit.Accusamus alias cupiditate dicta earum! Cumque cupiditate dignissimos fuga ipsum laudantium nam natus repellendus temporibus voluptatem voluptates!',
+        3, date(now())),
+       (5, 2,
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit.Accusamus alias cupiditate dicta earum! Cumque cupiditate dignissimos fuga ipsum laudantium nam natus repellendus temporibus voluptatem voluptates!',
+        0, date(now()))
+;

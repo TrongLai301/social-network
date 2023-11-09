@@ -16,7 +16,7 @@ public class CommentDAOImpl implements ICommentDAO{
         List<Comment> commentList = new ArrayList<>();
         while (resultSet.next()){
             Comment comment = new Comment();
-            comment.setIdCmt(resultSet.getInt("idCmt"));
+            comment.setIdComment(resultSet.getInt("idCmt"));
             comment.setIdUser(resultSet.getInt("idUser"));
             comment.setIdStatus(resultSet.getInt("idStatus"));
             comment.setContent(resultSet.getString("content"));

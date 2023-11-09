@@ -335,9 +335,32 @@ public class UserDAOImpl implements IUserDAO {
                 if (resultSet.next()) {
                     return resultSet.getInt("likeCount");
                 }
+                connection.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return likeCount;
         }
+
+    @Override
+    public List<User> getAllUserByIdStatus(int idStatus) {
+        List<User> list = new ArrayList<>();
+        try {
+            Connection con = DataConnector.getConnection();
+            CallableStatement cs = con.prepareCall("select u.id, u.avatar\n" +
+                    "from comment join user u on u.id = comment.idUser where idStatus = ?");
+            cs.setInt(1,idStatus);
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setAvatar(rs.getString("avatar"));
+                list.add(user);
+            }
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
     }
+}

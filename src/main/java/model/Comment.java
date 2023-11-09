@@ -1,29 +1,33 @@
 package model;
 
+import java.util.Date;
+
 public class Comment {
-   private int idCmt ;
-    private int idUser ;
-    private int idStatus ;
-    private String content ;
+    private int idComment;
+    private int idUser;
+    private int idStatus;
+    private String content;
     private int likeCount;
+    private Date createdTime;
 
-    public Comment() {
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "idComment=" + idComment +
+                ", idUser=" + idUser +
+                ", idStatus=" + idStatus +
+                ", content='" + content + '\'' +
+                ", likeCount=" + likeCount +
+                ", createdTime=" + createdTime +
+                '}';
     }
 
-    public Comment(int idCmt, int idUser, int idStatus, String content, int likeCount) {
-        this.idCmt = idCmt;
-        this.idUser = idUser;
-        this.idStatus = idStatus;
-        this.content = content;
-        this.likeCount = likeCount;
+    public int getIdComment() {
+        return idComment;
     }
 
-    public int getIdCmt() {
-        return idCmt;
-    }
-
-    public void setIdCmt(int idCmt) {
-        this.idCmt = idCmt;
+    public void setIdComment(int idComment) {
+        this.idComment = idComment;
     }
 
     public int getIdUser() {
@@ -57,4 +61,13 @@ public class Comment {
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
 }
