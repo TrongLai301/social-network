@@ -323,8 +323,11 @@
         </c:otherwise>
     </c:choose>
                             </div>
-                            <div><img src="../display-home/images/comments.png" alt="">${post.commentCount}</div>
-                            <div><img src="../display-home/images/share.png" alt="">0</div>
+                            <div>
+                                <a href="/home?idStatus=${post.id}"><img src="../display-home/images/comments.png" alt=""></a>${post.commentCount}
+                            </div>
+                            <div><img src="../display-home/images/share.png" alt=""></div>
+
                         </div>
                     </div>
 

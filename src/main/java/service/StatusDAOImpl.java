@@ -107,7 +107,7 @@ public class StatusDAOImpl implements IStatusDAO {
                 comment.setIdStatus(rs.getInt("idStatus"));
                 comment.setContent(rs.getString("content"));
                 comment.setLikeCount(rs.getInt("likeCount"));
-                comment.setCreatedTime(rs.getTime("createdTime"));
+                comment.setCreatedTime(rs.getTime("createTime"));
                 comments.add(comment);
             }
         } catch (ClassNotFoundException | SQLException e) {
