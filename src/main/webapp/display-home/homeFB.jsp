@@ -323,7 +323,7 @@
     </c:choose>
                             </div>
                             <div>
-                                <a href="/home?idStatus=${post.id}"></a><img src="../display-home/images/comments.png" alt="">
+                                <a href="/home?idStatus=${post.id}"><img src="../display-home/images/comments.png" alt=""></a>
                             </div>
                             <div><img src="../display-home/images/share.png" alt=""></div>
                         </div>
