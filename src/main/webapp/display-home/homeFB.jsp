@@ -474,13 +474,19 @@
                 </div>
             </c:forEach>
         </div>
-        <div class="comment__user">
+        <div class="comment__footer">
+            <div class="user__comment">
+                <div class="">
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <script src="../display-home/function.js"></script>
 <script src="../public/js/home/modal.js"></script>
+
 <script>
     let url = window.location.href;
     if (!url.includes("idStatusCmt=")){
