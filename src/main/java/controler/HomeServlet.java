@@ -116,10 +116,12 @@ public class HomeServlet extends HttpServlet {
                     break;
             }
         }
-        public void showCommentOnStatus(HttpServletRequest request , HttpServletResponse response) {
+
+        public void showCommentStatus(HttpServletRequest request , HttpServletResponse response) {
 
         }
-        public boolean checkPermissionShowCommentStatus(User userCheck , User userNow){
+
+        public boolean checkPermissionToCommentStatus(User userCheck , User userNow){
         boolean status;
                if (userServlet.getRelationship(userCheck.getId(),userNow.getId()).equals("accepted")){
                    status = true;

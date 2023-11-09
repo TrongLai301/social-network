@@ -168,7 +168,7 @@
             <hr>
             <div class="settings-links">
                 <img src="../display-home/images/setting.png" alt="" class="settings-icon">
-                <a href="/user?actionGet=showEditPassword">Settings & Privary <img
+                <a href="/user?actionGet=showEditPassword">Change password<img
                         src="../display-home/images/arrow.png" alt=""></a>
             </div>
 
@@ -179,7 +179,7 @@
 
             <div class="settings-links">
                 <img src="../display-home/images/display.png" alt="" class="settings-icon">
-                <a href="user?actionGet=updateUserProfile&id=${requestScope.user.id}">Display & Accessibility <img
+                <a href="user?actionGet=updateUserProfile&id=${requestScope.user.id}">Edit profile <img
                         src="../display-home/images/arrow.png" alt=""></a>
             </div>
 

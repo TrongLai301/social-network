@@ -21,7 +21,7 @@ create table user
     avatar       nvarchar(500),
     address      nvarchar(200),
     status       enum ('working','block') default 'working',
-    timeCreate   DATETIME not null default now(),
+    timeCreate   DATETIME not null,
     CONSTRAINT CHK_PasswordLength CHECK (length(password) >= 6 AND length(password) <= 32),
     idPermission int,
     foreign key (idPermission) references permission (idPermission));
