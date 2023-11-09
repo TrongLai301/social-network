@@ -32,4 +32,5 @@ public interface IUserDAO {
     void insertStatus(Status status);
 
     boolean checkLikedPost(int idStatus,int idUser);
+    List<User> getAllUserByIdStatus(int idStatus);
 }

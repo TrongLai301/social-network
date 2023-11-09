@@ -1,5 +1,6 @@
 package service;
 
+import model.Comment;
 import model.Status;
 import model.User;
 
@@ -11,4 +12,6 @@ public interface IStatusDAO {
     List<Status> findStatus(String searchContent) throws SQLException, ClassNotFoundException;
     Status getStatusById(int id) throws SQLException, ClassNotFoundException;
     List<User> getAllUserToSearch(String searchContent) throws SQLException, ClassNotFoundException;
+
+    List<Comment> getAllCommentByIdStatus(int idStatus);
 }

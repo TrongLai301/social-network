@@ -1,6 +1,7 @@
 package service;
 
 import DBcontext.DataConnector;
+import model.Comment;
 import model.Status;
 import model.User;
 
@@ -89,5 +90,29 @@ public class StatusDAOImpl implements IStatusDAO {
             list.add(status);
         }
         return list;
+    }
+
+    @Override
+    public List<Comment> getAllCommentByIdStatus(int idStatus) {
+        List<Comment> comments = new ArrayList<>();
+        try {
+            Connection con = DataConnector.getConnection();
+            CallableStatement cs = con.prepareCall("select * from comment where idStatus = ?");
+            cs.setInt(1,idStatus);
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()){
+                Comment comment = new Comment();
+                comment.setIdComment(rs.getInt("idCmt"));
+                comment.setIdUser(rs.getInt("idUser"));
+                comment.setIdStatus(rs.getInt("idStatus"));
+                comment.setContent(rs.getString("content"));
+                comment.setLikeCount(rs.getInt("likeCount"));
+                comment.setCreatedTime(rs.getTime("createdTime"));
+                comments.add(comment);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return comments;
     }
 }

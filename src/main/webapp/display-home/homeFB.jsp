@@ -3,6 +3,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Facebook</title>
@@ -321,7 +322,9 @@
         </c:otherwise>
     </c:choose>
                             </div>
-                            <div><img src="../display-home/images/comments.png" alt=""></div>
+                            <div>
+                                <a href="/home?idStatus=${post.id}"></a><img src="../display-home/images/comments.png" alt="">
+                            </div>
                             <div><img src="../display-home/images/share.png" alt=""></div>
                         </div>
                     </div>
@@ -371,7 +374,6 @@
                 function toggleOptions(event) {
                     options = event.target.nextElementSibling;
                     options.classList.toggle("show");
-
                 }
 
                 function optionEdit() {
@@ -443,29 +445,42 @@
     </div>
 </div>
 <%--    Modal--%>
-<div class="modal">
-    <div class="modal__comment">
-            <div class="comment__header">
-                <h2>Comments</h2>
-                <i class="fa-solid fa-x"></i>
-            </div>
-            <div class="comment__body">
+<div class="modal modal__open">
+    <div class="modal__comment ">
+        <div class="comment__header">
+            <h2>Comments</h2>
+            <i class="fa-solid fa-x js-close-modal" ></i>
+        </div>
+        <div class="comment__body">
+            <C:forEach items="${requestScope.comments}" var="comment">
                 <div class="comment">
                     <div class="comment__avatar">
-                         <img src="../display-home/images/member-1.png">
+                        <img src="../display-home/images/member-1.png">
                     </div>
-                    <div class="comment__content">
-
+                    <div class="comment__container">
+                        <div class="comment__content">
+                            <div>
+                                <h5>Name user here</h5>
+                                <p>This is demo comment</p>
+                            </div>
+                            <div class="comment__more">
+                                <uL><i class="fa-solid fa-ellipsis"></i></uL>
+                            </div>
+                        </div>
+                        <div class="comment__react">
+                            <a class="react__like"><i class="fa-solid fa-thumbs-up" style="margin-right: 12px"></i> 0 Likes </a>
+                            <div class="comment__time">4 minutes ago</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="comment__user">
-
-            </div>
+            </C:forEach>
         </div>
+        <div class="comment__user">
+        </div>
+    </div>
 </div>
 
 <script src="../display-home/function.js"></script>
-
+<script src="../public/js/home/modal.js"></script>
 </body>
 </html>

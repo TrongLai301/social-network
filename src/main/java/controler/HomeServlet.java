@@ -1,5 +1,6 @@
 package controler;
 
+import model.Comment;
 import model.Like;
 import model.Status;
 import model.User;
@@ -111,7 +112,7 @@ public class HomeServlet extends HttpServlet {
             }
         }
 
-//    public void likeStatus(HttpServletRequest request , HttpServletResponse response){
+    //    public void likeStatus(HttpServletRequest request , HttpServletResponse response){
 //        try {
 //            HttpSession session = request.getSession();
 //            Integer idUser = (Integer) session.getAttribute("idAccount");
@@ -137,7 +138,8 @@ public class HomeServlet extends HttpServlet {
 //            throw new RuntimeException(e);
 //        }
 //    }
-        public void showHomePage(HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException {
+
+    public void showHomePage(HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException {
             try {
                 List<User> userList = new ArrayList<>();
                 HttpSession session = request.getSession();
@@ -147,6 +149,20 @@ public class HomeServlet extends HttpServlet {
                 List<Status> list = statusDAO.getAllStatus();
                 List<Status> post = new ArrayList<>();
                 List<Like> listLike = new ArrayList<>();
+                String idStatus = request.getParameter("idStatus");
+
+                List<Comment> commentList = new ArrayList<>();
+                List<User> userComment = new ArrayList<>();
+
+                if (idStatus != null && !idStatus.isEmpty()){
+                    System.out.println(idStatus);
+                    commentList = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
+                    for (Comment c: commentList
+                         ) {
+                        System.out.println(c);
+                    }
+                    userComment = userDAO.getAllUserByIdStatus(Integer.parseInt(idStatus));
+                }
 
                 for (Status status : list) {
 
@@ -169,6 +185,8 @@ public class HomeServlet extends HttpServlet {
                     post.add(status);
                     userList.add(userPost);
                 }
+
+                request.setAttribute("comments",commentList);
                 request.setAttribute("check",listLike);
                 request.setAttribute("user", user);
                 request.setAttribute("listStatus", post);
@@ -178,8 +196,9 @@ public class HomeServlet extends HttpServlet {
             } catch (SQLException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-
         }
-    }
+
+    /*--------------Comment-----------------*/
+}
 
 

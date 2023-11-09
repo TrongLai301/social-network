@@ -7,4 +7,5 @@ public interface iRelationshipDAO {
     public boolean isReceiver(int senderId,int receiverId);
     public void addFriend(int senderId,int receiverId);
     public void deleteRelationshipOf(int firstUser, int secondUser);
+
 }
