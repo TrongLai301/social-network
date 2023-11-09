@@ -301,7 +301,9 @@
                             <div class="react__like">
                                 <span class="likeCount">${post.likeCount} likes</span>
                             </div>
-                            <div class="react__cmt__share"></div>
+                            <div class="react__cmt__share">
+                                <span class="commentCount">${post.commentCount}</span>
+                            </div>
                         </div>
                         <div class="activity-icons">
                             <div class="likeAndUnlikeButton">
@@ -324,7 +326,7 @@
     </c:choose>
                             </div>
                             <div>
-                                <a href="/home?idStatus=${post.id}"><img src="../display-home/images/comments.png" alt=""></a>${post.commentCount}
+                                <a href="/home?idStatus=${post.id}"><img src="../display-home/images/comments.png" alt=""></a>
                             </div>
                             <div><img src="../display-home/images/share.png" alt=""></div>
 

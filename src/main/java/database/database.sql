@@ -149,11 +149,6 @@ values ('public'),
 alter table user
     add column idPermissionFriends int default 1;
 
-insert into permissionFriends(namePermission)
-values ('public'),
-       ('private');
-alter table user add column idPermissionFriends int default 1;
-
 create table Comment (
                          idCmt int auto_increment primary key ,
                          idUser int not null ,

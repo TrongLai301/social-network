@@ -118,9 +118,6 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
-    public void showCommentStatus(HttpServletRequest request, HttpServletResponse response) {
-
-    }
 
     public boolean checkPermissionToCommentStatus(User userCheck, User userNow) {
         boolean status;

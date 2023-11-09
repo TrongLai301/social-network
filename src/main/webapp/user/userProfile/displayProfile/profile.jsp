@@ -357,10 +357,10 @@
                     <span>Friends</span>
                     <c:set var="friend" scope="session" value="${idFriend}"/>
                     <c:if test="${friend == 0}">
-                        <a href="user?actionGet=showListFriendsUser&id=${requestScope.user.id}">View all friend</a>
+                        <a href="user?actionGet=showListFriendsUser&id=${requestScope.userFind.id}">View all friend</a>
                     </c:if>
                     <c:if test="${friend != 0}">
-                        <a href="user?actionGet=showListFriendsUser&idFriend=${idFriend}&id=${requestScope.user.id}">View
+                        <a href="user?actionGet=showListFriendsUser&idFriend=${idFriend}&id=${requestScope.userFind.id}">View
                             all friend</a>
                     </c:if>
                 </div>
@@ -370,7 +370,7 @@
                 <div class="showFrs">
                     <c:forEach var="friend" items="${listFriends}" end="8">
                         <div class="frsManual">
-                            <a href="/user?actionGet=showUserProfile&id=${requestScope.user.id}&idFriend=${friend.getId()}">
+                            <a href="user?actionGet=showUserProfile&id=${friend.getId()}">
                                 <div class="imgFrs">
                                     <img src="${friend.getAvatar()}"
                                          alt="avatar">
