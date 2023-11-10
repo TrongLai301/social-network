@@ -16,14 +16,6 @@
 </head>
 
 <body onload="myFunction()">
-<%--<c:if test="${sessionScope.message != null}">--%>
-<%--<%--%>
-<%--    PrintWriter printWriter = response.getWriter();--%>
-<%--    printWriter.println("<script type=\"text/javascript\">");--%>
-<%--    printWriter.println("alert('bạn không phải là bạn bè của người dùng này , hãy kết bạn với người dùng đó');");--%>
-<%--    printWriter.println("</script>");--%>
-<%--%>--%>
-
 <div class="form-post" id="post">
     <div class="editFormDiv" id="divPostForm">
         <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus" enctype="multipart/form-data">
@@ -422,6 +414,7 @@
         </div>
 
         <!-- sidebar------------ -->
+
         <div class="right-sidebar">
             <div class="heading-link">
                 <h4>Events</h4>
@@ -463,6 +456,7 @@
     </div>
 </div>
 <%--    Modal--%>
+
 <div class="modal modal__open">
     <div class="modal__comment ">
         <div class="comment__header">
@@ -489,12 +483,13 @@
                         <div class="comment__react">
                             <a class="react__like"><i class="fa-solid fa-thumbs-up" style="margin-right: 12px"></i> 0
                                 Likes </a>
-                                <%--                            <div class="comment__time">4 minutes ago</div>--%>
+
                         </div>
                     </div>
                 </div>
             </c:forEach>
         </div>
+
         <div class="comment__footer">
             <div class="user__comment">
                 <div class="comment__avatar">
@@ -504,14 +499,16 @@
                     <form class="comment__content" action="/home" method="post">
                         <input type="hidden" name="action" value="addComment">
                         <input class="js__cmt" type="hidden" name="idStatus" value="">
-                        <div>
-                            <input type="text" name="commentContent">
-                        </div>
-                        <div class="comment__more">
-                            <button class="reset__Button--css" type="submit">
-                                <i class="fa-solid fa-paper-plane"></i>
-                            </button>
-                        </div>
+                        <c:if test="${sessionScope.userCheck != null}">
+                            <div>
+                                <input type="text" name="commentContent">
+                            </div>
+                            <div class="comment__more">
+                                <button class="reset__Button--css" type="submit">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </c:if>
                     </form>
                 </div>
             </div>

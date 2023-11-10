@@ -20,13 +20,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "HomeServlet", value = "/home")
+@WebServlet(name = "HomeServlet",value = "/home")
 public class HomeServlet extends HttpServlet {
     StatusDAOImpl statusDAO;
     UserDAOImpl userDAO;
     CommentDAOImpl commentDAO;
     RelationshipDAO relationshipDAO;
-    UserServlet userServlet = new UserServlet();
 
     @Override
     public void init() throws ServletException {
@@ -53,26 +52,6 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
-    private void addCommentToDatabase(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-        String cmt = req.getParameter("commentContent");
-        int idStatus = Integer.parseInt(req.getParameter("idStatus"));
-        Integer idUser = (Integer) req.getSession().getAttribute("idAccount");
-        User userNow = userDAO.getUserById(idUser);
-        Comment commentToAdd = new Comment();
-        commentToAdd.setIdUser(idUser);
-        commentToAdd.setIdStatus(idStatus);
-        commentToAdd.setContent(cmt);
-        //code add vao csdl
-        statusDAO.addComment(commentToAdd);
-
-            resp.sendRedirect("/home?idStatusCmt=" + idStatus);
-        } catch (IOException | SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
     public void findStatusByName(HttpServletRequest request, HttpServletResponse response) {
         String searchContent = request.getParameter("searchContent");
         List<User> userList = new ArrayList<>();
@@ -82,24 +61,29 @@ public class HomeServlet extends HttpServlet {
             User user = userDAO.getUserById(idUser);
             List<Status> list = statusDAO.findStatus(searchContent);
             List<Status> post = new ArrayList<>();
-            List<User> userResult = statusDAO.getAllUserToSearch(searchContent);
             List<Like> listLike = new ArrayList<>();
+            String idStatus = request.getParameter("idStatusCmt");
+            List<Comment> comments = new ArrayList<>();
+            List<User> userComment = new ArrayList<>();
+            List<Comment> checkList = new ArrayList<>();
             User userPost;
+            if (idStatus != null && !idStatus.isEmpty()){
+                comments = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
+                userComment = userDAO.getAllUserByIdStatus(Integer.parseInt(idStatus));
+            }
             for (Status status : list) {
                 userPost = userDAO.getUserById(status.getIdUser());
                 if (status.getIdUser() != idUser) {
+                    if (getRelationship(status.getIdUser(),idUser).equals("accepted")) {
+                        Comment comment = new Comment();
+                        comment.setStatus(1);
+                        checkList.add(comment);
+                    }else{
+                        checkList.add(null);
+                    }
                     if (status.getPermission() == 2) {
                         continue;
                     }
-                    int countComment = commentDAO.countCommentForStatus(status.getId());
-                    session.setAttribute("countComment", countComment);
-                    post.add(status);
-                    userList.add(userPost);
-                } else {
-                    int countComment = commentDAO.countCommentForStatus(status.getId());
-                    session.setAttribute("countComment", countComment);
-                    post.add(status);
-                    userList.add(userPost);
                 }
                 if (userDAO.checkLikedPost(status.getId(), idUser)) {
                     Like like = new Like();
@@ -110,10 +94,19 @@ public class HomeServlet extends HttpServlet {
                     like = null;
                     listLike.add(like);
                 }
+                Comment comment = new Comment();
+                comment.setStatus(1);
+                checkList.add(comment);
+                status.setCommentCount(commentDAO.countCommentForStatus(status.getId()));
+                post.add(status);
+                userList.add(userPost);
             }
-            request.setAttribute("check", listLike);
-            request.setAttribute("UserResult", userResult);
+            request.setAttribute("checkUser",checkList);
+            request.setAttribute("userComment",userComment);
+            request.setAttribute("comments",comments);
+            request.setAttribute("check",listLike);
             request.setAttribute("user", user);
+            request.setAttribute("listUser", userList);
             request.setAttribute("listStatusFindBySearch", post);
             request.setAttribute("listUser", userList);
             request.getRequestDispatcher("display-home/resultSearchFB.jsp").forward(request, response);
@@ -135,9 +128,41 @@ public class HomeServlet extends HttpServlet {
                 break;
         }
     }
-
+    private void addCommentToDatabase(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+        String cmt = req.getParameter("commentContent");
+        int idStatus = Integer.parseInt(req.getParameter("idStatus"));
+        Integer idUser = (Integer) req.getSession().getAttribute("idAccount");
+        Comment commentToAdd = new Comment();
+        commentToAdd.setIdUser(idUser);
+        commentToAdd.setIdStatus(idStatus);
+        commentToAdd.setContent(cmt);
+            statusDAO.addComment(commentToAdd);
+        //code add vao csdl
+            resp.sendRedirect("/home?idStatusCmt=" + idStatus);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public String getRelationship(int firstId, int secondID){
+        String relationship = relationshipDAO.getRelationshipBetween(firstId,secondID);
+        if (firstId == secondID){
+            return  "myself";
+        }
+        if (relationship == null){
+            return  "stranger";
+        }
+        if (relationshipDAO.isSender(firstId, secondID)){
+            return  "pending";
+        }
+        if (relationshipDAO.isReceiver(firstId, secondID)){
+            return  "not_received";
+        }
+        return relationship;
+    }
 
     public void showHomePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         try {
             List<User> userList = new ArrayList<>();
             HttpSession session = request.getSession();
@@ -150,22 +175,24 @@ public class HomeServlet extends HttpServlet {
             String idStatus = request.getParameter("idStatusCmt");
             List<Comment> comments = new ArrayList<>();
             List<User> userComment = new ArrayList<>();
-
-            if (idStatus != null && !idStatus.isEmpty()) {
-                comments = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
-                userComment = userDAO.getAllUserByIdStatus(Integer.parseInt(idStatus));
-                for (User c : userComment
-                ) {
-                    System.out.println(c.getId());
-                }
-                for (Status status : list) {
-
-                    userPost = userDAO.getUserById(status.getIdUser());
-                    if (status.getIdUser() != idUser) {
-                        if (status.getPermission() == 2) {
-                            continue;
+            for (Status status : list) {
+                userPost = userDAO.getUserById(status.getIdUser());
+                if (status.getIdUser() != idUser) {
+                    if (status.getPermission() != 2) {
+                        if (userDAO.checkLikedPost(status.getId(), idUser)) {
+                            Like like = new Like();
+                            like.setStatus(1);
+                            listLike.add(like);
+                        } else {
+                            Like like = new Like();
+                            like = null;
+                            listLike.add(like);
                         }
+                        status.setCommentCount(commentDAO.countCommentForStatus(status.getId()));
+                        post.add(status);
+                        userList.add(userPost);
                     }
+                }else {
                     if (userDAO.checkLikedPost(status.getId(), idUser)) {
                         Like like = new Like();
                         like.setStatus(1);
@@ -175,24 +202,33 @@ public class HomeServlet extends HttpServlet {
                         like = null;
                         listLike.add(like);
                     }
-
                     status.setCommentCount(commentDAO.countCommentForStatus(status.getId()));
                     post.add(status);
                     userList.add(userPost);
                 }
-                request.setAttribute("userComment", userComment);
-                request.setAttribute("comments", comments);
-                request.setAttribute("check", listLike);
-                request.setAttribute("user", user);
-                request.setAttribute("listStatus", post);
-                request.setAttribute("listUser", userList);
             }
-                request.getRequestDispatcher("display-home/homeFB.jsp").forward(request, response);
-            } catch(SQLException | ClassNotFoundException e) {
+            if (idStatus != null && !idStatus.isEmpty()){
+                comments = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
+                userComment = userDAO.getAllUserByIdStatus(Integer.parseInt(idStatus));
+                Status statusCheck = statusDAO.getStatusById(Integer.parseInt(idStatus));
+                if (getRelationship(statusCheck.getIdUser(),user.getId()).equals("accepted") || statusCheck.getIdUser() == user.getId()) {
+                    session.setAttribute("userCheck",1);
+                }else{
+                    session.setAttribute("userCheck",null);
+                }
+            }
+            request.setAttribute("userComment",userComment);
+            request.setAttribute("comments",comments);
+            request.setAttribute("check",listLike);
+            request.setAttribute("user", user);
+            request.setAttribute("listStatus", post);
+            request.setAttribute("listUser", userList);
+
+            request.getRequestDispatcher("display-home/homeFB.jsp").forward(request, response);
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-                /*--------------Comment-----------------*/
-
     }
-}
 
+    /*--------------Comment-----------------*/
+}

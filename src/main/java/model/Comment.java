@@ -9,6 +9,7 @@ public class Comment {
     private String content;
     private int likeCount;
     private Date createdTime;
+    private int status;
 
     @Override
     public String toString() {
@@ -20,6 +21,14 @@ public class Comment {
                 ", likeCount=" + likeCount +
                 ", createdTime=" + createdTime +
                 '}';
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getIdComment() {
