@@ -347,7 +347,7 @@ public class UserDAOImpl implements IUserDAO {
         List<User> list = new ArrayList<>();
         try {
             Connection con = DataConnector.getConnection();
-            CallableStatement cs = con.prepareCall("select u.id, u.avatar\n" +
+            CallableStatement cs = con.prepareCall("select u.id, u.avatar, u.fullname\n" +
                     "from comment join user u on u.id = comment.idUser where idStatus = ?");
             cs.setInt(1,idStatus);
             ResultSet rs = cs.executeQuery();
@@ -355,6 +355,7 @@ public class UserDAOImpl implements IUserDAO {
                 User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setAvatar(rs.getString("avatar"));
+                user.setName(rs.getString("fullname"));
                 list.add(user);
             }
             con.close();

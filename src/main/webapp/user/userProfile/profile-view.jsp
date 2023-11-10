@@ -14,7 +14,7 @@
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body >
 <section style="background-color: #eee;">
     <div class="container py-5">
         <div class="row">
@@ -130,7 +130,7 @@
                             <hr>
                             <div class="row">
                                 <div class="d-flex justify-content-center mb-2">
-                                    <button id="js.submitButton" type="submit" class="btn btn-primary">Save</button>
+                                    <button id="js.submitButton" type="submit" class="btn btn-primary" disabled >Save</button>
                                 </div>
                             </div>
                             <div class="row ">
@@ -157,7 +157,6 @@
         let today = new Date();
         today.setFullYear(today.getFullYear() - 13);
         document.getElementById("js.birthInput").max = today.toISOString().split("T")[0];
-
     }
 
     function setInputAvailable() {

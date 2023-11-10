@@ -381,9 +381,6 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    public void viewUserMain(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("/home.jsp").forward(request, response);
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

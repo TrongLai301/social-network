@@ -120,11 +120,9 @@ public class HomeServlet extends HttpServlet {
 
 
     public boolean checkPermissionToCommentStatus(User userCheck, User userNow) {
-        boolean status;
+        boolean status = false;
         if (userServlet.getRelationship(userCheck.getId(), userNow.getId()).equals("accepted")) {
             status = true;
-        } else {
-            status = false;
         }
         return status;
     }
@@ -140,19 +138,18 @@ public class HomeServlet extends HttpServlet {
                 List<Status> list = statusDAO.getAllStatus();
                 List<Status> post = new ArrayList<>();
                 List<Like> listLike = new ArrayList<>();
-                String idStatus = request.getParameter("idStatus");
+                String idStatus = request.getParameter("idStatusCmt");
 
-                List<Comment> commentList = new ArrayList<>();
+                List<Comment> comments = new ArrayList<>();
                 List<User> userComment = new ArrayList<>();
 
-                if (idStatus != null && !idStatus.isEmpty()) {
-                    System.out.println(idStatus);
-                    commentList = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
-                    for (Comment c : commentList
-                    ) {
-                        System.out.println(c);
-                    }
+                if (idStatus != null && !idStatus.isEmpty()){
+                    comments = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
                     userComment = userDAO.getAllUserByIdStatus(Integer.parseInt(idStatus));
+                    for (User c: userComment
+                    ) {
+                        System.out.println(c.getId());
+                    }
                 }
                 for (Status status : list) {
 
@@ -171,13 +168,14 @@ public class HomeServlet extends HttpServlet {
                         like = null;
                         listLike.add(like);
                     }
+
                     status.setCommentCount(commentDAO.countCommentForStatus(status.getId()));
                     post.add(status);
                     userList.add(userPost);
                 }
-
-                request.setAttribute("comments", commentList);
-                request.setAttribute("check", listLike);
+                request.setAttribute("userComment",userComment);
+                request.setAttribute("comments",comments);
+                request.setAttribute("check",listLike);
                 request.setAttribute("user", user);
                 request.setAttribute("listStatus", post);
                 request.setAttribute("listUser", userList);

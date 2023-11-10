@@ -16,6 +16,7 @@
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../../public/css/user/profile.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <%--    <script src="../display-home/function.js"></script>--%>
 </head>
 <body>
@@ -273,8 +274,8 @@
     border-radius: 15px;
     width: 100px;
     height: 30px;text-decoration: none;color: black">
-                            <a href="${pageContext.request.contextPath}/friend?actionGet=sendFriendRequest&id=${requestScope.userFind.id}">
-                                + Add Friend </a></button>
+                            <a href="${pageContext.request.contextPath}/friend?actionGet=sendFriendRequest&id=${requestScope.userFind.id} " style="text-decoration: none">
+                                <i class="bi bi-person-plus"></i> </a></button>
                     </div>
                 </c:when>
                 <c:when test="${requestScope.relationship.equals('pending')}">
@@ -283,8 +284,7 @@
     border-radius: 15px;
     width: 100px;
     height: 30px;text-decoration: none;color: black"><a
-                                href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> x
-                            Cancel </a></button>
+                                href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}" style="text-decoration: none"><i class="bi bi-x-circle"></i></a></button>
                     </div>
                 </c:when>
                 <c:when test="${requestScope.relationship.equals('not_received')}">
@@ -293,7 +293,7 @@
     border-radius: 15px;
     width: 100px;
     height: 30px;text-decoration: none;color: black"><a
-                                href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> Reject </a>
+                                href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}" style="text-decoration: none"> <i class="bi bi-x-circle"></i> </a>
                         </button>
                     </div>
                     <div>
@@ -301,7 +301,7 @@
     border-radius: 15px;
     width: 100px;
     height: 30px;text-decoration: none;color: black"><a
-                                href="/friend?actionGet=acceptRequest&id=${requestScope.userFind.id}"> Accept </a>
+                                href="/friend?actionGet=acceptRequest&id=${requestScope.userFind.id}" style="text-decoration: none"><i class="bi bi-person-plus-fill"></i> </a>
                         </button>
                     </div>
                 </c:when>
@@ -311,8 +311,8 @@
     border-radius: 15px;
     width: 100px;
     height: 30px;text-decoration: none;color: black"><a
-                                href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}"> -
-                            Unfriend </a></button>
+                                href="/friend?actionGet=deleteRelationship&id=${requestScope.userFind.id}" style="text-decoration: none">
+                            <i class="bi bi-person-x-fill"></i> </a></button>
                     </div>
                 </c:when>
             </c:choose>

@@ -13,10 +13,8 @@
     <script src="https://kit.fontawesome.com/ef7e2b893b.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/39e48099af.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
 </head>
-<body>
-
+<body onload="myFunction()">
 <div class="form-post" id="post">
     <div class="editFormDiv" id="divPostForm">
         <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus"  enctype="multipart/form-data">
@@ -213,11 +211,16 @@
                 <a href="#"><img src="../display-home/images/friends.png" alt="">Friends</a>
             </div>
             <div class="shortcut-links">
-                <p>Your Shortcuts</p>
+                <p>Top your shortcuts</p>
                 <a href="#"> <img src="../display-home/images/shortcut-1.png" alt="">Web Developers</a>
                 <a href="#"> <img src="../display-home/images/shortcut-2.png" alt="">Web Design Course</a>
                 <a href="#"> <img src="../display-home/images/shortcut-3.png" alt="">Full Stack Development</a>
                 <a href="#"> <img src="../display-home/images/shortcut-4.png" alt="">Website Experts</a>
+                <a href="https://vietnhan.co/ho-tro-khach-hang/su-khac-nhau-giua-website-va-facebook-217" style="text-decoration: none"> <img src="https://vietnhan.co/files/common/viet-nhan-co-xto0hnbp1zvmi4bmvdfv3ii7eek5mh4lo6h.jpg" alt="">Website vs FaceBook</a>
+                <a href="https://thanhnien.vn/nhieu-website-go-nut-dang-nhap-bang-facebook-1851497994.htm" style="text-decoration: none"> <img src="https://images2.thanhnien.vn/Uploaded/thanhnx/2022_09_09/website-facebook-login-2-8806.jpeg" alt="">Facebook remove a lot of big website , Why ?</a>
+                <a href="https://vnexpress.net/hiem-hoa-xe-ba-gac-cho-sat-thep-tren-duong-tp-hcm-4674971.html"> <img src="https://i1-vnexpress.vnecdn.net/2023/11/09/f2f2e03bc52613784a37-1699516536.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=KlNOYse8VKXuXtXPVBk3cA" alt="">Danger of transport "3 gang"</a>
+                <a href="https://vnexpress.net/le-trao-thuong-thanh-tham-kich-cua-quan-doi-ukraine-4674953.html"> <img src="https://i1-vnexpress.vnecdn.net/2023/11/09/imrs-jpeg-6759-1699522831.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=GEPd5YPbmWf2415huPg4IQ" alt="">The award ceremony turned into a tragedy for the Ukrainian army</a>
+                <a href="https://vnexpress.net/chinh-phu-moi-cua-slovakia-huy-goi-vien-tro-quan-su-cho-ukraine-4674644.html"> <img src="https://i1-vnexpress.vnecdn.net/2023/11/08/2023-10-27T101752Z-58012558-RC-6961-7332-1699458649.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=sN3gt2Iy3Ln6mBS7kn3f5g" alt="">Slovakia's new government cancels military aid package for Ukraine</a>
             </div>
         </div>
 
@@ -253,7 +256,7 @@
                             <img src="${user.avatar}" style="height: 50px;" alt="Avatar">
                             <div>
                                 <a href="/user?actionGet=showUserProfile&id=${user.id}"
-                                   style="text-decoration: none;color: black">${user.name}</a><br>
+                                   style="text-decoration: none;color: black">${user.name} </a><br>
                                 <small>${post.createTime}</small>
                                 <c:choose>
                                     <c:when test="${post.permission == 1}">
@@ -270,24 +273,24 @@
                                 ...
                             </p>
                             <div class="options" id="option">
-                                <ul class="option-ul" style="list-style: none ;height: 60px;">
-                                    <li>
-                                        <div class="div-li">
-                                            <form action="/user?actionPost=deleteStatus" method="post">
-                                                <input type="hidden" name="idStatus" value="${post.id}">
-                                                <input type="submit" value="Delete"/>
-                                            </form>
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
-                                                 class="icon-option">
-                                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                <style>svg {
-                                                    fill: #2265d8
-                                                }</style>
-                                                <path d="M576 128c0-35.3-28.7-64-64-64H205.3c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7H512c35.3 0 64-28.7 64-64V128zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
-                                            </svg>
-                                        </div>
-                                    </li>
-                                </ul>
+<%--                                <ul class="option-ul" style="list-style: none ;height: 60px;">--%>
+<%--                                    <li>--%>
+<%--                                        <div class="div-li">--%>
+<%--                                            <form action="/user?actionPost=deleteStatus" method="post">--%>
+<%--                                                <input type="hidden" name="idStatus" value="${post.id}">--%>
+<%--                                                <input type="submit" value="Delete"/>--%>
+<%--                                            </form>--%>
+<%--                                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"--%>
+<%--                                                 class="icon-option">--%>
+<%--                                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->--%>
+<%--                                                <style>svg {--%>
+<%--                                                    fill: #2265d8--%>
+<%--                                                }</style>--%>
+<%--                                                <path d="M576 128c0-35.3-28.7-64-64-64H205.3c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7H512c35.3 0 64-28.7 64-64V128zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>--%>
+<%--                                            </svg>--%>
+<%--                                        </div>--%>
+<%--                                    </li>--%>
+<%--                                </ul>--%>
                             </div>
                         </div>
                     </div>
@@ -311,14 +314,14 @@
                                   <c:choose>
         <c:when test="${ status != null}">
             <div>
-                <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
+                <a onclick="toggleLike(${post.id}, 'unlike', this)">
                     <img class="like-button liked" src="../display-home/images/like-blue.png">
                 </a>
             </div>
         </c:when>
         <c:otherwise>
             <div>
-                <a onclick="toggleLike(${post.id}, 'like', this)" href="#">
+                <a onclick="toggleLike(${post.id}, 'like', this)">
                     <img class="like-button" src="../display-home/images/like.png">
                 </a>
             </div>
@@ -326,7 +329,7 @@
     </c:choose>
                             </div>
                             <div>
-                                <a href="/home?idStatus=${post.id}"><img src="../display-home/images/comments.png" alt=""></a>
+                                <a href="/home?idStatusCmt=${post.id}"><img src="../display-home/images/comments.png" alt=""></a>
                             </div>
                             <div><img src="../display-home/images/share.png" alt=""></div>
 
@@ -456,16 +459,17 @@
             <i class="fa-solid fa-x js-close-modal" ></i>
         </div>
         <div class="comment__body">
-            <C:forEach items="${requestScope.comments}" var="comment">
+            <c:forEach items="${requestScope.comments}" var="cmt" varStatus="count">
+                <c:set var="userComment" value="${requestScope.userComment[count.index]}"/>
                 <div class="comment">
                     <div class="comment__avatar">
-                        <img src="../display-home/images/member-1.png">
+                        <img src="${userComment.avatar}">
                     </div>
                     <div class="comment__container">
                         <div class="comment__content">
                             <div>
-                                <h5>Name user here</h5>
-                                <p>This is demo comment</p>
+                                <h5>${userComment.name}</h5>
+                                <p>${cmt.content}</p>
                             </div>
                             <div class="comment__more">
                                 <uL><i class="fa-solid fa-ellipsis"></i></uL>
@@ -477,7 +481,7 @@
                         </div>
                     </div>
                 </div>
-            </C:forEach>
+            </c:forEach>
         </div>
         <div class="comment__user">
         </div>
@@ -485,5 +489,14 @@
 </div>
 <script src="../display-home/function.js"></script>
 <script src="../public/js/home/modal.js"></script>
+<script>
+    let url = window.location.href;
+    if (!url.includes("idStatusCmt=")){
+        let modal = document.querySelector(".modal");
+        modal.classList.remove('modal__open');
+    }
+    console.log(url)
+    console.log(!url.includes("idStatusCmt="))
+</script>
 </body>
 </html>
