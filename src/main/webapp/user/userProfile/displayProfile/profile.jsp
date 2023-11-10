@@ -20,13 +20,7 @@
     <%--    <script src="../display-home/function.js"></script>--%>
 </head>
 <body>
-<%--<c:if test="${requestScope.messageDelete != null}">--%>
-<%--    <%--%>
-<%--        PrintWriter printWriter = response.getWriter();--%>
-<%--        printWriter.println("<script type=\"text/javascript\">");--%>
-<%--        printWriter.println("alert('xóa bài viết thành công');");--%>
-<%--        printWriter.println("</script>");--%>
-<%--    %>--%>
+
 <%--</c:if><c:if test="${requestScope.messageDeleteFalse != null}">--%>
 <%--    <%--%>
 <%--        PrintWriter printWriter = response.getWriter();--%>

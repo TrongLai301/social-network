@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "HomeServlet",value = "/home")
+@WebServlet(name = "HomeServlet", value = "/home")
 public class HomeServlet extends HttpServlet {
     StatusDAOImpl statusDAO;
     UserDAOImpl userDAO;
@@ -46,17 +46,36 @@ public class HomeServlet extends HttpServlet {
             case "search":
                 findStatusByName(req, resp);
                 break;
-
+            case "addComment":
+                addCommentToDatabase(req, resp);
             default:
                 break;
         }
     }
 
+    private void addCommentToDatabase(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+        String cmt = req.getParameter("commentContent");
+        int idStatus = Integer.parseInt(req.getParameter("idStatus"));
+        Integer idUser = (Integer) req.getSession().getAttribute("idAccount");
+        User userNow = userDAO.getUserById(idUser);
+        Comment commentToAdd = new Comment();
+        commentToAdd.setIdUser(idUser);
+        commentToAdd.setIdStatus(idStatus);
+        commentToAdd.setContent(cmt);
+        //code add vao csdl
+        statusDAO.addComment(commentToAdd);
+
+            resp.sendRedirect("/home?idStatusCmt=" + idStatus);
+        } catch (IOException | SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public void findStatusByName(HttpServletRequest request, HttpServletResponse response) {
         String searchContent = request.getParameter("searchContent");
         List<User> userList = new ArrayList<>();
-
-
         try {
             HttpSession session = request.getSession();
             Integer idUser = (Integer) session.getAttribute("idAccount");
@@ -92,7 +111,6 @@ public class HomeServlet extends HttpServlet {
                     listLike.add(like);
                 }
             }
-
             request.setAttribute("check", listLike);
             request.setAttribute("UserResult", userResult);
             request.setAttribute("user", user);
@@ -119,37 +137,26 @@ public class HomeServlet extends HttpServlet {
     }
 
 
-    public boolean checkPermissionToCommentStatus(User userCheck, User userNow) {
-        boolean status = false;
-        if (userServlet.getRelationship(userCheck.getId(), userNow.getId()).equals("accepted")) {
-            status = true;
-        }
-        return status;
-    }
-
     public void showHomePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            List<User> userList = new ArrayList<>();
+            HttpSession session = request.getSession();
+            Integer idUser = (Integer) session.getAttribute("idAccount");
+            User user = userDAO.getUserById(idUser);
+            User userPost;
+            List<Status> list = statusDAO.getAllStatus();
+            List<Status> post = new ArrayList<>();
+            List<Like> listLike = new ArrayList<>();
+            String idStatus = request.getParameter("idStatusCmt");
+            List<Comment> comments = new ArrayList<>();
+            List<User> userComment = new ArrayList<>();
 
-            try {
-                List<User> userList = new ArrayList<>();
-                HttpSession session = request.getSession();
-                Integer idUser = (Integer) session.getAttribute("idAccount");
-                User user = userDAO.getUserById(idUser);
-                User userPost;
-                List<Status> list = statusDAO.getAllStatus();
-                List<Status> post = new ArrayList<>();
-                List<Like> listLike = new ArrayList<>();
-                String idStatus = request.getParameter("idStatusCmt");
-
-                List<Comment> comments = new ArrayList<>();
-                List<User> userComment = new ArrayList<>();
-
-                if (idStatus != null && !idStatus.isEmpty()){
-                    comments = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
-                    userComment = userDAO.getAllUserByIdStatus(Integer.parseInt(idStatus));
-                    for (User c: userComment
-                    ) {
-                        System.out.println(c.getId());
-                    }
+            if (idStatus != null && !idStatus.isEmpty()) {
+                comments = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
+                userComment = userDAO.getAllUserByIdStatus(Integer.parseInt(idStatus));
+                for (User c : userComment
+                ) {
+                    System.out.println(c.getId());
                 }
                 for (Status status : list) {
 
@@ -173,21 +180,19 @@ public class HomeServlet extends HttpServlet {
                     post.add(status);
                     userList.add(userPost);
                 }
-                request.setAttribute("userComment",userComment);
-                request.setAttribute("comments",comments);
-                request.setAttribute("check",listLike);
+                request.setAttribute("userComment", userComment);
+                request.setAttribute("comments", comments);
+                request.setAttribute("check", listLike);
                 request.setAttribute("user", user);
                 request.setAttribute("listStatus", post);
                 request.setAttribute("listUser", userList);
-
-                request.getRequestDispatcher("display-home/homeFB.jsp").forward(request, response);
-            } catch (SQLException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
             }
+                request.getRequestDispatcher("display-home/homeFB.jsp").forward(request, response);
+            } catch(SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
+                /*--------------Comment-----------------*/
 
-        /*--------------Comment-----------------*/
     }
-
-
+}
 

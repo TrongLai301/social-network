@@ -115,4 +115,19 @@ public class StatusDAOImpl implements IStatusDAO {
         }
         return comments;
     }
+
+    @Override
+    public void addComment(Comment comment) {
+        try {
+            Connection connection = DataConnector.getConnection();
+            CallableStatement cs = connection.prepareCall("insert into comment (idUser, idStatus, content) values (?,?,?)");
+            cs.setInt(1,comment.getIdUser());
+            cs.setInt(2,comment.getIdStatus());
+            cs.setString(3,comment.getContent());
+            cs.executeUpdate();
+            connection.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

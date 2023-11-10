@@ -14,15 +14,24 @@
     <script src="https://kit.fontawesome.com/39e48099af.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
+
 <body onload="myFunction()">
+<%--<c:if test="${sessionScope.message != null}">--%>
+<%--<%--%>
+<%--    PrintWriter printWriter = response.getWriter();--%>
+<%--    printWriter.println("<script type=\"text/javascript\">");--%>
+<%--    printWriter.println("alert('bạn không phải là bạn bè của người dùng này , hãy kết bạn với người dùng đó');");--%>
+<%--    printWriter.println("</script>");--%>
+<%--%>--%>
+
 <div class="form-post" id="post">
     <div class="editFormDiv" id="divPostForm">
-        <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus"  enctype="multipart/form-data">
+        <form class="editForm" method="post" action="/user?actionPost=uploadNewStatus" enctype="multipart/form-data">
             <div class="header-edit">
                 <p>Create status</p>
                 <div role="button" id="closePost" onclick="hidePost()">
                     <i>
-                        <img style="width: 30px"  src="../display-home/images/cross.png">
+                        <img style="width: 30px" src="../display-home/images/cross.png">
                     </i>
                 </div>
             </div>
@@ -45,13 +54,13 @@
                                   name="description" class="textareaDescription"></textarea>
                     </div>
                     <div style="text-align: center">
-                        <img src="" alt="" id="image" width="400" height="250" > <br/> <br/>
-                        <input type="file" onchange="chooseFile(this)" id="imageFile" name="file" value="" size="60" />
+                        <img src="" alt="" id="image" width="400" height="250"> <br/> <br/>
+                        <input type="file" onchange="chooseFile(this)" id="imageFile" name="file" value="" size="60"/>
                         <script>
-                            function chooseFile(fileInput){
+                            function chooseFile(fileInput) {
                                 var reader = new FileReader();
 
-                                reader.onload = function (e){
+                                reader.onload = function (e) {
                                     $('#image').attr('src', e.target.result);
                                 }
                                 reader.readAsDataURL(fileInput.files[0]);
@@ -64,20 +73,20 @@
                 <input type="submit" value="upload">
             </div>
             <div>
-<%--                <script>--%>
-<%--                    const description = document.getElementById("desciption")--%>
-<%--                    const submit = document.getElementById("submit")--%>
-<%--                    description.addEventListener("input", checkError)--%>
+                <%--                <script>--%>
+                <%--                    const description = document.getElementById("desciption")--%>
+                <%--                    const submit = document.getElementById("submit")--%>
+                <%--                    description.addEventListener("input", checkError)--%>
 
-<%--                    function checkError(){--%>
-<%--                        const descrip = description.value;--%>
-<%--                        if (description == ""){--%>
-<%--                            submit.hidden--%>
-<%--                        }else {--%>
-<%--                            submit.style.vi--%>
-<%--                        }--%>
-<%--                    }--%>
-<%--                </script>--%>
+                <%--                    function checkError(){--%>
+                <%--                        const descrip = description.value;--%>
+                <%--                        if (description == ""){--%>
+                <%--                            submit.hidden--%>
+                <%--                        }else {--%>
+                <%--                            submit.style.vi--%>
+                <%--                        }--%>
+                <%--                    }--%>
+                <%--                </script>--%>
             </div>
         </form>
     </div>
@@ -310,26 +319,27 @@
                         </div>
                         <div class="activity-icons">
                             <div class="likeAndUnlikeButton">
-
-                                  <c:choose>
-        <c:when test="${ status != null}">
-            <div>
-                <a onclick="toggleLike(${post.id}, 'unlike', this)">
-                    <img class="like-button liked" src="../display-home/images/like-blue.png">
-                </a>
-            </div>
-        </c:when>
-        <c:otherwise>
-            <div>
-                <a onclick="toggleLike(${post.id}, 'like', this)">
-                    <img class="like-button" src="../display-home/images/like.png">
-                </a>
-            </div>
-        </c:otherwise>
-    </c:choose>
+                                <c:choose>
+                                    <c:when test="${ status != null}">
+                                        <div>
+                                            <a onclick="toggleLike(${post.id}, 'unlike', this)" href="#">
+                                                <img class="like-button liked"
+                                                     src="../display-home/images/like-blue.png">
+                                            </a>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div>
+                                            <a onclick="toggleLike(${post.id}, 'like', this)" href="#">
+                                                <img class="like-button" src="../display-home/images/like.png">
+                                            </a>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                             <div>
-                                <a href="/home?idStatusCmt=${post.id}"><img src="../display-home/images/comments.png" alt=""></a>
+                                <a href="/home?idStatusCmt=${post.id}"><img src="../display-home/images/comments.png"
+                                                                            alt=""></a>
                             </div>
                             <div><img src="../display-home/images/share.png" alt=""></div>
 
@@ -341,7 +351,7 @@
                         function toggleLike(idStatus, action, element) {
                             event.preventDefault();
                             var xhr = new XMLHttpRequest();
-                            xhr.onreadystatechange = function() {
+                            xhr.onreadystatechange = function () {
                                 if (xhr.readyState === 4 && xhr.status === 200) {
                                     var response = JSON.parse(xhr.responseText);
                                     updateLikeCount(response.likeCount, element);
@@ -354,6 +364,7 @@
                             xhr.open("GET", "user?actionGet=likeStatus&action=" + action + "&idStatus=" + idStatus, true);
                             xhr.send();
                         }
+
                         function updateLikeCount(likeCount, element) {
                             var likeCountElement = $(element).closest(".likeAndUnlikeButton").find(".likeCount");
                             likeCountElement.text(likeCount);
@@ -456,7 +467,7 @@
     <div class="modal__comment ">
         <div class="comment__header">
             <h2>Comments</h2>
-            <i class="fa-solid fa-x js-close-modal" ></i>
+            <i class="fa-solid fa-x js-close-modal"></i>
         </div>
         <div class="comment__body">
             <c:forEach items="${requestScope.comments}" var="cmt" varStatus="count">
@@ -476,27 +487,51 @@
                             </div>
                         </div>
                         <div class="comment__react">
-                            <a class="react__like"><i class="fa-solid fa-thumbs-up" style="margin-right: 12px"></i> 0 Likes </a>
-                            <div class="comment__time">4 minutes ago</div>
+                            <a class="react__like"><i class="fa-solid fa-thumbs-up" style="margin-right: 12px"></i> 0
+                                Likes </a>
+                                <%--                            <div class="comment__time">4 minutes ago</div>--%>
                         </div>
                     </div>
                 </div>
             </c:forEach>
         </div>
-        <div class="comment__user">
+        <div class="comment__footer">
+            <div class="user__comment">
+                <div class="comment__avatar">
+                    <img src="${requestScope.user.avatar}">
+                </div>
+                <div class="comment__container">
+                    <form class="comment__content" action="/home" method="post">
+                        <input type="hidden" name="action" value="addComment">
+                        <input class="js__cmt" type="hidden" name="idStatus" value="">
+                        <div>
+                            <input type="text" name="commentContent">
+                        </div>
+                        <div class="comment__more">
+                            <button class="reset__Button--css" type="submit">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <script src="../display-home/function.js"></script>
 <script src="../public/js/home/modal.js"></script>
+
 <script>
     let url = window.location.href;
-    if (!url.includes("idStatusCmt=")){
+    if (!url.includes("idStatusCmt=")) {
         let modal = document.querySelector(".modal");
         modal.classList.remove('modal__open');
     }
-    console.log(url)
-    console.log(!url.includes("idStatusCmt="))
+    const indexOfIdStatusCmt = url.indexOf("idStatusCmt=");
+    if (indexOfIdStatusCmt !== -1) {
+        let inputComment = document.querySelector(".js__cmt");
+        inputComment.value = url.substring(indexOfIdStatusCmt + 12);
+    }
 </script>
 </body>
 </html>

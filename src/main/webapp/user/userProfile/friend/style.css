@@ -5,8 +5,32 @@
     margin: 0px;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-
 }
+
+.reset__Button--css {
+     border: none;
+     margin: 0;
+     padding: 0;
+     width: auto;
+     overflow: visible;
+
+     background: transparent;
+
+     /* inherit font & color from ancestor */
+     color: inherit;
+     font: inherit;
+
+     /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+     line-height: normal;
+
+     /* Corrects font smoothing for webkit */
+     -webkit-font-smoothing: inherit;
+     -moz-osx-font-smoothing: inherit;
+
+     /* Corrects inability to style clickable `input` types in iOS */
+     -webkit-appearance: none;
+ }
+
 
 :root {
     --body-color: #efefef;
@@ -1380,13 +1404,14 @@ img.coverImage {
     align-items: stretch;
 }
 
+.user__comment,
 .comment{
     display: flex;
-
+    padding: 4px 0 0 16px
 }
 
 .comment__avatar{
-
+    margin: 2px 6px 0 0;
 }
 
 .comment__avatar img {
@@ -1395,9 +1420,6 @@ img.coverImage {
     border-radius: 50%;
 }
 .comment__content {
-    background-color: #f0f2f5;
-    border-radius: 5%;
-    padding: 8px 0 8px 8px;
     display: flex;
     align-items: center;
 }
@@ -1405,12 +1427,39 @@ img.coverImage {
 .comment__container{
     flex: 1;
 }
-
-.comment__react {
-    display: flex;
-    justify-content: space-between;
+.comment__content div:nth-child(1) {
+    background-color: #f0f2f5;
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+.comment__content div:nth-child(1) p{
+    text-align: justify;
 }
 
+.comment__more {
+    margin: 0 5px;
+    padding: 10px 11px;
+    border-radius: 50%
+}
+
+.comment__more:hover {
+    background-color: #f0f2f5;
+    cursor: pointer;
+}
+.comment__react {
+    display: flex;
+}
+.comment__time {
+    order: -1;
+    margin-right: 10px;
+}
+
+.comment__footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
 
 
 
