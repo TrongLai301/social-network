@@ -5,8 +5,32 @@
     margin: 0px;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-
 }
+
+.reset__Button {
+     border: none;
+     margin: 0;
+     padding: 0;
+     width: auto;
+     overflow: visible;
+
+     background: transparent;
+
+     /* inherit font & color from ancestor */
+     color: inherit;
+     font: inherit;
+
+     /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+     line-height: normal;
+
+     /* Corrects font smoothing for webkit */
+     -webkit-font-smoothing: inherit;
+     -moz-osx-font-smoothing: inherit;
+
+     /* Corrects inability to style clickable `input` types in iOS */
+     -webkit-appearance: none;
+ }
+
 
 :root {
     --body-color: #efefef;
@@ -1375,6 +1399,7 @@ img.coverImage {
     align-items: stretch;
 }
 
+.user__comment,
 .comment{
     display: flex;
     padding: 4px 0 0 16px
@@ -1400,6 +1425,10 @@ img.coverImage {
 .comment__content div:nth-child(1) {
     background-color: #f0f2f5;
     border-radius: 6px;
+    padding: 8px 12px;
+}
+.comment__content div:nth-child(1) p{
+    text-align: justify;
 }
 
 .comment__more {
@@ -1414,9 +1443,18 @@ img.coverImage {
 }
 .comment__react {
     display: flex;
-    justify-content: space-between;
+}
+.comment__time {
+    order: -1;
+    margin-right: 10px;
 }
 
+.comment__footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
 
 
 
