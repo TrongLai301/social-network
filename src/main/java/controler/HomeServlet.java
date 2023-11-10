@@ -50,9 +50,17 @@ public class HomeServlet extends HttpServlet {
         String cmt = req.getParameter("commentContent");
         int idStatus = Integer.parseInt(req.getParameter("idStatus"));
         Integer idUser = (Integer) req.getSession().getAttribute("idAccount");
-
+        Comment commentToAdd = new Comment();
+        commentToAdd.setIdUser(idUser);
+        commentToAdd.setIdStatus(idStatus);
+        commentToAdd.setContent(cmt);
         //code add vao csdl
-
+        statusDAO.addComment(commentToAdd);
+        try {
+            resp.sendRedirect("/home?idStatusCmt=" + idStatus);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void findStatusByName(HttpServletRequest request, HttpServletResponse response) {

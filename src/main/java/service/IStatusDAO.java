@@ -15,5 +15,4 @@ public interface IStatusDAO {
     List<Comment> getAllCommentByIdStatus(int idStatus);
 
     void addComment(Comment comment);
-
 }

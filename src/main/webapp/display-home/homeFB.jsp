@@ -491,7 +491,7 @@
                             <input type="text" name="commentContent">
                         </div>
                         <div class="comment__more">
-                            <button class="reset__Button" type="submit">
+                            <button class="reset__Button--css" type="submit">
                                 <i class="fa-solid fa-paper-plane"></i>
                             </button>
                         </div>
