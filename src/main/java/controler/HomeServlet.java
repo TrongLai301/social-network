@@ -62,46 +62,54 @@ public class HomeServlet extends HttpServlet {
             List<Status> list = statusDAO.findStatus(searchContent);
             List<Status> post = new ArrayList<>();
             List<Like> listLike = new ArrayList<>();
+            List<User> userListSearch = statusDAO.getAllUserToSearch(searchContent);
+            request.setAttribute("UserResult",userListSearch);
+            User userPost;
             String idStatus = request.getParameter("idStatusCmt");
             List<Comment> comments = new ArrayList<>();
             List<User> userComment = new ArrayList<>();
-            List<Comment> checkList = new ArrayList<>();
-            User userPost;
-            if (idStatus != null && !idStatus.isEmpty()){
-                comments = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
-                userComment = userDAO.getAllUserByIdStatus(Integer.parseInt(idStatus));
-            }
             for (Status status : list) {
                 userPost = userDAO.getUserById(status.getIdUser());
                 if (status.getIdUser() != idUser) {
-                    if (getRelationship(status.getIdUser(),idUser).equals("accepted")) {
-                        Comment comment = new Comment();
-                        comment.setStatus(1);
-                        checkList.add(comment);
-                    }else{
-                        checkList.add(null);
+                    if (status.getPermission() != 2) {
+                        if (userDAO.checkLikedPost(status.getId(), idUser)) {
+                            Like like = new Like();
+                            like.setStatus(1);
+                            listLike.add(like);
+                        } else {
+                            Like like = new Like();
+                            like = null;
+                            listLike.add(like);
+                        }
+                        status.setCommentCount(commentDAO.countCommentForStatus(status.getId()));
+                        post.add(status);
+                        userList.add(userPost);
                     }
-                    if (status.getPermission() == 2) {
-                        continue;
+                }else {
+                    if (userDAO.checkLikedPost(status.getId(), idUser)) {
+                        Like like = new Like();
+                        like.setStatus(1);
+                        listLike.add(like);
+                    } else {
+                        Like like = new Like();
+                        like = null;
+                        listLike.add(like);
                     }
+                    status.setCommentCount(commentDAO.countCommentForStatus(status.getId()));
+                    post.add(status);
+                    userList.add(userPost);
                 }
-                if (userDAO.checkLikedPost(status.getId(), idUser)) {
-                    Like like = new Like();
-                    like.setStatus(1);
-                    listLike.add(like);
-                } else {
-                    Like like = new Like();
-                    like = null;
-                    listLike.add(like);
-                }
-                Comment comment = new Comment();
-                comment.setStatus(1);
-                checkList.add(comment);
-                status.setCommentCount(commentDAO.countCommentForStatus(status.getId()));
-                post.add(status);
-                userList.add(userPost);
             }
-            request.setAttribute("checkUser",checkList);
+            if (idStatus != null && !idStatus.isEmpty()){
+                comments = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
+                userComment = userDAO.getAllUserByIdStatus(Integer.parseInt(idStatus));
+                Status statusCheck = statusDAO.getStatusById(Integer.parseInt(idStatus));
+                if (getRelationship(statusCheck.getIdUser(),user.getId()).equals("accepted") || statusCheck.getIdUser() == user.getId()) {
+                    session.setAttribute("userCheck",1);
+                }else{
+                    session.setAttribute("userCheck",null);
+                }
+            }
             request.setAttribute("userComment",userComment);
             request.setAttribute("comments",comments);
             request.setAttribute("check",listLike);
