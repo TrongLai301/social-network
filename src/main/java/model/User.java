@@ -1,6 +1,8 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class User {
     private int id;
@@ -16,8 +18,9 @@ public class User {
     private String permission;
     private String status;
     private String permissionFriends;
+    private Date dateCreate;
 
-    public User(int id, String username, String password, String email, String phone, LocalDate birth, String avatar, String name, String address, String hobby, String permissionFriends) {
+    public User(int id, String username, String password, String email, String phone, LocalDate birth, String avatar, String name, String address, String hobby, String permissionFriends, Date dateCreate) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -29,6 +32,7 @@ public class User {
         this.hobby = hobby;
         this.id = id;
         this.permissionFriends = permissionFriends;
+        this.dateCreate = dateCreate;
     }
 
     //form dang ky
@@ -46,6 +50,12 @@ public class User {
         this.password = password;
     }
 
+    public User(int id, Date dateCreate, String username) {
+        this.id = id;
+        this.dateCreate = dateCreate;
+        this.username = username;
+    }
+
     // form profile
     public User(String username, String avatar, String name, String address, String hobby, String phone) {
         this.username = username;
@@ -57,13 +67,23 @@ public class User {
     }
 
 
-    public User(int id, String username, String password, String permission, String status,String email) {
+    public User(int id, String username, String password, String permission, String status, String email) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.permission = permission;
         this.status = status;
         this.email = email;
+    }
+
+    public User(int id, String username, String password, String permission, String status, String email, Date dateCreate) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.permission = permission;
+        this.status = status;
+        this.email = email;
+        this.dateCreate = dateCreate;
     }
 
     public User() {
@@ -163,6 +183,14 @@ public class User {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
     }
 
     @Override
