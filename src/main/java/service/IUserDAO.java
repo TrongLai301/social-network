@@ -33,4 +33,7 @@ public interface IUserDAO {
 
     boolean checkLikedPost(int idStatus,int idUser);
     List<User> getAllUserByIdStatus(int idStatus);
+    boolean hasLikedComment (int sessionUserId, int commentId);
+    int getCommentLikeCount (int idComment);
+    void decreaseCommentLikesInDatabase(int idComment);
 }

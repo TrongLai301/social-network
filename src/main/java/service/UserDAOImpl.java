@@ -364,4 +364,67 @@ public class UserDAOImpl implements IUserDAO {
         }
         return list;
     }
+
+    public boolean hasLikedComment(int sessionUserId, int commentId) {
+        boolean check = false;
+        String query = "SELECT COUNT(*) FROM likeComment WHERE idCmt = ? AND idUserLiked = ?";
+
+        try (Connection connection = DataConnector.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setInt(1, commentId);
+            statement.setInt(2, sessionUserId);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Kiểm tra kết quả truy vấn
+            if (resultSet.next()) {
+                check = true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return check;
+    }
+
+    public int getCommentLikeCount (int idComment){
+        int likeCount = 0;
+        String query = "select likeCount from comment where idCmt = ?";
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, idComment);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("likeCount");
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return likeCount;
+    }
+
+    public void increaseCommentLikesInDatabase(int idComment) {
+        String sql = "UPDATE comment SET likeCount = likeCount + 1 WHERE idCmt = ?";
+
+        try ( Connection connection = DataConnector.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, idComment);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Xử lý lỗi nếu cần thiết
+        }
+    }
+
+    public void decreaseCommentLikesInDatabase(int idComment) {
+        String sql = "UPDATE comment SET likeCount = likeCount - 1 WHERE idCmt = ?";
+
+        try ( Connection connection = DataConnector.getConnection();
+              PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, idComment);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }

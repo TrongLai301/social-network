@@ -454,6 +454,7 @@
         </div>
         <div class="comment__body">
             <c:forEach items="${requestScope.comments}" var="cmt" varStatus="count">
+                <c:set var="idComment" value="${cmt.id}"/>
                 <c:set var="userComment" value="${requestScope.userComment[count.index]}"/>
                 <div class="comment">
                     <div class="comment__avatar">
@@ -469,11 +470,20 @@
                                 <uL><i class="fa-solid fa-ellipsis"></i></uL>
                             </div>
                         </div>
-                        <div class="comment__react">
-                            <a class="react__like"><i class="fa-solid fa-thumbs-up" style="margin-right: 12px"></i> 0
-                                Likes </a>
-                                <%--                            <div class="comment__time">4 minutes ago</div>--%>
+                        <div class="comment__react" id="likeContainer">
+                            <c:choose>
+                                <c:when test="${checkLikedComment}">
+                                    <a class="react__like"><i class="fa-solid fa-thumbs-up" style="margin-right: 12px"
+                                                              style="color: blue;"
+                                                              onclick="loadUnlike();"></i> + likeCmtCount + </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="react__like"><i class="fa-solid fa-thumbs-up" style="margin-right: 12px"
+                                                              onclick="loadLike();"></i>+ likeCmtCount +</a>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
+                        <div class="comment__time">at: ${cmt.time}</div>
                     </div>
                 </div>
             </c:forEach>
@@ -504,7 +514,7 @@
 
 <script src="../display-home/function.js"></script>
 <script src="../public/js/home/modal.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     let url = window.location.href;
     if (!url.includes("idStatusCmt=")) {
@@ -515,6 +525,51 @@
     if (indexOfIdStatusCmt !== -1) {
         let inputComment = document.querySelector(".js__cmt");
         inputComment.value = url.substring(indexOfIdStatusCmt + 12);
+    }
+
+    function loadLike() {
+        sendAjaxRequest(true);
+    }
+
+    function loadUnlike() {
+        sendAjaxRequest(false);
+    }
+
+    function sendAjaxRequest(checkLikedComment) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "./controller/updateLikeCommentServlet", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Xử lý phản hồi từ Servlet
+                    var response = JSON.parse(xhr.responseText);
+                    updateLikeCommentStatus(response.checkLikedComment, response.likeCount);
+                } else {
+                    console.error("Error: " + xhr.status);
+                }
+            }
+        };
+        xhr.send("checkLikedComment=" + checkLikedComment);
+    }
+
+    function updateLikeCommentStatus(checkLikedComment, likeCount) {
+        var likeContainer = document.getElementById("likeContainer");
+
+        // Xóa HTML cũ trong phần tử likeContainer
+        likeContainer.innerHTML = "";
+
+        // Tạo HTML mới dựa trên giá trị checkLikedComment
+        var likeHtml = "";
+        if (checkLikedComment) {
+            likeHtml = '<a class="react__like"><i class="fa-solid fa-thumbs-up" style="margin-right: 12px; color: blue;" onclick="loadUnlike();"></i> ' + likeCmtCount + '</a>';
+
+        } else {
+            likeHtml = '<a class="react__like"><i class="fa-solid fa-thumbs-up" style="margin-right: 12px" onclick="loadLike();"></i> ' + likeCmtCount + '</a>';
+        }
+
+        // Thêm HTML mới vào likeContainer
+        likeContainer.innerHTML = likeHtml;
     }
 </script>
 </body>

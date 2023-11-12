@@ -1,4 +1,4 @@
-package controler;
+package controller;
 
 import DBcontext.DataConnector;
 import model.Like;
@@ -18,17 +18,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @WebServlet(name = "UserServlet", value = "/user")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 20, // 2MB

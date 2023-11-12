@@ -115,4 +115,9 @@ public class StatusDAOImpl implements IStatusDAO {
         }
         return comments;
     }
+
+    @Override
+    public void addComment(Comment comment) {
+
+    }
 }

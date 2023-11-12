@@ -1,4 +1,4 @@
-package controler;
+package controller;
 
 import model.Comment;
 import model.Like;
@@ -171,10 +171,16 @@ public class HomeServlet extends HttpServlet {
                 ) {
                     System.out.println(c.getId());
                 }
+                for (Comment comment: comments) {
+                    int likeCount = comment.getLikeCount();
+                    boolean checkLikedComment = userDAO.hasLikedComment(idUser, Integer.parseInt(idStatus));
+                    int cmtLikeCount = userDAO.getCommentLikeCount(Integer.parseInt(request.getParameter("idComment")));
+                    request.setAttribute("checkLikedComment", checkLikedComment);
+                    request.setAttribute("cmtLikeCount", cmtLikeCount);
+                }
             }
 
             for (Status status : list) {
-
                 userPost = userDAO.getUserById(status.getIdUser());
                 if (status.getIdUser() != idUser) {
                     if (status.getPermission() == 2) {
@@ -190,7 +196,6 @@ public class HomeServlet extends HttpServlet {
                     like = null;
                     listLike.add(like);
                 }
-
                 post.add(status);
                 userList.add(userPost);
             }

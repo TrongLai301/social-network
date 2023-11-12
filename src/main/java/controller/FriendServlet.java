@@ -1,6 +1,5 @@
-package controler;
+package controller;
 
-import model.User;
 import service.RelationshipDAO;
 
 import javax.servlet.ServletException;

@@ -1,4 +1,4 @@
-package controler;
+package controller;
 
 import DBcontext.DataConnector;
 import model.User;
