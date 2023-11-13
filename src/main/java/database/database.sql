@@ -7,6 +7,7 @@ create table permission
     idPermission   int auto_increment primary key,
     namePermission varchar(30)
 );
+
 create table user
 (
     id           int auto_increment primary key,
@@ -28,14 +29,14 @@ create table user
 );
 -- tao bang permision lam viec voi quyen thuc thi
 
-
 -- tao thu tuc lam viec xem cac du lieu co ban tai khoan nguoi dung
+
 DELIMITER $$
 create procedure showUserWithStatus()
 begin
-    select user.id, username, password, email, namePermission, status, phone
-    from user
-             inner join permission on user.idPermission = permission.idPermission;
+select user.id, username, password, email, namePermission, status, phone, timeCreate
+from user
+         inner join permission on user.idPermission = permission.idPermission;
 end $$
 call showUserWithStatus();
 -- tao thu tuc them du lieu nguoi dung
@@ -43,9 +44,10 @@ DELIMITER $$
 create procedure insertUser(in usernameWeb varchar(45), in passwordWeb varchar(32), in emailWeb varchar(100),
                             in birthWeb date, in phoneNumberWeb varchar(20), in PermissionWeb int)
 begin
-    insert into user (username, password, email, birth, phone, idPermission)
-    values (usernameWeb, passwordWeb, emailWeb, birthWeb, phoneNumberWeb, PermissionWeb);
+insert into user (username, password, email, birth, phone, idPermission)
+values (usernameWeb, passwordWeb, emailWeb, birthWeb, phoneNumberWeb, PermissionWeb);
 end $$
+call insertUser();
 -- *  du leu tham so dau vao
 -- du lieu bang permission
 insert into permission(namePermission)
@@ -123,21 +125,6 @@ create table likes (
                        foreign key (idStatus) references status (idStatus),
                        foreign key (idUser) references user (id)
 );
-
-
-# Database friendship
-
-CREATE table Friendships
-(
-    requestId  int primary key auto_increment,
-    senderId   int,
-    receiverId int,
-    status     varchar(10) default 'pending',
-    FOREIGN KEY (senderId) references user (id),
-    FOREIGN KEY (receiverId) references user (id)
-);
-
-
 create table permissionFriends
 (
     idPermission   int primary key auto_increment,
@@ -159,25 +146,104 @@ create table Comment (
                          FOREIGN KEY (idUser) references  user(id),
                          FOREIGN KEY  (idStatus) references  status(idStatus)
 );
+# Create table admin
 
-select *
-from user;
-select *
-from status;
-insert into comment (idUser, idStatus, content, likeCount, createTime)
-values (5, 1,
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit.Accusamus alias cupiditate dicta earum! Cumque cupiditate dignissimos !',
-        0, date(now())),
-       (6, 1,
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit.Accusamus alias cupiditate dicta earum! Cumque cupiditate dignissimos fuga ipsum laudantium nam natus repellendus temporibus voluptatem voluptates!',
-        1, date(now())),
-       (7, 1,
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit.Accusamus alias cupiditate dicta earum! Cumque cupiditate dignissimos fuga ipsum laudantium nam natus repellendus temporibus voluptatem voluptates!',
-        2, date(now())),
-       (8, 1,
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit.Accusamus alias cupiditate dicta earum! Cumque cupiditate dignissimos fuga ipsum laudantium nam natus repellendus temporibus voluptatem voluptates!',
-        3, date(now())),
-       (5, 2,
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit.Accusamus alias cupiditate dicta earum! Cumque cupiditate dignissimos fuga ipsum laudantium nam natus repellendus temporibus voluptatem voluptates!',
-        0, date(now()))
-;
+create table admin (
+                       id int primary key auto_increment,
+                       idUser int not null,
+                       idPermission int not null,
+                       timeAccess DATETIME not null default now(),
+                       foreign key (idPermission) references user (idPermission),
+                       foreign key (idUser) references user (id)
+);
+INSERT INTO admin (idUser, timeAccess, idPermission) VALUES
+                                                         (6, '2023-10-01 09:12:00',2),
+                                                         (5, '2023-11-10 10:00:00',2),
+                                                         (5, '2023-11-09 09:00:00',2),
+                                                         (5, '2023-10-01 09:00:00',2),
+                                                         (8, '2023-10-02 10:30:00',2),
+                                                         (9, '2023-10-03 14:15:00',2),
+                                                         (5, '2023-10-04 16:45:00',2),
+                                                         (6, '2023-10-05 11:20:00',2),
+                                                         (5, '2023-10-06 13:10:00',2),
+                                                         (5, '2023-10-07 08:45:00',2),
+                                                         (5, '2023-10-08 17:30:00',2),
+                                                         (9, '2023-10-09 12:00:00',2),
+                                                         (10, '2023-10-10 15:20:00',2),
+                                                         (10, '2023-10-10 15:20:00',2),
+                                                         (1, '2023-10-10 15:20:00',1);
+
+INSERT INTO admin (idUser, idPermission) VALUES (6,2);
+
+INSERT INTO admin (idUser, timeAccess, idPermission) VALUES (10, '2023-11-08 15:20:00',2);
+INSERT INTO admin (idUser, timeAccess, idPermission) VALUES (10, '2023-11-07 15:20:00',2);
+INSERT INTO admin (idUser, timeAccess, idPermission) VALUES (10, '2023-11-06 15:20:00',2);
+INSERT INTO admin (idUser, timeAccess, idPermission) VALUES (10, '2023-11-05 15:20:00',2);
+INSERT INTO admin (idUser, timeAccess, idPermission) VALUES (10, '2022-11-05 15:20:00',2);
+INSERT INTO admin (idUser, timeAccess, idPermission) VALUES (10, '2021-11-05 15:20:00',2);
+INSERT INTO admin (idUser, timeAccess, idPermission) VALUES (10, '2022-11-05 15:20:00',2);
+
+DELIMITER $$
+create procedure userPerWeekAdmin()
+begin
+SELECT *
+FROM admin
+WHERE WEEKDAY(timeAccess) >= 0 -- Thứ 2
+  AND WEEKDAY(timeAccess) <= 6 -- Chủ nhật
+  AND timeAccess >= DATE_ADD(CURDATE(), INTERVAL (0 - WEEKDAY(CURDATE())) DAY);
+end $$
+call userPerWeekAdmin();
+
+DELIMITER $$
+create procedure userPerMonthAdmin()
+begin
+select * from admin where MONTH(timeAccess) = MONTH(now());
+end $$
+
+call userPerMonthAdmin;
+
+DELIMITER $$
+create procedure userPerYearAdmin()
+begin
+select * from admin where year(timeAccess) =year(now());
+end $$
+
+call userPerYearAdmin;
+
+#login
+DELIMITER $$
+create procedure userPerWeekLogin()
+begin
+SELECT *
+FROM user
+WHERE WEEKDAY(timeCreate) >= 0 -- Thứ 2
+  AND WEEKDAY(timeCreate) <= 6 -- Chủ nhật
+  AND timeCreate >= DATE_ADD(CURDATE(), INTERVAL (0 - WEEKDAY(CURDATE())) DAY);
+end $$
+call userPerWeekLogin();
+
+DELIMITER $$
+create procedure userPerMonthLogin()
+begin
+select * from user where MONTH(timeCreate) = MONTH(now());
+end $$
+call userPerMonthLogin();
+DELIMITER $$
+create procedure userPerYearLogin()
+begin
+select * from user where year(timeCreate) =year(now());
+end $$
+#login
+
+DELIMITER $$
+create procedure showAllUserLogin()
+begin
+select * from admin;
+end $$
+call showAllUserLogin();
+
+DELIMITER $$
+create procedure inserQuantitytUserLogin(in idUserLogin int, in idPermissionLogin int)
+begin
+insert into admin (idUser, idPermission) values (idUserLogin, idPermissionLogin);
+end $$

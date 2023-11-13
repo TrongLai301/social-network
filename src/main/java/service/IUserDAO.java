@@ -2,6 +2,7 @@ package service;
 
 import model.Status;
 import model.User;
+import model.Admin;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -33,4 +34,10 @@ public interface IUserDAO {
 
     boolean checkLikedPost(int idStatus,int idUser);
     List<User> getAllUserByIdStatus(int idStatus);
+    List<Admin> getAllUserLogin();
+    void insertQuantityUserLogin(Admin admin) throws SQLException, ClassNotFoundException;
+
+    List<Admin> userAccessAdmin(String call);
+
+    List<User> userAccessLogin(String call);
 }

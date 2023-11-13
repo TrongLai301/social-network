@@ -1,14 +1,18 @@
 package service;
 
 import DBcontext.DataConnector;
+import model.Admin;
 import model.Status;
 import model.User;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+//import java.util.Date;
 public class UserDAOImpl implements IUserDAO {
     @Override
     public List<User> getAllUser() {
@@ -27,10 +31,14 @@ public class UserDAOImpl implements IUserDAO {
                 user.setStatus(rs.getString("status"));
                 user.setEmail(rs.getString("email"));
                 user.setPhone(rs.getString("phone"));
+                String date = rs.getString("timeCreate");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                java.util.Date dateUserSignup = simpleDateFormat.parse(date);
+                user.setDateCreate(dateUserSignup);
                 listFromDb.add(user);
             }
             connection.close();
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException | ParseException e) {
             throw new RuntimeException(e);
         }
         return listFromDb;
@@ -63,6 +71,7 @@ public class UserDAOImpl implements IUserDAO {
         connection.close();
         return user;
     }
+
     @Override
     public Integer getPermissionFriendsUserById(int id) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
@@ -75,6 +84,7 @@ public class UserDAOImpl implements IUserDAO {
         connection.close();
         return permissionFriends;
     }
+
     @Override
     public User getUserByName(String name) throws SQLException, ClassNotFoundException {
         Connection connection = DataConnector.getConnection();
@@ -153,10 +163,10 @@ public class UserDAOImpl implements IUserDAO {
             cs.setString(5, user.getName());
             cs.setString(6, user.getAddress());
             cs.setString(7, user.getHobby());
-            if (user.getPermissionFriends().equals("public")){
+            if (user.getPermissionFriends().equals("public")) {
                 cs.setInt(8, 1);
             } else if (user.getPermissionFriends().equals("private")) {
-                cs.setInt(8,2);
+                cs.setInt(8, 2);
             }
             cs.setInt(9, user.getId());
             cs.executeUpdate();
@@ -189,13 +199,15 @@ public class UserDAOImpl implements IUserDAO {
             callableStatement.setDate(4, date);
             callableStatement.setString(5, user.getPhone());
             callableStatement.setInt(6, 2);
+            System.out.println(user.getDateCreate());
             callableStatement.executeUpdate();
             connection.close();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
-@Override
+
+    @Override
     public boolean checkLikedPost(int idStatus, int idUser) {
         boolean hasBeenLiked = false;
         Connection conn = null;
@@ -215,6 +227,7 @@ public class UserDAOImpl implements IUserDAO {
         }
         return hasBeenLiked;
     }
+
     @Override
     public void updatePlusLikeCount(int idStatus, int idUser) {
         Connection conn = null;
@@ -268,6 +281,7 @@ public class UserDAOImpl implements IUserDAO {
             }
         }
     }
+
     @Override
     public void updateMinusLikeCount(int idStatus, int idUser) {
         Connection conn = null;
@@ -323,8 +337,7 @@ public class UserDAOImpl implements IUserDAO {
             throw new RuntimeException(e);
         }
     }
-
-        public int getLikeCount ( int idStatus){
+        public int getLikeCount ( int idStatus) {
             int likeCount = 0;
             String query = "select likeCount from status where idStatus = ?";
             try {
@@ -341,7 +354,52 @@ public class UserDAOImpl implements IUserDAO {
             }
             return likeCount;
         }
+    @Override
+    public List<Admin> getAllUserLogin() {
+        List<Admin> newListAdmin = new ArrayList<>();
+        Connection connection = null;
+        try {
+            connection = DataConnector.getConnection();
+            CallableStatement callableStatement = connection.prepareCall("{Call showAllUserLogin()}");
+            ResultSet resultSet = callableStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int idUser = resultSet.getInt("idUser");
+                String dateTime = resultSet.getString("timeAccess");
+                Admin admin = getAdmin(dateTime, id, idUser);
+                newListAdmin.add(admin);
+            }
+            connection.close();
+        } catch (SQLException | ClassNotFoundException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return newListAdmin;
+    }
 
+    private Admin getAdmin(String dateTime, int id, int idUser) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        java.util.Date date = dateFormat.parse(dateTime);
+        return new Admin(id, idUser, date);
+    }
+    private User getUser(String dateTime, int id, String name) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        java.util.Date date = dateFormat.parse(dateTime);
+        return new User(id,date,name);
+    }
+    @Override
+    public void insertQuantityUserLogin(Admin admin){
+                Connection connection = null;
+                try {
+                    connection = DataConnector.getConnection();
+                    CallableStatement callableStatement = connection.prepareCall("{Call inserQuantitytUserLogin(?,?)}");
+                    callableStatement.setInt(1, admin.getIdUser());
+                    callableStatement.setInt(2, admin.getIdPermission());
+                    callableStatement.executeUpdate();
+                    connection.close();
+                } catch (ClassNotFoundException | SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
     @Override
     public List<User> getAllUserByIdStatus(int idStatus) {
         List<User> list = new ArrayList<>();
@@ -364,4 +422,47 @@ public class UserDAOImpl implements IUserDAO {
         }
         return list;
     }
+
+
+    @Override
+    public List<Admin> userAccessAdmin(String call){
+        String callable = "{Call "+ call +"()}";
+        List<Admin> admins = new ArrayList<>();
+        Connection connection = null;
+        try {
+            connection = DataConnector.getConnection();
+            CallableStatement callableStatement = connection.prepareCall(callable);
+            ResultSet resultSet = callableStatement.executeQuery();
+            while (resultSet.next()){
+                int idUser = resultSet.getInt("idUser");
+                int id = resultSet.getInt("id");
+                String date = resultSet.getString("timeAccess");
+                    admins.add(getAdmin(date,id,idUser));
+            }
+        } catch (ClassNotFoundException | ParseException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return admins;
+    }
+    @Override
+    public List<User> userAccessLogin(String call){
+        String callable = "{Call "+ call +"()}";
+        List<User> users = new ArrayList<>();
+        Connection connection = null;
+        try {
+            connection = DataConnector.getConnection();
+            CallableStatement callableStatement = connection.prepareCall(callable);
+            ResultSet resultSet = callableStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String date = resultSet.getString("timeCreate");
+                String username = resultSet.getString("username");
+                users.add(getUser(date,id,username));
+            }
+        } catch (ClassNotFoundException | ParseException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return users;
+    }
 }
+

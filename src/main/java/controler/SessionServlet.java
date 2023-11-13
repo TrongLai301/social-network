@@ -1,6 +1,7 @@
 package controler;
 
 import DBcontext.DataConnector;
+import model.Admin;
 import model.User;
 import org.json.simple.JSONObject;
 import service.UserDAOImpl;
@@ -17,7 +18,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /*   Xử lý phiên làm việc như login, logout*/
@@ -125,6 +129,8 @@ public class SessionServlet extends HttpServlet {
                             req.setAttribute("message","tài khoản bị chặn");
                             req.getRequestDispatcher("login-signup/display-signUp-signIn.jsp").forward(req,resp);
                         }else{
+                            Admin admin = new Admin(id,2);
+                            userDAO.insertQuantityUserLogin(admin);
                             resp.sendRedirect("/user");
                         }
                     }
@@ -176,6 +182,8 @@ public class SessionServlet extends HttpServlet {
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         String date = request.getParameter("date");
+        Date dateCreate = new Date();
+
         if(date.isEmpty()){
             date = "1000-10-10";
         }
