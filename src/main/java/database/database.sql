@@ -308,11 +308,11 @@ VALUES ('admin', '123456', 'Kamito', 'Kamito0620042gmail.com', NULL, '0777280105
         'Singing, shopping', 'avatar100.jpg', '890 Oak Street, City', 'working', 2);
 
 INSERT INTO status (createTime, description, media, idUser, idPermission)
-VALUES (date(now()), 'update new version with best waifu ',
-        'https://fastcdn.hoyoverse.com/content-v2/bh3/113389/fe26b6ed796f996ef25a00e84c143db3_7064957493634494323.png',
+VALUES (date(now()), 'Mình bị sao v mn , chạy ko đc',
+        'https://scontent.fhan3-1.fna.fbcdn.net/v/t39.30808-6/400428103_1142337480078454_8810820960284013359_n.jpg?stp=cp6_dst-jpg&_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEgx-9ka9UpZ13U0b5IDloNPJ-Vtkuo8QA8n5W2S6jxAOU73rs7hB_afJhOK9IE01DVSsu70pgsPvwTxHh57DHR&_nc_ohc=uWyGsFIl9XMAX-J9eOl&_nc_zt=23&_nc_ht=scontent.fhan3-1.fna&oh=00_AfAGGWZLDj4KgdXIbwP73XMosvlrpHB1ZipOmwdHuVjq0g&oe=6556290A',
         25, 1);
 INSERT INTO status (createTime, description, media, idUser, idPermission)
-VALUES (date(now()), 'New guy is comming', 'https://images8.alphacoders.com/131/1316156.jpeg', 55, 1);
+VALUES (date(now()), 'New guy is comming', 'https://scontent.fhan3-1.fna.fbcdn.net/v/t39.30808-6/401148059_211344731985279_7448540053370047402_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHWCuh94nKkNX2bfadHLvKKlD8OgGvM7NmUPw6Aa8zs2b_oNumfo6PDrStIRhr7dnFr4pBr3N67u4BwvGUuDgXH&_nc_ohc=0V0grXZzAWIAX-uK0-D&_nc_zt=23&_nc_ht=scontent.fhan3-1.fna&oh=00_AfAk7-ajt124JnWl3G8iZytyOjJSvqArxWMxQAH4hSVfFQ&oe=655513B4', 55, 1);
 INSERT INTO status (createTime, description, media, idUser, idPermission)
 VALUES (date(now()), 'New girl', 'https://images7.alphacoders.com/129/1295443.jpg', 3, 2);
 INSERT INTO status (createTime, description, media, idUser, idPermission)
@@ -435,3 +435,5 @@ values (5, 1,
         'Lorem ipsum dolor sit amet consectetur adipisicing elit.Accusamus alias cupiditate dicta earum! Cumque cupiditate dignissimos fuga ipsum laudantium nam natus repellendus temporibus voluptatem voluptates!',
         0, date(now()))
 ;
+
+select * from comment;

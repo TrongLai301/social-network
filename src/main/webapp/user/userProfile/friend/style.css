@@ -6,30 +6,36 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+.f1 {
+    flex: 1;
+}
+.w-100 {
+    width: 100%;
+}
 
 .reset__Button--css {
-     border: none;
-     margin: 0;
-     padding: 0;
-     width: auto;
-     overflow: visible;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
 
-     background: transparent;
+    background: transparent;
 
-     /* inherit font & color from ancestor */
-     color: inherit;
-     font: inherit;
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
 
-     /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
-     line-height: normal;
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
 
-     /* Corrects font smoothing for webkit */
-     -webkit-font-smoothing: inherit;
-     -moz-osx-font-smoothing: inherit;
+    /* Corrects font smoothing for webkit */
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
 
-     /* Corrects inability to style clickable `input` types in iOS */
-     -webkit-appearance: none;
- }
+    /* Corrects inability to style clickable `input` types in iOS */
+    -webkit-appearance: none;
+}
 
 
 :root {
@@ -1391,6 +1397,7 @@ img.coverImage {
 }
 
 .comment__body{
+    padding-top: 20px;
     min-width: 12px;
     height: 75%;
     overflow-y: auto;
@@ -1404,6 +1411,7 @@ img.coverImage {
     display: flex;
     padding: 4px 0 0 16px
 }
+
 
 .comment__avatar{
     margin: 2px 6px 0 0;
@@ -1434,13 +1442,41 @@ img.coverImage {
 .comment__more {
     margin: 0 5px;
     padding: 10px 11px;
-    border-radius: 50%
+    border-radius: 50%;
+    position: relative;
 }
-
+.comment__option a:hover,
 .comment__more:hover {
     background-color: #f0f2f5;
     cursor: pointer;
 }
+
+.comment__option {
+    list-style: none;
+    position: absolute;
+    right: 7%;
+    top: 46px;
+    padding : 8px;
+    background-color: white;;
+    width: 300px;
+    display: none;
+}
+.comment__option > li {
+
+}
+
+.comment__option  a{
+    text-decoration: none;
+    list-style: none;
+    color: black;
+    background-color: white;
+    display: block;
+    padding: 12px 8px;
+    border-radius: 5px;
+
+}
+
+
 .comment__react {
     display: flex;
 }
@@ -1451,10 +1487,34 @@ img.coverImage {
 
 .comment__footer {
     position: absolute;
+    padding-top: 12px;
     bottom: 0;
     left: 0;
     right: 0;
+    height: 13vh;
+    display: flex;
 }
+.comment__footer textarea{
+    height: 100px;
+    width: 100%;
+    overflow: auto;
+    resize: none;
+    padding: 8px 12px;
+}
+.comment__submit > button{
+    margin: 0 5px;
+    padding: 10px 11px;
+    border-radius: 50%;
+    border: none;
+    background: none;
+    font-size: 17px;
+}
+.comment__submit > button:hover {
+    cursor: pointer;
+    border: none;
+    color: #2b65ca;
+}
+
 
 
 

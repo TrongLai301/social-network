@@ -175,10 +175,6 @@ public class HomeServlet extends HttpServlet {
             if (idStatus != null && !idStatus.isEmpty()) {
                 comments = statusDAO.getAllCommentByIdStatus(Integer.parseInt(idStatus));
                 userComment = userDAO.getAllUserByIdStatus(Integer.parseInt(idStatus));
-                for (User c : userComment
-                ) {
-                    System.out.println(c.getId());
-                }
             }
 
             for (Status status : list) {

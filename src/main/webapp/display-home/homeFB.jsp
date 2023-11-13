@@ -466,7 +466,11 @@
                                 <p>${cmt.content}</p>
                             </div>
                             <div class="comment__more">
-                                <uL><i class="fa-solid fa-ellipsis"></i></uL>
+                                <i class="fa-solid fa-ellipsis"></i>
+                                <uL class="comment__option" >
+                                    <li><a href="#">Edit</a> </li>
+                                    <li><a  href="#">Delete</a> </li>
+                                </uL>
                             </div>
                         </div>
                         <div class="comment__react">
@@ -479,7 +483,7 @@
             </c:forEach>
         </div>
         <div class="comment__footer">
-            <div class="user__comment">
+            <div class="user__comment w-100 ">
                 <div class="comment__avatar">
                     <img src="${requestScope.user.avatar}">
                 </div>
@@ -487,11 +491,11 @@
                     <form class="comment__content" action="/home" method="post">
                         <input type="hidden" name="action" value="addComment">
                         <input class="js__cmt" type="hidden" name="idStatus" value="">
-                        <div>
-                            <input type="text" name="commentContent">
+                        <div class="f1">
+                            <textarea name="commentContent" onchange="setSubmitAvailable()"></textarea>
                         </div>
-                        <div class="comment__more">
-                            <button class="reset__Button--css" type="submit">
+                        <div class="comment__submit">
+                            <button class= "js-btn-submit-comment" type="submit" disabled>
                                 <i class="fa-solid fa-paper-plane"></i>
                             </button>
                         </div>
@@ -515,6 +519,10 @@
     if (indexOfIdStatusCmt !== -1) {
         let inputComment = document.querySelector(".js__cmt");
         inputComment.value = url.substring(indexOfIdStatusCmt + 12);
+    }
+    function setSubmitAvailable(){
+        let submitBtn =  document.querySelector('.js-btn-submit-comment');
+        submitBtn.disabled = false;
     }
 </script>
 </body>
